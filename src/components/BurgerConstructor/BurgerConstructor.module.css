@@ -1,15 +1,38 @@
-.burgerIngredients {
-
-}
-
-.tabs {
+.burgerConstructor {
     display: flex;
-    list-style-type: none;
+    flex-direction: column;
+    gap: 16px;
 
 }
-.ingredientsLists {
-    width: 600px;
-    max-height: 70vh;
+
+.container {
+    display: flex;
+    max-height: 30vh;
+    gap: 16px;
+    flex-direction: column;
     overflow-y: auto;
 }
 
+.constructorItem {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.text {
+    text-align: center;
+}
+
+.price {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 8px;
+    padding-top: 40px;
+    gap: 41.5px;
+}
+
+.currency {
+    display: flex;
+    align-items: baseline;
+    gap: 9.5px;
+}
