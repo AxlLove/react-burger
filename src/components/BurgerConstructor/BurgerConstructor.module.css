@@ -1,0 +1,15 @@
+.burgerIngredients {
+
+}
+
+.tabs {
+    display: flex;
+    list-style-type: none;
+
+}
+.ingredientsLists {
+    width: 600px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
