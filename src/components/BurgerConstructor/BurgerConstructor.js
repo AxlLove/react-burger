@@ -1,7 +1,7 @@
 import styles from './BurgerConstructor.module.css'
-import {useState} from "react";
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types";
+import {ingredientType} from "../../utils/types";
 
 const img = 'https://code.s3.yandex.net/react/code/bun-02-mobile.png'
 
@@ -19,7 +19,7 @@ function BurgerConstructor({data}) {
             </div>
             <ul className={`${styles.container} pr-2`}>
                 {data.map((item => (
-                    <li className={styles.constructorItem} key={item._id}>
+                   item.type !== 'bun' && <li className={styles.constructorItem} key={item._id}>
                         <DragIcon type="primary"/>
                         <ConstructorElement
                             text={item.name}
@@ -51,21 +51,9 @@ function BurgerConstructor({data}) {
 
         </section>
     )
-};
+}
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number,
-        fat: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        calories: PropTypes.number,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string,
-        __v: PropTypes.number,
-    })).isRequired,
+    data: PropTypes.arrayOf(ingredientType).isRequired,
 };
 export default BurgerConstructor;
