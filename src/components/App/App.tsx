@@ -6,19 +6,16 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 
 function App() {
-  return (
-    <div className={styles.App}>
-      <AppHeader/>
-        <main className={styles.main}>
-            <BurgerIngredients data={data}/>
-            <BurgerConstructor data={data}/>
-        </main>
-    </div>
-  );
+    return (
+        <div className={styles.App}>
+            <AppHeader/>
+            <main className={styles.main}>
+                <BurgerIngredients data={data}/>
+                <BurgerConstructor data={data}/>
+            </main>
+        </div>
+    );
 }
 
 export default App;
 
-
-//TODO в компоненте бургер конструкто можно вынести в отдельный компонент UL
-//TODO проверить весь нейминг
