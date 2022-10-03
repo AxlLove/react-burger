@@ -1,5 +1,7 @@
 import Card from "../Card/Card";
 import styles from "./CardList.module.css";
+import PropTypes from "prop-types";
+import {ingredientType} from "../../utils/types";
 
 function CardList({data, type, name}) {
     return (
@@ -14,5 +16,11 @@ function CardList({data, type, name}) {
         </>
     )
 }
+
+CardList.propTypes = {
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    data: PropTypes.arrayOf(ingredientType).isRequired,
+};
 
 export default CardList;
