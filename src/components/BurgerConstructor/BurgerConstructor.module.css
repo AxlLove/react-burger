@@ -1,0 +1,37 @@
+.burgerConstructor {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.container {
+    display: flex;
+    max-height: 40vh;
+    gap: 16px;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.constructorItem {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.text {
+    text-align: center;
+}
+
+.price {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 8px;
+    padding-top: 40px;
+    gap: 42px;
+}
+
+.currency {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
