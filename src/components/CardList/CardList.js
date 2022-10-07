@@ -10,7 +10,9 @@ function CardList({data, type, name}) {
             <ul className={`${styles.list} pt-6`}>
                 {data.map((card) => (
                     card.type === type &&
-                    <Card image={card.image} name={card.name} price={card.price} key={card._id}/>
+                    <Card
+                        {...card}
+                        key={card._id}/>
                 ))}
             </ul>
         </>
