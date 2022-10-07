@@ -5,9 +5,7 @@ import Card from "../Card/Card";
 function ModalOverlay({toggleModal}) {
 
     return (
-        <div className={styles.modalOverlay} onClick={() => {
-            toggleModal()
-        }}/>
+        <div className={styles.modalOverlay} onClick={toggleModal}/>
     )
 }
 

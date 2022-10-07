@@ -3,7 +3,6 @@ import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/
 import PropTypes from "prop-types";
 import {ingredientType} from "../../utils/types";
 import {useState} from "react";
-import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
@@ -16,9 +15,6 @@ function BurgerConstructor({data}) {
     const toggleModal = () => {
         setIsOpen(!isOpen)
     }
-    const overlay = (
-        <ModalOverlay toggleModal={toggleModal}/>
-    )
 
 
     return (
@@ -65,7 +61,7 @@ function BurgerConstructor({data}) {
                     Оформить заказ
                 </Button>
             </div>
-            <Modal isOpen={isOpen} toggleModal={toggleModal} overlay={overlay}>
+            <Modal isOpen={isOpen} toggleModal={toggleModal}>
                 <OrderDetails identifier={'034536'}/>
             </Modal>
         </section>

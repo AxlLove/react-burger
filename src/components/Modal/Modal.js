@@ -3,10 +3,11 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import ReactDOM from "react-dom"
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
+import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 const modalRoot = document.getElementById('react-modals')
 
-function Modal({isOpen, toggleModal, children, overlay}) {
+function Modal({isOpen, toggleModal, children}) {
 
     useEffect(() => {
         const closeModalPressEsc = (e) => {
@@ -28,7 +29,7 @@ function Modal({isOpen, toggleModal, children, overlay}) {
             {
                 isOpen &&
                 <>
-                    {overlay}
+                    <ModalOverlay toggleModal={toggleModal}/>
                     <div className={styles.modal} onClick={event => event.stopPropagation()}>
                         <button className={styles.button} type={"button"} onClick={toggleModal}>
                             <CloseIcon type="primary"/>

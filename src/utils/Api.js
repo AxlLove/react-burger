@@ -7,12 +7,15 @@ const checkResponse = (response) => {
     return Promise.reject(`Ошибка: ${response.status}`)
 }
 
-export const getIngredients = (token) => {
-    return fetch(BASE_URL, {
+const request = (url, options) => {
+    return fetch(url, options).then(checkResponse)
+}
+
+export const getIngredients = () => {
+    return  request(BASE_URL, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
         }
     })
-        .then(checkResponse)
 }
