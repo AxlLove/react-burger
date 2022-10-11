@@ -6,15 +6,19 @@ import PropTypes from 'prop-types';
 import {ingredientType} from "../../utils/types";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import {IngredientContext} from "../../contexts/ingredientContext";
+import {useContext} from "react";
 
 function BurgerIngredients({data}) {
     const [current, setCurrent] = useState('Булки')
     const [card, setCard] = useState({})
     const [isOpen, setIsOpen] = useState(false)
 
+    const {state, dispatch} = useContext(IngredientContext)
     const handeCardClick = (item) => {
-        setCard(item)
-        toggleModal()
+        // setCard(item)
+        // toggleModal()
+        dispatch({card: item, type: item.type})
     }
     const toggleModal = () => {
         setIsOpen(!isOpen)
