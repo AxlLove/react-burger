@@ -9,45 +9,50 @@ import {IngredientContext} from "../../contexts/ingredientContext";
 
 
 function App() {
+    const [selectedBun, setSelectedBun] = useState({})
+    const [otherIngredients, setOtherIngredients] = useState([])
     const [ingredients, setIngredients] = useState([])
+    const [constructorData, setConstructorData] = useState([])
+    const [price, setPrice] = useState(0)
 
     useEffect(() => {
         getIngredients().then(res => {
             setIngredients(res.data)
+            const bun = res.data.find(item=> item.type === 'bun')
+            setSelectedBun(bun)
+            setConstructorData([bun, bun])
+            setPrice(bun.price + bun.price)
         })
             .catch(console.log)
     }, [])
 
+    useEffect(()=>{
+        setConstructorData([selectedBun, ...otherIngredients, selectedBun])
+        console.log(constructorData)
+        console.log(price)
+    }, [otherIngredients, selectedBun])
 
-    const reducer = (state, action) => {
-        //console.log(action)
-        switch (action.type) {
-            case 'bun':
-                let bun = state.cards.findIndex(item=> item.type === 'bun')
-                console.log(bun)
-                if (bun !== -1) {
-                    console.log('я тут')
-                    state.cards.splice(bun, 1, action.card)
-                    return {cards: state.cards}
-                }
-                return {cards : [...state.cards, action.card]}
-            case 'sauce':
-                return  {cards: [...state.cards, action.card]}
-            case 'main':
-                return  {cards: [...state.cards, action.card]}
-            default:
-                throw new Error(`Wrong type of action: ${action.type}`);
+    useEffect(()=> {
+       const totalPrice = constructorData.reduce((acc, item) => acc + item.price,0)
+        setPrice(totalPrice)
+    }, [constructorData])
+
+    const addIngredientToCart = (ingredient) => {
+        if (ingredient.type === 'bun') {
+            setSelectedBun(ingredient)
+            return
         }
+        setOtherIngredients([...otherIngredients, ingredient])
     }
 
-    const [state, dispatch] = useReducer(reducer, {cards: []}, undefined)
+
 
     return (
-        <IngredientContext.Provider value={{state, dispatch}}>
+        <IngredientContext.Provider value={{constructorData, setConstructorData, price}}>
             <div className={styles.App}>
                 <AppHeader/>
                 <main className={styles.main}>
-                    <BurgerIngredients data={ingredients}/>
+                    <BurgerIngredients data={ingredients} addIngredientToCart={addIngredientToCart}/>
                     <BurgerConstructor data={ingredients}/>
                 </main>
             </div>
@@ -58,3 +63,4 @@ function App() {
 
 export default App;
 
+//TODO подчистить тест код

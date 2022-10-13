@@ -1,6 +1,6 @@
 import styles from './IngredientDetails.module.css'
 import {ingredientType} from "../../utils/types";
-import {useEffect} from "react";
+
 
 
 function IngredientDetails({card}) {

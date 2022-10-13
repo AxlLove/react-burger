@@ -12,16 +12,14 @@ const img = 'https://code.s3.yandex.net/react/code/bun-02-mobile.png'
 
 function BurgerConstructor({data}) {
 
-    const {state, dispatch} = useContext(IngredientContext)
+    const {constructorData, price = 0} = useContext(IngredientContext)
     const [isOpen, setIsOpen] = useState(false)
-    const bun = state.cards.find(item=>item.type==='bun')
+    const bun = constructorData.find(item => item.type === 'bun')
 
     const toggleModal = () => {
         setIsOpen(!isOpen)
     }
-    useEffect(()=> {
-        console.log(state)
-    },[state])
+
 
     return (
         <section className={`${styles.burgerConstructor} pt-25 pb-10`}>
@@ -35,7 +33,7 @@ function BurgerConstructor({data}) {
                 />
             </div>}
             <ul className={`${styles.container} pr-2`}>
-                {state.cards && state.cards.map(((item , index)=> (
+                {constructorData && constructorData.map(((item, index) => (
                     item.type !== 'bun' && <li className={styles.constructorItem} key={index}>
                         <DragIcon type="primary"/>
                         <ConstructorElement
@@ -57,7 +55,7 @@ function BurgerConstructor({data}) {
             <div className={styles.price}>
                 <div className={styles.currency}>
                     <p className={`${styles.text} text text_type_digits-medium`}>
-                        610
+                        {price}
                     </p>
                     <CurrencyIcon type="primary"/>
                 </div>
