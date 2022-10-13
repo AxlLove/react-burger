@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect, useReducer} from "react";
-import {getIngredients} from "../../utils/Api";
+import {getIngredients, makeAnOrder} from "../../utils/Api";
 import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
@@ -21,22 +21,20 @@ function App() {
             const bun = res.data.find(item=> item.type === 'bun')
             setSelectedBun(bun)
             setConstructorData([bun, bun])
-            setPrice(bun.price + bun.price)
         })
             .catch(console.log)
     }, [])
 
     useEffect(()=>{
         setConstructorData([selectedBun, ...otherIngredients, selectedBun])
-        console.log(constructorData)
-        console.log(price)
     }, [otherIngredients, selectedBun])
 
     useEffect(()=> {
-       const totalPrice = constructorData.reduce((acc, item) => acc + item.price,0)
+       const totalPrice = constructorData.reduce((acc, item) => acc + item.price, 0)
         setPrice(totalPrice)
     }, [constructorData])
 
+    //для теста
     const addIngredientToCart = (ingredient) => {
         if (ingredient.type === 'bun') {
             setSelectedBun(ingredient)
@@ -45,10 +43,15 @@ function App() {
         setOtherIngredients([...otherIngredients, ingredient])
     }
 
+    const handleMakeAnOrder = () => {
+        const orderData = { "ingredients": constructorData.map(item => item._id) } 
+        console.log('=>', orderData)
+        makeAnOrder(orderData).then(res=> console.log(res)).catch(console.log)
+    }
 
 
     return (
-        <IngredientContext.Provider value={{constructorData, setConstructorData, price}}>
+        <IngredientContext.Provider value={{constructorData, setConstructorData, price, selectedBun, handleMakeAnOrder}}>
             <div className={styles.App}>
                 <AppHeader/>
                 <main className={styles.main}>

@@ -12,24 +12,29 @@ const img = 'https://code.s3.yandex.net/react/code/bun-02-mobile.png'
 
 function BurgerConstructor({data}) {
 
-    const {constructorData, price = 0} = useContext(IngredientContext)
+    const {constructorData, price = 0, selectedBun, handleMakeAnOrder} = useContext(IngredientContext)
     const [isOpen, setIsOpen] = useState(false)
-    const bun = constructorData.find(item => item.type === 'bun')
+
 
     const toggleModal = () => {
+        setIsOpen(!isOpen)
+    }
+    const submit=(e)=> {
+        e.preventDefault()
+        handleMakeAnOrder()
         setIsOpen(!isOpen)
     }
 
 
     return (
         <section className={`${styles.burgerConstructor} pt-25 pb-10`}>
-            {bun && <div className='pl-8'>
+            {selectedBun && <div className='pl-8'>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${bun.name} (верх)`}
-                    price={bun.price}
-                    thumbnail={bun.image_mobile}
+                    text={`${selectedBun.name} (верх)`}
+                    price={selectedBun.price}
+                    thumbnail={selectedBun.image_mobile}
                 />
             </div>}
             <ul className={`${styles.container} pr-2`}>
@@ -43,13 +48,13 @@ function BurgerConstructor({data}) {
                     </li>
                 )))}
             </ul>
-            {bun && <div className='pl-8'>
+            {selectedBun && <div className='pl-8'>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${bun.name} (низ)`}
-                    price={bun.price}
-                    thumbnail={bun.image_mobile}
+                    text={`${selectedBun.name} (низ)`}
+                    price={selectedBun.price}
+                    thumbnail={selectedBun.image_mobile}
                 />
             </div>}
             <div className={styles.price}>
@@ -59,9 +64,7 @@ function BurgerConstructor({data}) {
                     </p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button onClick={() => {
-                    toggleModal()
-                }} htmlType={'submit'} type="primary" size="large">
+                <Button onClick={submit} htmlType={'submit'} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
