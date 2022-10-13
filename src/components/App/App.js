@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import {useState, useEffect, useReducer} from "react";
 import {getIngredients, makeAnOrder} from "../../utils/Api";
 import styles from './App.module.css';
@@ -14,6 +14,8 @@ function App() {
     const [ingredients, setIngredients] = useState([])
     const [constructorData, setConstructorData] = useState([])
     const [price, setPrice] = useState(0)
+    const [orderDetails, setOrderDetails] = useState({})
+    const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
 
     useEffect(() => {
         getIngredients().then(res => {
@@ -44,14 +46,17 @@ function App() {
     }
 
     const handleMakeAnOrder = () => {
-        const orderData = { "ingredients": constructorData.map(item => item._id) } 
+        const orderData = { "ingredients": constructorData.map(item =>  item._id) } 
         console.log('=>', orderData)
-        makeAnOrder(orderData).then(res=> console.log(res)).catch(console.log)
+        makeAnOrder(orderData).then(res=> {
+            setOrderDetails(res)
+            setBurgerConstructorModalOpen(true)
+        } ).catch(console.log)
     }
 
 
     return (
-        <IngredientContext.Provider value={{constructorData, setConstructorData, price, selectedBun, handleMakeAnOrder}}>
+        <IngredientContext.Provider value={{constructorData, setConstructorData, price, selectedBun, handleMakeAnOrder, orderDetails, burgerConstructorModalOpen, setBurgerConstructorModalOpen}}>
             <div className={styles.App}>
                 <AppHeader/>
                 <main className={styles.main}>

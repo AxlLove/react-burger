@@ -2,28 +2,23 @@ import styles from './BurgerConstructor.module.css'
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types";
 import {ingredientType} from "../../utils/types";
-import {useEffect, useState} from "react";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import {IngredientContext} from "../../contexts/ingredientContext";
 import {useContext} from "react";
 
-const img = 'https://code.s3.yandex.net/react/code/bun-02-mobile.png'
-
-function BurgerConstructor({data}) {
-
-    const {constructorData, price = 0, selectedBun, handleMakeAnOrder} = useContext(IngredientContext)
-    const [isOpen, setIsOpen] = useState(false)
-
+function BurgerConstructor() {
+    const {constructorData, price, selectedBun, handleMakeAnOrder , orderDetails, burgerConstructorModalOpen, setBurgerConstructorModalOpen} = useContext(IngredientContext)
 
     const toggleModal = () => {
-        setIsOpen(!isOpen)
+        setBurgerConstructorModalOpen(!burgerConstructorModalOpen)
     }
+
     const submit=(e)=> {
         e.preventDefault()
         handleMakeAnOrder()
-        setIsOpen(!isOpen)
     }
+
 
 
     return (
@@ -58,7 +53,7 @@ function BurgerConstructor({data}) {
                 />
             </div>}
             <div className={styles.price}>
-                <div className={styles.currency}>
+                <div className={styles.currency}>                
                     <p className={`${styles.text} text text_type_digits-medium`}>
                         {price}
                     </p>
@@ -68,9 +63,12 @@ function BurgerConstructor({data}) {
                     Оформить заказ
                 </Button>
             </div>
-            <Modal isOpen={isOpen} toggleModal={toggleModal}>
-                <OrderDetails identifier={'034536'}/>
-            </Modal>
+            { burgerConstructorModalOpen &&
+                        <Modal isOpen={burgerConstructorModalOpen} toggleModal={toggleModal}>
+                        <OrderDetails identifier={orderDetails.order.number}/>
+                    </Modal>
+                    }
+
         </section>
     )
 }
