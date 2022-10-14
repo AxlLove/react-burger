@@ -1,24 +1,30 @@
 import styles from './BurgerConstructor.module.css'
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types";
-import {ingredientType} from "../../utils/types";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import {IngredientContext} from "../../contexts/ingredientContext";
 import {useContext} from "react";
 
 function BurgerConstructor() {
-    const {constructorData, price, selectedBun, handleMakeAnOrder , orderDetails, burgerConstructorModalOpen, setBurgerConstructorModalOpen} = useContext(IngredientContext)
+    const {
+        constructorData,
+        price,
+        selectedBun,
+        handleMakeAnOrder,
+        orderDetails,
+        burgerConstructorModalOpen,
+        setBurgerConstructorModalOpen
+    } = useContext(IngredientContext)
 
     const toggleModal = () => {
         setBurgerConstructorModalOpen(!burgerConstructorModalOpen)
     }
 
-    const submit=(e)=> {
+    const submit = (e) => {
         e.preventDefault()
         handleMakeAnOrder()
     }
-
 
 
     return (
@@ -53,7 +59,7 @@ function BurgerConstructor() {
                 />
             </div>}
             <div className={styles.price}>
-                <div className={styles.currency}>                
+                <div className={styles.currency}>
                     <p className={`${styles.text} text text_type_digits-medium`}>
                         {price}
                     </p>
@@ -63,17 +69,17 @@ function BurgerConstructor() {
                     Оформить заказ
                 </Button>
             </div>
-            { burgerConstructorModalOpen &&
-                        <Modal isOpen={burgerConstructorModalOpen} toggleModal={toggleModal}>
-                        <OrderDetails identifier={orderDetails.order.number}/>
-                    </Modal>
-                    }
+            {burgerConstructorModalOpen &&
+                <Modal isOpen={burgerConstructorModalOpen} toggleModal={toggleModal}>
+                    <OrderDetails identifier={orderDetails.order.number}/>
+                </Modal>
+            }
 
         </section>
     )
 }
 
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(ingredientType).isRequired,
-};
+// BurgerConstructor.propTypes = {
+//     data: PropTypes.arrayOf(ingredientType).isRequired,
+// };
 export default BurgerConstructor;

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, {useLayoutEffect} from 'react';
 import {useState, useEffect, useReducer} from "react";
 import {getIngredients, makeAnOrder} from "../../utils/Api";
 import styles from './App.module.css';
@@ -6,6 +6,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import {IngredientContext} from "../../contexts/ingredientContext";
+import Preloader from "../Preloader/Preloader";
 
 
 function App() {
@@ -16,23 +17,30 @@ function App() {
     const [price, setPrice] = useState(0)
     const [orderDetails, setOrderDetails] = useState({})
     const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
+    const [onLoad, setOnLoad] = useState(false)
 
     useEffect(() => {
+        setOnLoad(true)
         getIngredients().then(res => {
             setIngredients(res.data)
-            const bun = res.data.find(item=> item.type === 'bun')
+            const bun = res.data.find(item => item.type === 'bun')
             setSelectedBun(bun)
             setConstructorData([bun, bun])
+            setPrice(bun.price * 2)
+            setOnLoad(false)
         })
-            .catch(console.log)
+            .catch((res) => {
+                setOnLoad(false)
+                console.log(res)
+            })
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         setConstructorData([selectedBun, ...otherIngredients, selectedBun])
     }, [otherIngredients, selectedBun])
 
-    useEffect(()=> {
-       const totalPrice = constructorData.reduce((acc, item) => acc + item.price, 0)
+    useEffect(() => {
+        const totalPrice = constructorData.reduce((acc, item) => acc + item.price, 0)
         setPrice(totalPrice)
     }, [constructorData])
 
@@ -46,25 +54,42 @@ function App() {
     }
 
     const handleMakeAnOrder = () => {
-        const orderData = { "ingredients": constructorData.map(item =>  item._id) } 
-        console.log('=>', orderData)
-        makeAnOrder(orderData).then(res=> {
+        const orderData = {"ingredients": constructorData.map(item => item._id)}
+        makeAnOrder(orderData).then(res => {
             setOrderDetails(res)
             setBurgerConstructorModalOpen(true)
-        } ).catch(console.log)
+        }).catch(console.log)
     }
 
 
     return (
-        <IngredientContext.Provider value={{constructorData, setConstructorData, price, selectedBun, handleMakeAnOrder, orderDetails, burgerConstructorModalOpen, setBurgerConstructorModalOpen}}>
-            <div className={styles.App}>
-                <AppHeader/>
-                <main className={styles.main}>
-                    <BurgerIngredients data={ingredients} addIngredientToCart={addIngredientToCart}/>
-                    <BurgerConstructor data={ingredients}/>
-                </main>
-            </div>
-        </IngredientContext.Provider>
+
+        <div className={styles.App}>
+            <AppHeader/>
+            <main className={styles.main}>
+                {
+                    onLoad ? <Preloader/> :
+                        <>
+                            <BurgerIngredients data={ingredients} addIngredientToCart={addIngredientToCart}/>
+                            <IngredientContext.Provider value={{
+                                constructorData,
+                                setConstructorData,
+                                price,
+                                selectedBun,
+                                handleMakeAnOrder,
+                                orderDetails,
+                                burgerConstructorModalOpen,
+                                setBurgerConstructorModalOpen
+                            }}>
+                                <BurgerConstructor/>
+                            </IngredientContext.Provider>
+                        </>
+                }
+
+            </main>
+
+        </div>
+
 
     );
 }

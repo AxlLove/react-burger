@@ -45,6 +45,7 @@ function BurgerIngredients({data, addIngredientToCart}) {
 
 BurgerIngredients.propTypes = {
     data: PropTypes.arrayOf(ingredientType).isRequired,
+    addIngredientToCart: PropTypes.func
 };
 
 export default BurgerIngredients;
