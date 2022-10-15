@@ -14,6 +14,8 @@ function BurgerIngredients({data, addIngredientToCart}) {
     const [isOpen, setIsOpen] = useState(false)
 
     const handeCardClick = (item) => {
+        //TODO вернуть открытие модального окна
+
         // setCard(item)
         // toggleModal()
         addIngredientToCart(item)
@@ -35,9 +37,10 @@ function BurgerIngredients({data, addIngredientToCart}) {
                 <CardList data={data} name={'Соусы'} type={'sauce'} handeCardClick={handeCardClick}/>
                 <CardList data={data} name={'Начинки'} type={'main'} handeCardClick={handeCardClick}/>
             </div>
-            <Modal isOpen={isOpen} toggleModal={toggleModal}>
+            {isOpen && <Modal toggleModal={toggleModal}>
                 <IngredientDetails card={card}/>
-            </Modal>
+            </Modal>}
+
         </section>
     )
 }
@@ -45,7 +48,7 @@ function BurgerIngredients({data, addIngredientToCart}) {
 
 BurgerIngredients.propTypes = {
     data: PropTypes.arrayOf(ingredientType).isRequired,
-    addIngredientToCart: PropTypes.func
+    addIngredientToCart: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;

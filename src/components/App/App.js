@@ -10,14 +10,11 @@ import Preloader from "../Preloader/Preloader";
 
 
 function App() {
-    const [selectedBun, setSelectedBun] = useState({})
+    const [selectedBun, setSelectedBun] = useState(null)
     const [otherIngredients, setOtherIngredients] = useState([])
     const [ingredients, setIngredients] = useState([])
-    const [constructorData, setConstructorData] = useState([])
-    const [price, setPrice] = useState(0)
-    const [orderDetails, setOrderDetails] = useState({})
-    const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
     const [onLoad, setOnLoad] = useState(false)
+
 
     useEffect(() => {
         setOnLoad(true)
@@ -25,24 +22,14 @@ function App() {
             setIngredients(res.data)
             const bun = res.data.find(item => item.type === 'bun')
             setSelectedBun(bun)
-            setConstructorData([bun, bun])
-            setPrice(bun.price * 2)
-            setOnLoad(false)
         })
             .catch((res) => {
-                setOnLoad(false)
                 console.log(res)
             })
+            .finally(()=>{
+                setOnLoad(false)
+            })
     }, [])
-
-    useEffect(() => {
-        setConstructorData([selectedBun, ...otherIngredients, selectedBun])
-    }, [otherIngredients, selectedBun])
-
-    useEffect(() => {
-        const totalPrice = constructorData.reduce((acc, item) => acc + item.price, 0)
-        setPrice(totalPrice)
-    }, [constructorData])
 
     //для теста
     const addIngredientToCart = (ingredient) => {
@@ -52,15 +39,6 @@ function App() {
         }
         setOtherIngredients([...otherIngredients, ingredient])
     }
-
-    const handleMakeAnOrder = () => {
-        const orderData = {"ingredients": constructorData.map(item => item._id)}
-        makeAnOrder(orderData).then(res => {
-            setOrderDetails(res)
-            setBurgerConstructorModalOpen(true)
-        }).catch(console.log)
-    }
-
 
     return (
 
@@ -72,20 +50,13 @@ function App() {
                         <>
                             <BurgerIngredients data={ingredients} addIngredientToCart={addIngredientToCart}/>
                             <IngredientContext.Provider value={{
-                                constructorData,
-                                setConstructorData,
-                                price,
+                                otherIngredients,
                                 selectedBun,
-                                handleMakeAnOrder,
-                                orderDetails,
-                                burgerConstructorModalOpen,
-                                setBurgerConstructorModalOpen
                             }}>
                                 <BurgerConstructor/>
                             </IngredientContext.Provider>
                         </>
                 }
-
             </main>
 
         </div>

@@ -4,28 +4,40 @@ import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import {IngredientContext} from "../../contexts/ingredientContext";
-import {useContext} from "react";
+import {useContext, useState, useMemo} from "react";
+import {makeAnOrder} from "../../utils/Api";
+
 
 function BurgerConstructor() {
+    const [orderDetails, setOrderDetails] = useState({})
+    const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
+
     const {
-        constructorData,
-        price,
+        otherIngredients,
         selectedBun,
-        handleMakeAnOrder,
-        orderDetails,
-        burgerConstructorModalOpen,
-        setBurgerConstructorModalOpen
     } = useContext(IngredientContext)
+
 
     const toggleModal = () => {
         setBurgerConstructorModalOpen(!burgerConstructorModalOpen)
     }
 
-    const submit = (e) => {
-        e.preventDefault()
-        handleMakeAnOrder()
+    const handleMakeAnOrder = () => {
+        //TODO добавить ux сообщение об ошибке, блок кнопки
+        const constructorData = [selectedBun, ...otherIngredients, selectedBun]
+        const orderData = {ingredients: constructorData.map(item => item._id)}
+        makeAnOrder(orderData).then(res => {
+            setOrderDetails(res)
+            setBurgerConstructorModalOpen(true)
+        }).catch(console.log)
     }
 
+    const memoizedPrice = useMemo(() => {
+        if (otherIngredients && selectedBun) {
+            const constructorData = [selectedBun, ...otherIngredients, selectedBun]
+            return constructorData.reduce((acc, item) => acc + item.price, 0)
+        }
+    }, [otherIngredients, selectedBun])
 
     return (
         <section className={`${styles.burgerConstructor} pt-25 pb-10`}>
@@ -39,7 +51,7 @@ function BurgerConstructor() {
                 />
             </div>}
             <ul className={`${styles.container} pr-2`}>
-                {constructorData && constructorData.map(((item, index) => (
+                {otherIngredients && otherIngredients.map(((item, index) => (
                     item.type !== 'bun' && <li className={styles.constructorItem} key={index}>
                         <DragIcon type="primary"/>
                         <ConstructorElement
@@ -59,27 +71,24 @@ function BurgerConstructor() {
                 />
             </div>}
             <div className={styles.price}>
-                <div className={styles.currency}>
+                {memoizedPrice && <div className={styles.currency}>
                     <p className={`${styles.text} text text_type_digits-medium`}>
-                        {price}
+                        {memoizedPrice}
                     </p>
                     <CurrencyIcon type="primary"/>
-                </div>
-                <Button onClick={submit} htmlType={'submit'} type="primary" size="large">
+                </div>}
+
+                <Button onClick={handleMakeAnOrder} htmlType={'button'} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
             {burgerConstructorModalOpen &&
-                <Modal isOpen={burgerConstructorModalOpen} toggleModal={toggleModal}>
+                <Modal toggleModal={toggleModal}>
                     <OrderDetails identifier={orderDetails.order.number}/>
                 </Modal>
             }
-
         </section>
     )
 }
 
-// BurgerConstructor.propTypes = {
-//     data: PropTypes.arrayOf(ingredientType).isRequired,
-// };
 export default BurgerConstructor;
