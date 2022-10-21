@@ -3,23 +3,15 @@ import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/
 import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import {IngredientContext} from "../../contexts/ingredientContext";
-import {useContext, useState, useMemo} from "react";
-import {makeAnOrder} from "../../utils/Api";
-import {useSelector} from "react-redux";
-import store from "../../services/store";
+import {useSelector, useDispatch} from "react-redux";
+import { useState, useMemo } from 'react';
+import { fetchOrder } from '../../services/slices/IngerdientSlice';
 
 
 function BurgerConstructor() {
-    const [orderDetails, setOrderDetails] = useState({})
     const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
-
-    // const {
-    //     otherIngredients,
-    //     selectedBun,
-    // } = useContext(IngredientContext)
-
-    const {selectedBun, otherIngredients} = useSelector(store=>({ selectedBun: store.ingredients.bun, otherIngredients: store.ingredients.constructorData}))
+    const dispatch = useDispatch()
+    const {selectedBun, otherIngredients, onLoad} = useSelector(store=>({ selectedBun: store.ingredients.bun, otherIngredients: store.ingredients.constructorData, onLoad: store.ingredients.onLoadOrder}))
 
     const toggleModal = () => {
         setBurgerConstructorModalOpen(!burgerConstructorModalOpen)
@@ -29,10 +21,9 @@ function BurgerConstructor() {
         //TODO добавить ux сообщение об ошибке, блок кнопки
         const constructorData = [selectedBun, ...otherIngredients, selectedBun]
         const orderData = {ingredients: constructorData.map(item => item._id)}
-        makeAnOrder(orderData).then(res => {
-            setOrderDetails(res)
+        //TODO возможно селектор?
+            dispatch(fetchOrder(orderData))
             setBurgerConstructorModalOpen(true)
-        }).catch(console.log)
     }
 
     const memoizedPrice = useMemo(() => {
@@ -81,13 +72,13 @@ function BurgerConstructor() {
                     <CurrencyIcon type="primary"/>
                 </div>}
 
-                <Button onClick={handleMakeAnOrder} htmlType={'button'} type="primary" size="large">
+                <Button onClick={handleMakeAnOrder} htmlType={'button'} type="primary" size="large" disabled={onLoad}>
                     Оформить заказ
                 </Button>
             </div>
-            {burgerConstructorModalOpen &&
+            {burgerConstructorModalOpen && !onLoad &&
                 <Modal toggleModal={toggleModal}>
-                    <OrderDetails identifier={orderDetails.order.number}/>
+                    <OrderDetails/>
                 </Modal>
             }
         </section>

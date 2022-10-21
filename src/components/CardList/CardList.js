@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {ingredientType} from "../../utils/types";
 import {useSelector} from "react-redux";
 
-function CardList({data, type, name, handeCardClick}) {
+function CardList({type, name, handeCardClick}) {
     const ingredients = useSelector(store=> store.ingredients.ingredientData)
     return (
         <>
@@ -24,7 +24,6 @@ function CardList({data, type, name, handeCardClick}) {
 CardList.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    data: PropTypes.arrayOf(ingredientType).isRequired,
     handeCardClick: PropTypes.func.isRequired
 };
 

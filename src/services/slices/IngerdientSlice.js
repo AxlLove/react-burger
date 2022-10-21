@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {getIngredients} from "../../utils/Api";
+import {getIngredients, makeAnOrder} from "../../utils/Api";
 
 const sliceName = 'ingredients'
 
@@ -7,8 +7,12 @@ const initialState = {
     ingredientData: [],
     constructorData: [],
     bun: null,
+    ingredient: null,
     onLoad: false,
     onError: false,
+    orderDitails: null,
+    onLoadOrder: false,
+    onErrorOrder: false,
 };
 
 export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`,async function ()  {
@@ -25,6 +29,17 @@ export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`
     }
 )
 
+export const fetchOrder = createAsyncThunk(`${sliceName}/fetchOrder`, async function (orderData)  {
+    return await
+    makeAnOrder(orderData).then(res => {
+            return res
+    })
+        .catch((res) => {
+            throw new Error(`Ошибка ${res}`)
+        })
+}
+)
+
 export const ingredientSlice = createSlice({
     name: sliceName,
     initialState,
@@ -36,6 +51,12 @@ export const ingredientSlice = createSlice({
                 return
             }
             state.constructorData.push(action.payload)
+        },
+        addIngredientInfo: (state, action) => {
+            state.ingredient = action.payload
+        },
+        deleteIngredientInfo: (state, action) => {
+            state.ingredient = null
         }
 
     },
@@ -47,6 +68,13 @@ export const ingredientSlice = createSlice({
             state.bun = action.payload.bun
             },
         [fetchIngredients.rejected]: (state, action) => {state.onLoad=false; state.onError = true},
+
+        [fetchOrder.pending]: (state, action) => {state.onLoadOrder=true; state.onErrorOrder = false},
+        [fetchOrder.fulfilled]: (state, action) => {
+            state.onLoadOrder=false;
+            state.orderDitails = action.payload
+            },
+        [fetchOrder.rejected]: (state, action) => {state.onLoadOrder=false; state.onErrorOrder = true},
     }
 })
 const {reducer} = ingredientSlice;

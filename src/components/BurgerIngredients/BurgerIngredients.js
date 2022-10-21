@@ -1,6 +1,6 @@
 import styles from './BurgerIngredients.module.css';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import CardList from "../CardList/CardList";
 import PropTypes from 'prop-types';
 import {ingredientType} from "../../utils/types";
@@ -9,25 +9,30 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import {useSelector, useDispatch} from "react-redux";
 import {ingredientSlice} from "../../services/slices/IngerdientSlice";
 
-function BurgerIngredients({data, addIngredientToCart}) {
+function BurgerIngredients() {
     const [current, setCurrent] = useState('Булки')
-    const [card, setCard] = useState({})
     const [isOpen, setIsOpen] = useState(false)
 
     const dispatch = useDispatch()
 
+    
     const handeCardClick = (item) => {
-        // setCard(item)
-        // toggleModal()
-        //TODO вернуть открытие модального окна
+        // dispatch(ingredientSlice.actions.addIngredientInfo(item))
+        // openModal()
+        
+        // TODO вернуть открытие модального окна
 
-        //addIngredientToCart(item)
         dispatch(ingredientSlice.actions.addIngredientToCart(item))
     }
-    const toggleModal = () => {
-        setIsOpen(!isOpen)
+    const openModal = () => {
+        setIsOpen(true)
+    }
+    const closeModal = () => {
+        setIsOpen(false)
+        dispatch(ingredientSlice.actions.deleteIngredientInfo())
     }
 
+    
     return (
         <section className={styles.burgerIngredients}>
             <h1 className={`text text_type_main-large pt-10`}>Соберите бургер</h1>
@@ -37,12 +42,12 @@ function BurgerIngredients({data, addIngredientToCart}) {
                 <Tab active={current === 'Начинки'} value={'Начинки'} onClick={setCurrent}>Начинки</Tab>
             </nav>
             <div className={`${styles.ingredientsLists}`}>
-                <CardList data={data} name={'Булки'} type={'bun'} handeCardClick={handeCardClick}/>
-                <CardList data={data} name={'Соусы'} type={'sauce'} handeCardClick={handeCardClick}/>
-                <CardList data={data} name={'Начинки'} type={'main'} handeCardClick={handeCardClick}/>
+                <CardList name={'Булки'} type={'bun'} handeCardClick={handeCardClick}/>
+                <CardList name={'Соусы'} type={'sauce'} handeCardClick={handeCardClick}/>
+                <CardList name={'Начинки'} type={'main'} handeCardClick={handeCardClick}/>
             </div>
-            {isOpen && <Modal toggleModal={toggleModal}>
-                <IngredientDetails card={card}/>
+            {isOpen && <Modal toggleModal={closeModal}>
+                <IngredientDetails/>
             </Modal>}
 
         </section>
@@ -50,9 +55,8 @@ function BurgerIngredients({data, addIngredientToCart}) {
 }
 
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientType).isRequired,
-    addIngredientToCart: PropTypes.func.isRequired
-};
+
 
 export default BurgerIngredients;
+
+// TODO может вынести обработчики в компонет?
