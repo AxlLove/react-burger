@@ -6,19 +6,23 @@ import PropTypes from 'prop-types';
 import {ingredientType} from "../../utils/types";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-
+import {useSelector, useDispatch} from "react-redux";
+import {ingredientSlice} from "../../services/slices/IngerdientSlice";
 
 function BurgerIngredients({data, addIngredientToCart}) {
     const [current, setCurrent] = useState('Булки')
     const [card, setCard] = useState({})
     const [isOpen, setIsOpen] = useState(false)
 
-    const handeCardClick = (item) => {
-        //TODO вернуть открытие модального окна
+    const dispatch = useDispatch()
 
+    const handeCardClick = (item) => {
         // setCard(item)
         // toggleModal()
-        addIngredientToCart(item)
+        //TODO вернуть открытие модального окна
+
+        //addIngredientToCart(item)
+        dispatch(ingredientSlice.actions.addIngredientToCart(item))
     }
     const toggleModal = () => {
         setIsOpen(!isOpen)

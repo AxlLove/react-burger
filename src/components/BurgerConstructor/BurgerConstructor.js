@@ -6,17 +6,20 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import {IngredientContext} from "../../contexts/ingredientContext";
 import {useContext, useState, useMemo} from "react";
 import {makeAnOrder} from "../../utils/Api";
+import {useSelector} from "react-redux";
+import store from "../../services/store";
 
 
 function BurgerConstructor() {
     const [orderDetails, setOrderDetails] = useState({})
     const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
 
-    const {
-        otherIngredients,
-        selectedBun,
-    } = useContext(IngredientContext)
+    // const {
+    //     otherIngredients,
+    //     selectedBun,
+    // } = useContext(IngredientContext)
 
+    const {selectedBun, otherIngredients} = useSelector(store=>({ selectedBun: store.ingredients.bun, otherIngredients: store.ingredients.constructorData}))
 
     const toggleModal = () => {
         setBurgerConstructorModalOpen(!burgerConstructorModalOpen)
