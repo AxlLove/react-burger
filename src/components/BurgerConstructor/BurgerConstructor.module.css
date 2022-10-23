@@ -35,3 +35,15 @@
     align-items: baseline;
     gap: 10px;
 }
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.error {
+    color: #b02828;
+    opacity: .9;
+    align-self: end;
+}

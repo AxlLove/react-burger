@@ -4,14 +4,13 @@ import PropTypes from "prop-types";
 import { useSelector } from 'react-redux';
 
 function OrderDetails() {
-    const identifier = useSelector(store=> store.ingredients.orderDitails.order)
+    const identifier = useSelector(store=> store.ingredients?.orderDetails?.order?.number)
 
 
     return (
         <div className={`${styles.orderDetails} pt-30 pb-30`}>
-            { identifier.number && 
-                        <h2 className={`${styles.identifierHeader} ${styles.textColor} text text_type_digits-large`}>{identifier.number}</h2>
-
+            { identifier &&
+                        <h2 className={`${styles.identifierHeader} ${styles.textColor} text text_type_digits-large`}>{identifier}</h2>
             }
             <p className={`${styles.textColor} text text_type_main-medium pt-8`}>идентификатор заказа</p>
             <img className={'pt-15'} src={image} alt={'done!'}/>
@@ -22,8 +21,5 @@ function OrderDetails() {
     )
 }
 
-OrderDetails.propTypes = {
-    identifier: PropTypes.number.isRequired,
-}
 
 export default OrderDetails;

@@ -10,7 +10,7 @@ const initialState = {
     ingredient: null,
     onLoad: false,
     onError: false,
-    orderDitails: null,
+    orderDetails: null,
     onLoadOrder: false,
     onErrorOrder: false,
 };
@@ -61,20 +61,29 @@ export const ingredientSlice = createSlice({
 
     },
     extraReducers: {
-        [fetchIngredients.pending]: (state, action) => {state.onLoad=true; state.onError = false},
+        [fetchIngredients.pending]: (state, action) => {
+            state.onLoad=true;
+            state.onError = false
+        },
         [fetchIngredients.fulfilled]: (state, action) => {
             state.onLoad=false;
             state.ingredientData = action.payload.data
             state.bun = action.payload.bun
             },
-        [fetchIngredients.rejected]: (state, action) => {state.onLoad=false; state.onError = true},
+        [fetchIngredients.rejected]: (state, action) => {
+            state.onLoad=false;
+            state.onError = true
+        },
 
         [fetchOrder.pending]: (state, action) => {state.onLoadOrder=true; state.onErrorOrder = false},
         [fetchOrder.fulfilled]: (state, action) => {
             state.onLoadOrder=false;
-            state.orderDitails = action.payload
+            state.orderDetails = action.payload
             },
-        [fetchOrder.rejected]: (state, action) => {state.onLoadOrder=false; state.onErrorOrder = true},
+        [fetchOrder.rejected]: (state, action) => {
+            state.onLoadOrder=false;
+            state.onErrorOrder = true
+        },
     }
 })
 const {reducer} = ingredientSlice;

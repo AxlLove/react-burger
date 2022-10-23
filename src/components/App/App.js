@@ -7,9 +7,10 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import Preloader from "../Preloader/Preloader";
 import {fetchIngredients} from "../../services/slices/IngerdientSlice";
 import {useDispatch, useSelector} from "react-redux";
+import {ingredientDataLoadSelector} from "../../services/selectors/ingrediensSelectors";
 
 function App() {
-    const onLoad = useSelector(store=> store.ingredients.onLoad)
+    const onLoad = useSelector(ingredientDataLoadSelector)
     const dispatch = useDispatch()
 
     useEffect(() => {
