@@ -18,9 +18,9 @@ function BurgerIngredients() {
     const mainRef = useRef()
     const bunRef = useRef()
     const sauceRef = useRef()
-    const [containerRef, current , setCurrent] = useIntersectionObserver({
-        rootMargin: '0px 0px -65% 0px',
-        threshold: [0, 0.7]
+    const [containerRef, current ] = useIntersectionObserver({
+        rootMargin: '0px 0px -90% 0px',
+        threshold: 0
     })
 
 
@@ -40,20 +40,21 @@ function BurgerIngredients() {
         dispatch(ingredientSlice.actions.deleteIngredientInfo())
     }
 
-    const handleClickTab = (e) => {
-        let ref = e === 'Начинки'? mainRef : 'Соусы'? sauceRef : 'Булки'? bunRef : ''
-        console.log(ref.current , e)
+    const handleClickTab = (ref) => {
+        console.log(ref)
             ref.current.scrollIntoView({behavior: 'smooth'})
-        setCurrent(e)
     }
 
     return (
         <section className={styles.burgerIngredients}>
             <h1 className={`text text_type_main-large pt-10`}>Соберите бургер</h1>
             <nav className={`${styles.tabs} pt-5 pb-10`}>
-                <Tab active={current === 'Булки'} value={'Булки'} onClick={handleClickTab}>Булки</Tab>
-                <Tab active={current === 'Соусы'} value={'Соусы'} onClick={handleClickTab}>Соусы</Tab>
-                <Tab active={current === 'Начинки'} value={'Начинки'} onClick={handleClickTab}>Начинки</Tab>
+                <Tab active={current === 'Булки'} value={'Булки'} onClick={()=> {
+                    handleClickTab(bunRef)}}>Булки</Tab>
+                <Tab active={current === 'Соусы'} value={'Соусы'} onClick={()=> {
+                    handleClickTab(sauceRef)}}>Соусы</Tab>
+                <Tab active={current === 'Начинки'} value={'Начинки'} onClick={()=> {
+                    handleClickTab(mainRef)}}>Начинки</Tab>
             </nav>
             <div ref={containerRef} className={`${styles.ingredientsLists}`}>
                 <CardList listRef={bunRef} name={'Булки'} type={'bun'} handeCardClick={handeCardClick}/>

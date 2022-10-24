@@ -26,3 +26,14 @@ export const totalPriceSelector = createSelector(selectBun, selectOtherIngredien
         return data.reduce((subtotal, item) => subtotal + item?.price, 0)
     }
 )
+
+export const counterSelector = (card) => createSelector(selectBun, selectOtherIngredient, (selectBun, selectOtherIngredient) => {
+    if (selectBun && selectOtherIngredient) {
+        const data = [selectBun, ...selectOtherIngredient, selectBun]
+        let counter = 0
+         data.forEach((item) => card.name===item.name && counter++)
+        return counter
+    }
+}
+)
+
