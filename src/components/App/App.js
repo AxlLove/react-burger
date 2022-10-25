@@ -6,8 +6,11 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import Preloader from "../Preloader/Preloader";
 import {fetchIngredients} from "../../services/slices/IngerdientSlice";
-import {useDispatch, useSelector} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import {ingredientDataLoadSelector} from "../../services/selectors/ingrediensSelectors";
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 
 function App() {
     const onLoad = useSelector(ingredientDataLoadSelector)
@@ -26,8 +29,11 @@ function App() {
                 {
                     onLoad ? <Preloader/> :
                         <>
-                            <BurgerIngredients/>
-                            <BurgerConstructor/>
+                            <DndProvider backend={HTML5Backend}>
+                                <BurgerIngredients/>
+                                <BurgerConstructor/>
+                            </DndProvider>
+
                         </>
                 }
             </main>

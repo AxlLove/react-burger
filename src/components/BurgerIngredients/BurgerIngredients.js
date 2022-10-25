@@ -25,12 +25,12 @@ function BurgerIngredients() {
 
 
     const handeCardClick = (item) => {
-        // dispatch(ingredientSlice.actions.addIngredientInfo(item))
-        // openModal()
+        dispatch(ingredientSlice.actions.addIngredientInfo(item))
+        openModal()
 
         // TODO вернуть открытие модального окна
 
-        dispatch(ingredientSlice.actions.addIngredientToCart(item))
+        // dispatch(ingredientSlice.actions.addIngredientToCart(item))
     }
     const openModal = () => {
         setIsOpen(true)

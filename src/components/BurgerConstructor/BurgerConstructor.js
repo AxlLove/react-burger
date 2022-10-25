@@ -5,14 +5,15 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import {useSelector, useDispatch} from "react-redux";
 import {useState, useMemo} from 'react';
-import {fetchOrder} from '../../services/slices/IngerdientSlice';
+import {fetchOrder, ingredientSlice} from '../../services/slices/IngerdientSlice';
 import {
     constructorSubmitOrderSelector,
     constructorDataSelector,
     orderDataSelector,
     totalPriceSelector
 } from "../../services/selectors/ingrediensSelectors";
-
+import {useDrop} from "react-dnd";
+import {useEffect} from 'react'
 function BurgerConstructor() {
     const dispatch = useDispatch()
 
@@ -31,25 +32,37 @@ function BurgerConstructor() {
         console.log(orderData)
     }
 
-    // const memoizedPrice = useMemo(() => {
-    //     if (otherIngredients && selectedBun) {
-    //         const constructorData = [selectedBun, ...otherIngredients, selectedBun]
-    //         return constructorData.reduce((acc, item) => acc + item.price, 0)
-    //     }
-    // }, [otherIngredients, selectedBun])
 
+const [{isHover, isBunHover}, dropTargetRef] = useDrop( {
+    accept: 'ingredient',
+    collect: monitor => ({
+        isHover: monitor.getItem()?.type !== 'bun' && monitor.isOver(),
+        isBunHover: monitor.getItem()?.type === 'bun' && monitor.isOver()
+    }),
+    drop(item) {
+        dispatch(ingredientSlice.actions.addIngredientToCart(item))
+        //TODO подписать id
+    },
+
+})
+//TODO изучить
+//
+
+    const preventDefault = (e) => e.preventDefault();
     return (
-        <section className={`${styles.burgerConstructor} pt-25 pb-10`}>
-            {selectedBun && <div className='pl-8'>
-                <ConstructorElement
+        <section ref={dropTargetRef} className={`${styles.burgerConstructor} pt-25 pb-10`}>
+            {selectedBun && <div className={`pl-8`} >
+                <div className={`${isBunHover? styles.borderBunTop : ''}`}>
+                    <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${selectedBun.name} (верх)`}
                     price={selectedBun.price}
                     thumbnail={selectedBun.image_mobile}
-                />
+                /></div>
+
             </div>}
-            <ul className={`${styles.container} pr-2`}>
+            <ul className={`${styles.container} ${isHover? styles.borderIngredients : ''} pr-2`}>
                 {otherIngredients && otherIngredients.map(((item, index) => (
                     item.type !== 'bun' && <li className={styles.constructorItem} key={index}>
                         <DragIcon type="primary"/>
@@ -57,17 +70,21 @@ function BurgerConstructor() {
                             text={item.name}
                             price={item.price}
                             thumbnail={item.image_mobile}/>
+                        {/*//TODO создать новый компонент*/}
                     </li>
                 )))}
             </ul>
+
             {selectedBun && <div className='pl-8'>
-                <ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text={`${selectedBun.name} (низ)`}
-                    price={selectedBun.price}
-                    thumbnail={selectedBun.image_mobile}
-                />
+                <div className={`${isBunHover? styles.borderBunBot : ''}`}>
+                    <ConstructorElement
+                        type="bottom"
+                        isLocked={true}
+                        text={`${selectedBun.name} (низ)`}
+                        price={selectedBun.price}
+                        thumbnail={selectedBun.image_mobile}
+                    />
+                </div>
             </div>}
             <div className={styles.price}>
                 {totalPrice && <div className={styles.currency}>
@@ -94,5 +111,5 @@ function BurgerConstructor() {
         </section>
     )
 }
-
+// TODO возможно проверка на булку не нужна,
 export default BurgerConstructor;
