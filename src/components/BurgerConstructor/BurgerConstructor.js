@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import {useSelector, useDispatch} from "react-redux";
-import {useState, useMemo} from 'react';
+import {useState, useCallback} from 'react';
 import {fetchOrder, ingredientSlice} from '../../services/slices/IngerdientSlice';
 import {
     constructorSubmitOrderSelector,
@@ -14,6 +14,9 @@ import {
 } from "../../services/selectors/ingrediensSelectors";
 import {useDrop} from "react-dnd";
 import {useEffect} from 'react'
+import {v4 as uiv4} from 'uuid'
+import ConstructorItem from '../ConstructorItem/ConstructorItem';
+
 function BurgerConstructor() {
     const dispatch = useDispatch()
 
@@ -40,15 +43,35 @@ const [{isHover, isBunHover}, dropTargetRef] = useDrop( {
         isBunHover: monitor.getItem()?.type === 'bun' && monitor.isOver()
     }),
     drop(item) {
-        dispatch(ingredientSlice.actions.addIngredientToCart(item))
+        dispatch(ingredientSlice.actions.addIngredientToCart({...item, dragId: uiv4()}))
         //TODO подписать id
     },
 
 })
+
 //TODO изучить
 //
+const moveCard = useCallback((dragIndex, hoverIndex) => {
+    // Получаем перетаскиваемый ингредиент
+    const dragCard = otherIngredients[dragIndex];
+    const newCards = [...otherIngredients]
+    // Удаляем перетаскиваемый элемент из массива
+    newCards.splice(dragIndex, 1)
+    // Вставляем элемент на место того элемента,
+    // над которым мы навели мышку с "перетаскиванием"
+    // Тут просто создается новый массив, в котором изменен порядок наших элементов
+    newCards.splice(hoverIndex, 0, dragCard)
+    // В примере react-dnd используется библиотека immutability-helper
+    // Которая позволяет описывать такую имутабельную логику более декларативно
+    // Но для лучше понимания обновления массива,
+    // Советую использовать стандартный splice
 
-    const preventDefault = (e) => e.preventDefault();
+    dispatch(ingredientSlice.actions.updateIngredientsInConstructor(newCards))
+  }, [otherIngredients, dispatch]);
+///
+
+
+
     return (
         <section ref={dropTargetRef} className={`${styles.burgerConstructor} pt-25 pb-10`}>
             {selectedBun && <div className={`pl-8`} >
@@ -64,14 +87,13 @@ const [{isHover, isBunHover}, dropTargetRef] = useDrop( {
             </div>}
             <ul className={`${styles.container} ${isHover? styles.borderIngredients : ''} pr-2`}>
                 {otherIngredients && otherIngredients.map(((item, index) => (
-                    item.type !== 'bun' && <li className={styles.constructorItem} key={index}>
-                        <DragIcon type="primary"/>
-                        <ConstructorElement
-                            text={item.name}
-                            price={item.price}
-                            thumbnail={item.image_mobile}/>
-                        {/*//TODO создать новый компонент*/}
-                    </li>
+                    item.type !== 'bun' && 
+                    <ConstructorItem dragId={item.dragId}
+                     index={index}
+                     moveCard={moveCard}
+                     item = {item}
+                     key={item.dragId}
+                     />
                 )))}
             </ul>
 
@@ -83,6 +105,7 @@ const [{isHover, isBunHover}, dropTargetRef] = useDrop( {
                         text={`${selectedBun.name} (низ)`}
                         price={selectedBun.price}
                         thumbnail={selectedBun.image_mobile}
+                        moveCard={moveCard}
                     />
                 </div>
             </div>}

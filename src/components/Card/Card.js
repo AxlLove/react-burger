@@ -35,3 +35,4 @@ Card.propTypes = {
 };
 
 export default Card;
+//todo поправить счетчик

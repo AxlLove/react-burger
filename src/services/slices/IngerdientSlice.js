@@ -57,8 +57,14 @@ export const ingredientSlice = createSlice({
         },
         deleteIngredientInfo: (state, action) => {
             state.ingredient = null
-        }
-
+        },
+        updateIngredientsInConstructor: (state, action) => {
+            state.constructorData = action.payload
+        },
+        deleteIngredient: (state, id) => {
+           const index = state.constructorData.findIndex(item=> item.dragId === id)
+           state.constructorData.splice(index, 1)
+        },
     },
     extraReducers: {
         [fetchIngredients.pending]: (state, action) => {

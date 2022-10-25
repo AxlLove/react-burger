@@ -41,7 +41,6 @@ function BurgerIngredients() {
     }
 
     const handleClickTab = (ref) => {
-        console.log(ref)
             ref.current.scrollIntoView({behavior: 'smooth'})
     }
 
