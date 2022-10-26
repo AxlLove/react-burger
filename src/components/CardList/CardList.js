@@ -1,7 +1,6 @@
 import Card from "../Card/Card";
 import styles from "./CardList.module.css";
 import PropTypes from "prop-types";
-import {ingredientType} from "../../utils/types";
 import {useSelector} from "react-redux";
 import {getIngredientsSelector} from "../../services/selectors/ingrediensSelectors";
 
@@ -25,7 +24,8 @@ function CardList({type, name, handeCardClick, listRef}) {
 CardList.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    handeCardClick: PropTypes.func.isRequired
+    handeCardClick: PropTypes.func.isRequired,
+    listRef: PropTypes.object.isRequired,
 };
 
 export default CardList;

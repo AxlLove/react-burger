@@ -1,11 +1,11 @@
 import styles from './IngredientDetails.module.css'
 import {ingredientType} from "../../utils/types";
 import { useSelector } from 'react-redux';
-
+import {getIngredientsSelector} from '../../services/selectors/IngredientInfoSelectors'
 
 
 function IngredientDetails() {
-    const ingredient = useSelector(store=> store.ingredients.ingredient)
+    const ingredient = useSelector(getIngredientsSelector)
     return (
         <div className={`${styles.ingredientDetails}`}>
             <h2 className={'text text_type_main-large pl-10 pt-15'} style={{alignSelf: 'start'}}>Детали инредиента</h2>

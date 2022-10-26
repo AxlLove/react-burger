@@ -8,8 +8,8 @@ import Preloader from "../Preloader/Preloader";
 import {fetchIngredients} from "../../services/slices/IngerdientSlice";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {ingredientDataLoadSelector} from "../../services/selectors/ingrediensSelectors";
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import {DndProvider} from 'react-dnd'
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 
 function App() {
@@ -33,7 +33,6 @@ function App() {
                                 <BurgerIngredients/>
                                 <BurgerConstructor/>
                             </DndProvider>
-
                         </>
                 }
             </main>
@@ -45,5 +44,3 @@ function App() {
 }
 
 export default App;
-
-//TODO подчистить тест код

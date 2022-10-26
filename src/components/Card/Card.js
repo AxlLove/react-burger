@@ -9,7 +9,6 @@ import {useDrag} from "react-dnd";
 function Card({card, handeCardClick}) {
     const counter = useSelector (counterSelector(card))
     const [{ opacity }, dragRef] = useDrag({
-        //type: card.type === 'bun' ? 'bun' : 'ingredient',
         type: 'ingredient',
         item: card,
         collect: monitor => ({
@@ -33,6 +32,5 @@ Card.propTypes = {
     card: ingredientType.isRequired,
     handeCardClick: PropTypes.func.isRequired
 };
-
+//TODO prop
 export default Card;
-//todo поправить счетчик

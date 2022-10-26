@@ -7,7 +7,7 @@ import {ingredientType} from "../../utils/types";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import {useSelector, useDispatch} from "react-redux";
-import {ingredientSlice} from "../../services/slices/IngerdientSlice";
+import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
 import {useIntersectionObserver} from "../hooks/useIntersectionObserver";
 
 
@@ -18,42 +18,41 @@ function BurgerIngredients() {
     const mainRef = useRef()
     const bunRef = useRef()
     const sauceRef = useRef()
-    const [containerRef, current ] = useIntersectionObserver({
+    const [containerRef, current] = useIntersectionObserver({
         rootMargin: '0px 0px -90% 0px',
         threshold: 0
     })
 
 
     const handeCardClick = (item) => {
-        dispatch(ingredientSlice.actions.addIngredientInfo(item))
+        dispatch(ingredientInfoSlice.actions.addIngredientInfo(item))
         openModal()
-
-        // TODO вернуть открытие модального окна
-
-        // dispatch(ingredientSlice.actions.addIngredientToCart(item))
     }
     const openModal = () => {
         setIsOpen(true)
     }
     const closeModal = () => {
         setIsOpen(false)
-        dispatch(ingredientSlice.actions.deleteIngredientInfo())
+        dispatch(ingredientInfoSlice.actions.deleteIngredientInfo())
     }
 
     const handleClickTab = (ref) => {
-            ref.current.scrollIntoView({behavior: 'smooth'})
+        ref.current.scrollIntoView({behavior: 'smooth'})
     }
 
     return (
         <section className={styles.burgerIngredients}>
             <h1 className={`text text_type_main-large pt-10`}>Соберите бургер</h1>
             <nav className={`${styles.tabs} pt-5 pb-10`}>
-                <Tab active={current === 'Булки'} value={'Булки'} onClick={()=> {
-                    handleClickTab(bunRef)}}>Булки</Tab>
-                <Tab active={current === 'Соусы'} value={'Соусы'} onClick={()=> {
-                    handleClickTab(sauceRef)}}>Соусы</Tab>
-                <Tab active={current === 'Начинки'} value={'Начинки'} onClick={()=> {
-                    handleClickTab(mainRef)}}>Начинки</Tab>
+                <Tab active={current === 'Булки'} value={'Булки'} onClick={() => {
+                    handleClickTab(bunRef)
+                }}>Булки</Tab>
+                <Tab active={current === 'Соусы'} value={'Соусы'} onClick={() => {
+                    handleClickTab(sauceRef)
+                }}>Соусы</Tab>
+                <Tab active={current === 'Начинки'} value={'Начинки'} onClick={() => {
+                    handleClickTab(mainRef)
+                }}>Начинки</Tab>
             </nav>
             <div ref={containerRef} className={`${styles.ingredientsLists}`}>
                 <CardList listRef={bunRef} name={'Булки'} type={'bun'} handeCardClick={handeCardClick}/>
@@ -71,5 +70,3 @@ function BurgerIngredients() {
 
 
 export default BurgerIngredients;
-
-// TODO может вынести обработчики в компонет?

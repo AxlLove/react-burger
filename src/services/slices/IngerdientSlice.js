@@ -5,46 +5,29 @@ const sliceName = 'ingredients'
 
 const initialState = {
     ingredientData: [],
-    constructorData: [],
-    bun: null,
-    ingredient: null,
     onLoad: false,
     onError: false,
-    orderDetails: null,
-    onLoadOrder: false,
-    onErrorOrder: false,
 };
 
-export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`,async function ()  {
+export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`, async function () {
         return await
             getIngredients().then(res => {
                 return {
-                bun: res.data.find(item => item.type === 'bun'),
-                data: res.data
+                    bun: res.data.find(item => item.type === 'bun'),
+                    data: res.data
                 }
-        })
-            .catch((res) => {
-                throw new Error(`Ошибка ${res}`)
             })
+                .catch((res) => {
+                    throw new Error(`Ошибка ${res}`)
+                })
     }
 )
 
-export const fetchOrder = createAsyncThunk(`${sliceName}/fetchOrder`, async function (orderData)  {
-    return await
-    makeAnOrder(orderData).then(res => {
-            return res
-    })
-        .catch((res) => {
-            throw new Error(`Ошибка ${res}`)
-        })
-}
-)
 
 export const ingredientSlice = createSlice({
     name: sliceName,
     initialState,
     reducers: {
-        //TODO естовый редьюсер
         addIngredientToCart: (state, action) => {
             if (action.payload.type === 'bun') {
                 state.bun = action.payload
@@ -52,44 +35,21 @@ export const ingredientSlice = createSlice({
             }
             state.constructorData.push(action.payload)
         },
-        addIngredientInfo: (state, action) => {
-            state.ingredient = action.payload
-        },
-        deleteIngredientInfo: (state, action) => {
-            state.ingredient = null
-        },
-        updateIngredientsInConstructor: (state, action) => {
-            state.constructorData = action.payload
-        },
-        deleteIngredient: (state, id) => {
-           const index = state.constructorData.findIndex(item=> item.dragId === id)
-           state.constructorData.splice(index, 1)
-        },
     },
-    extraReducers: {
+    extraReducers:  {
         [fetchIngredients.pending]: (state, action) => {
-            state.onLoad=true;
+            state.onLoad = true;
             state.onError = false
         },
         [fetchIngredients.fulfilled]: (state, action) => {
-            state.onLoad=false;
+            state.onLoad = false;
             state.ingredientData = action.payload.data
-            state.bun = action.payload.bun
-            },
+        },
         [fetchIngredients.rejected]: (state, action) => {
-            state.onLoad=false;
+            state.onLoad = false;
             state.onError = true
         },
 
-        [fetchOrder.pending]: (state, action) => {state.onLoadOrder=true; state.onErrorOrder = false},
-        [fetchOrder.fulfilled]: (state, action) => {
-            state.onLoadOrder=false;
-            state.orderDetails = action.payload
-            },
-        [fetchOrder.rejected]: (state, action) => {
-            state.onLoadOrder=false;
-            state.onErrorOrder = true
-        },
     }
 })
 const {reducer} = ingredientSlice;
