@@ -7,7 +7,7 @@ import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 const modalRoot = document.getElementById('react-modals')
 
-function Modal({isOpen, toggleModal, children}) {
+function Modal({toggleModal, children}) {
 
     useEffect(() => {
         const closeModalPressEsc = (e) => {
@@ -15,19 +15,15 @@ function Modal({isOpen, toggleModal, children}) {
                 toggleModal()
             }
         }
-        if (isOpen) {
             document.addEventListener('keyup', closeModalPressEsc)
             return () => {
                 document.removeEventListener('keyup', closeModalPressEsc)
             }
-        }
-    }, [isOpen])
+    }, [toggleModal])
 
 
     return ReactDOM.createPortal(
         <>
-            {
-                isOpen &&
                 <>
                     <ModalOverlay toggleModal={toggleModal}/>
                     <div className={styles.modal} onClick={event => event.stopPropagation()}>
@@ -37,8 +33,6 @@ function Modal({isOpen, toggleModal, children}) {
                         {children}
                     </div>
                 </>
-
-            }
         </>
         ,
         modalRoot
@@ -46,7 +40,6 @@ function Modal({isOpen, toggleModal, children}) {
 }
 
 Modal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
     toggleModal: PropTypes.func.isRequired,
     children: PropTypes.element,
     overlay: PropTypes.element,

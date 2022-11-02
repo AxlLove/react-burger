@@ -16,7 +16,7 @@ function OrderDetails({identifier}) {
 }
 
 OrderDetails.propTypes = {
-    identifier: PropTypes.string.isRequired,
+    identifier: PropTypes.number.isRequired,
 }
 
 export default OrderDetails;

@@ -4,7 +4,7 @@ const checkResponse = (response) => {
     if (response.ok) {
         return response.json();
     }
-    return Promise.reject(`Ошибка: ${response.status}`)
+    return Promise.reject(response)
 }
 
 const request = (url, options) => {
@@ -12,10 +12,21 @@ const request = (url, options) => {
 }
 
 export const getIngredients = () => {
-    return  request(BASE_URL, {
+    return  request(`${BASE_URL}/ingredients`, {
         method: 'GET',
         headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
         }
     })
 }
+
+export const makeAnOrder = (ingredients) => {    
+    return request(`${BASE_URL}/orders`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(ingredients)
+    })
+}
+

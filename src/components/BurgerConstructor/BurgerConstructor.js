@@ -1,36 +1,58 @@
 import styles from './BurgerConstructor.module.css'
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types";
-import {ingredientType} from "../../utils/types";
-import {useState} from "react";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
+import {IngredientContext} from "../../contexts/ingredientContext";
+import {useContext, useState, useMemo} from "react";
+import {makeAnOrder} from "../../utils/Api";
 
-const img = 'https://code.s3.yandex.net/react/code/bun-02-mobile.png'
 
-function BurgerConstructor({data}) {
+function BurgerConstructor() {
+    const [orderDetails, setOrderDetails] = useState({})
+    const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
 
-    const [isOpen, setIsOpen] = useState(false)
+    const {
+        otherIngredients,
+        selectedBun,
+    } = useContext(IngredientContext)
+
 
     const toggleModal = () => {
-        setIsOpen(!isOpen)
+        setBurgerConstructorModalOpen(!burgerConstructorModalOpen)
     }
 
+    const handleMakeAnOrder = () => {
+        //TODO добавить ux сообщение об ошибке, блок кнопки
+        const constructorData = [selectedBun, ...otherIngredients, selectedBun]
+        const orderData = {ingredients: constructorData.map(item => item._id)}
+        makeAnOrder(orderData).then(res => {
+            setOrderDetails(res)
+            setBurgerConstructorModalOpen(true)
+        }).catch(console.log)
+    }
+
+    const memoizedPrice = useMemo(() => {
+        if (otherIngredients && selectedBun) {
+            const constructorData = [selectedBun, ...otherIngredients, selectedBun]
+            return constructorData.reduce((acc, item) => acc + item.price, 0)
+        }
+    }, [otherIngredients, selectedBun])
 
     return (
         <section className={`${styles.burgerConstructor} pt-25 pb-10`}>
-            <div className='pl-8'>
+            {selectedBun && <div className='pl-8'>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={200}
-                    thumbnail={img}
+                    text={`${selectedBun.name} (верх)`}
+                    price={selectedBun.price}
+                    thumbnail={selectedBun.image_mobile}
                 />
-            </div>
+            </div>}
             <ul className={`${styles.container} pr-2`}>
-                {data.map((item => (
-                    item.type !== 'bun' && <li className={styles.constructorItem} key={item._id}>
+                {otherIngredients && otherIngredients.map(((item, index) => (
+                    item.type !== 'bun' && <li className={styles.constructorItem} key={index}>
                         <DragIcon type="primary"/>
                         <ConstructorElement
                             text={item.name}
@@ -39,36 +61,34 @@ function BurgerConstructor({data}) {
                     </li>
                 )))}
             </ul>
-            <div className='pl-8'>
+            {selectedBun && <div className='pl-8'>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text="Краторная булка N-200i (низ)"
-                    price={200}
-                    thumbnail={img}
+                    text={`${selectedBun.name} (низ)`}
+                    price={selectedBun.price}
+                    thumbnail={selectedBun.image_mobile}
                 />
-            </div>
+            </div>}
             <div className={styles.price}>
-                <div className={styles.currency}>
+                {memoizedPrice && <div className={styles.currency}>
                     <p className={`${styles.text} text text_type_digits-medium`}>
-                        610
+                        {memoizedPrice}
                     </p>
                     <CurrencyIcon type="primary"/>
-                </div>
-                <Button onClick={() => {
-                    toggleModal()
-                }} htmlType={'submit'} type="primary" size="large">
+                </div>}
+
+                <Button onClick={handleMakeAnOrder} htmlType={'button'} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
-            <Modal isOpen={isOpen} toggleModal={toggleModal}>
-                <OrderDetails identifier={'034536'}/>
-            </Modal>
+            {burgerConstructorModalOpen &&
+                <Modal toggleModal={toggleModal}>
+                    <OrderDetails identifier={orderDetails.order.number}/>
+                </Modal>
+            }
         </section>
     )
 }
 
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(ingredientType).isRequired,
-};
 export default BurgerConstructor;
