@@ -1,0 +1,14 @@
+.form {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+.button {
+    width: 128px;
+}
+
+.header {
+
+}
