@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './App.module.css';
 import MainPage from "../../pages/MainPage/MainPage";
-import {Switch, BrowserRouter as Router, Route} from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import LoginPage from "../../pages/LoginPage/LognPage";
-
+import RegisterPage from '../../pages/RegisterPage/RegisterPage';
+import ForgotPasswordPage from '../../pages/ForgotPasswordPage/ForgotPasswordPage';
+import ResetPasswordPage from '../../pages/ResetPasswordPage/ResetPasswordPage';
+import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 function App() {
 
     return (
-        <Router>
             <div className={styles.App}>
                 <Switch>
                    <Route exact={true} path={'/'}>
@@ -17,16 +19,23 @@ function App() {
                         <LoginPage/>
                     </Route>
                     <Route path={'/register'}>
-
+                        <RegisterPage/>
                     </Route>
-                    <Route></Route>
-                    <Route></Route>
-                    <Route></Route>
+                    <Route path={'/forgot-password'}>
+                        <ForgotPasswordPage/>
+                    </Route>
+                    <Route path={'/reset-password'}>
+                        <ResetPasswordPage/>
+                    </Route>
+                    <Route path={'/profile'}>
+                        <ProfilePage/>
+                    </Route>
                 </Switch>
             </div>
-        </Router>
 
     );
 }
 
 export default App;
+
+//TODO наладить работать сслок

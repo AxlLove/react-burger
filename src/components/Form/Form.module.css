@@ -6,7 +6,7 @@
     align-items: center;
 }
 .button {
-    width: 128px;
+    width: fit-content;
 }
 
 .header {

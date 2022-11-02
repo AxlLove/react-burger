@@ -16,3 +16,5 @@ const store = configureStore({
 })
 
 export default store;
+
+//TODO возмоно стоит вынести экшены из слайсов

@@ -1,0 +1,18 @@
+.loginPage {
+    padding-top: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.linkContainer {
+    margin: 80px 0 40px;
+}
+.link {
+    text-decoration: none;
+    outline: 0;
+    color: #4C4CFF;
+    transition: linear .1s;
+}
+.link:hover {
+    opacity: 0.6;
+}

@@ -1,0 +1,12 @@
+.registerPage {
+    composes: loginPage from '../LoginPage/LoginPage.module.css';
+}
+.linkContainer {
+    composes: linkContainer from '../LoginPage/LoginPage.module.css';
+}
+.link {
+    composes: link from '../LoginPage/LoginPage.module.css';
+}
+.link:hover {
+    opacity: 0.6;
+}
