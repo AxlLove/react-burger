@@ -1,15 +1,13 @@
 import styles from './BurgerIngredients.module.css';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useState, useEffect, useRef} from "react";
+import {useState, useRef} from "react";
 import CardList from "../CardList/CardList";
-import PropTypes from 'prop-types';
-import {ingredientType} from "../../utils/types";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
-import {useIntersectionObserver} from "../hooks/useIntersectionObserver";
-
+import {useIntersectionObserver} from "../../hooks/useIntersectionObserver";
+import {BUN_INGREDIENT_TYPE, SAUCE_INGREDIENT_TYPE, MAIN_INGREDIENT_TYPE} from "../../utils/constants";
 
 function BurgerIngredients() {
     const [isOpen, setIsOpen] = useState(false)
@@ -70,3 +68,5 @@ function BurgerIngredients() {
 
 
 export default BurgerIngredients;
+
+//TODO ПРИСВОИТЬ КОНСТАНТАМ ИМЕНА ПЕРЕИСПОЛЬЗУЕМЫХ ПЕРЕМЕННЫХ

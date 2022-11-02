@@ -13,13 +13,15 @@ export const constructorSlice = createSlice({
     initialState,
     reducers: {
         addIngredientToCart: (state, action) => {
-            if(action.payload) {
+            if(!action.payload) {
+                return;
+            }
                 if (action.payload.type === 'bun') {
                     state.bun = action.payload
                     return
                 }
                 state.constructorData.push(action.payload)
-            }
+
         },
         updateIngredientsInConstructor: (state, action) => {
             state.constructorData = action.payload

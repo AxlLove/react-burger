@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {getIngredients, makeAnOrder} from "../../utils/Api";
+import {makeAnOrder} from "../../utils/Api";
 
 const sliceName = 'order'
 
@@ -23,7 +23,7 @@ export const orderSlice = createSlice({
     name: sliceName,
     initialState,
     extraReducers:  {
-        [fetchOrder.pending]: (state, action) => {
+        [fetchOrder.pending]: (state) => {
             state.onLoadOrder = true;
             state.onErrorOrder = false
         },
@@ -31,7 +31,7 @@ export const orderSlice = createSlice({
             state.onLoadOrder = false;
             state.orderDetails = action.payload
         },
-        [fetchOrder.rejected]: (state, action) => {
+        [fetchOrder.rejected]: (state) => {
             state.onLoadOrder = false;
             state.onErrorOrder = true
         },
