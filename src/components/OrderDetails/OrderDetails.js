@@ -1,11 +1,16 @@
 import image from '../../images/done.png'
 import styles from './OrderDetails.module.css'
-import PropTypes from "prop-types";
+import {useSelector} from 'react-redux';
 
-function OrderDetails({identifier}) {
+function OrderDetails() {
+    const identifier = useSelector(store => store.order?.orderDetails?.order?.number)
+
+
     return (
         <div className={`${styles.orderDetails} pt-30 pb-30`}>
-            <h2 className={`${styles.identifierHeader} ${styles.textColor} text text_type_digits-large`}>{identifier}</h2>
+            {identifier &&
+                <h2 className={`${styles.identifierHeader} ${styles.textColor} text text_type_digits-large`}>{identifier}</h2>
+            }
             <p className={`${styles.textColor} text text_type_main-medium pt-8`}>идентификатор заказа</p>
             <img className={'pt-15'} src={image} alt={'done!'}/>
             <p className={`${styles.textColor} text text_type_main-default pt-15`}>Ваш заказ начали готовить</p>
@@ -15,8 +20,5 @@ function OrderDetails({identifier}) {
     )
 }
 
-OrderDetails.propTypes = {
-    identifier: PropTypes.number.isRequired,
-}
 
 export default OrderDetails;

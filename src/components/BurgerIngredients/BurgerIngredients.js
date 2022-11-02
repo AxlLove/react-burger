@@ -1,44 +1,65 @@
 import styles from './BurgerIngredients.module.css';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useState} from "react";
+import {useState, useRef} from "react";
 import CardList from "../CardList/CardList";
-import PropTypes from 'prop-types';
-import {ingredientType} from "../../utils/types";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import {useDispatch} from "react-redux";
+import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
+import {useIntersectionObserver} from "../../hooks/useIntersectionObserver";
+import {BUN_INGREDIENT_TYPE, SAUCE_INGREDIENT_TYPE, MAIN_INGREDIENT_TYPE} from "../../utils/constants";
 
-
-function BurgerIngredients({data, addIngredientToCart}) {
-    const [current, setCurrent] = useState('Булки')
-    const [card, setCard] = useState({})
+function BurgerIngredients() {
     const [isOpen, setIsOpen] = useState(false)
+    const dispatch = useDispatch()
+
+    const mainRef = useRef()
+    const bunRef = useRef()
+    const sauceRef = useRef()
+    const [containerRef, current] = useIntersectionObserver({
+        rootMargin: '0px 0px -90% 0px',
+        threshold: 0
+    })
+
 
     const handeCardClick = (item) => {
-        //TODO вернуть открытие модального окна
-
-        // setCard(item)
-        // toggleModal()
-        addIngredientToCart(item)
+        dispatch(ingredientInfoSlice.actions.addIngredientInfo(item))
+        openModal()
     }
-    const toggleModal = () => {
-        setIsOpen(!isOpen)
+    const openModal = () => {
+        setIsOpen(true)
+    }
+    const closeModal = () => {
+        setIsOpen(false)
+        dispatch(ingredientInfoSlice.actions.deleteIngredientInfo())
+    }
+
+    const handleClickTab = (ref) => {
+        ref.current.scrollIntoView({behavior: 'smooth'})
     }
 
     return (
         <section className={styles.burgerIngredients}>
             <h1 className={`text text_type_main-large pt-10`}>Соберите бургер</h1>
             <nav className={`${styles.tabs} pt-5 pb-10`}>
-                <Tab active={current === 'Булки'} value={'Булки'} onClick={setCurrent}>Булки</Tab>
-                <Tab active={current === 'Соусы'} value={'Соусы'} onClick={setCurrent}>Соусы</Tab>
-                <Tab active={current === 'Начинки'} value={'Начинки'} onClick={setCurrent}>Начинки</Tab>
+                <Tab active={current === 'Булки'} value={'Булки'} onClick={() => {
+                    handleClickTab(bunRef)
+                }}>Булки</Tab>
+                <Tab active={current === 'Соусы'} value={'Соусы'} onClick={() => {
+                    handleClickTab(sauceRef)
+                }}>Соусы</Tab>
+                <Tab active={current === 'Начинки'} value={'Начинки'} onClick={() => {
+                    handleClickTab(mainRef)
+                }}>Начинки</Tab>
             </nav>
-            <div className={`${styles.ingredientsLists}`}>
-                <CardList data={data} name={'Булки'} type={'bun'} handeCardClick={handeCardClick}/>
-                <CardList data={data} name={'Соусы'} type={'sauce'} handeCardClick={handeCardClick}/>
-                <CardList data={data} name={'Начинки'} type={'main'} handeCardClick={handeCardClick}/>
+            <div ref={containerRef} className={`${styles.ingredientsLists}`}>
+                <CardList listRef={bunRef} name={'Булки'} type={'bun'} handeCardClick={handeCardClick}/>
+                <CardList listRef={sauceRef} name={'Соусы'} type={'sauce'} handeCardClick={handeCardClick}/>
+                <CardList listRef={mainRef} name={'Начинки'} type={'main'} handeCardClick={handeCardClick}/>
+
             </div>
-            {isOpen && <Modal toggleModal={toggleModal}>
-                <IngredientDetails card={card}/>
+            {isOpen && <Modal toggleModal={closeModal}>
+                <IngredientDetails/>
             </Modal>}
 
         </section>
@@ -46,9 +67,6 @@ function BurgerIngredients({data, addIngredientToCart}) {
 }
 
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientType).isRequired,
-    addIngredientToCart: PropTypes.func.isRequired
-};
-
 export default BurgerIngredients;
+
+//TODO ПРИСВОИТЬ КОНСТАНТАМ ИМЕНА ПЕРЕИСПОЛЬЗУЕМЫХ ПЕРЕМЕННЫХ

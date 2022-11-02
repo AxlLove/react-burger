@@ -2,12 +2,23 @@ import styles from './Card.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import {ingredientType} from "../../utils/types";
+import {counterSelector} from '../../services/selectors/ingrediensSelectors'
+import { useSelector } from 'react-redux';
+import {useDrag} from "react-dnd";
 
 function Card({card, handeCardClick}) {
+    const counter = useSelector (counterSelector(card))
+    const [{ opacity }, dragRef] = useDrag({
+        type: 'ingredient',
+        item: card,
+        collect: monitor => ({
+            opacity: monitor.isDragging() ? 0.5 : 1
+        })
+    })
     return (
-        <li onClick={() => handeCardClick(card)} className={`${styles.card}`}>
-            <Counter count={1} size="default"/>
-            <img className={`${styles.image} pl-4 pr-5`} src={card.image} alt={card.name}/>
+        <li  onClick={() => handeCardClick(card)} className={`${styles.card}`}>
+            {counter > 0 && <Counter count={counter} size="default"/>}
+            <img ref={dragRef} style={{opacity}} className={`${styles.image}`} src={card.image} alt={card.name}/>
             <div className={`${styles.price} mt-1`}>
                 <p className={`text text_type_digits-default ${styles.wordBreak}`}>{card.price}</p>
                 <CurrencyIcon type={'primary'}/>
@@ -21,5 +32,5 @@ Card.propTypes = {
     card: ingredientType.isRequired,
     handeCardClick: PropTypes.func.isRequired
 };
-
+//TODO prop
 export default Card;

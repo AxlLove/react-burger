@@ -3,88 +3,120 @@ import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/
 import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import {IngredientContext} from "../../contexts/ingredientContext";
-import {useContext, useState, useMemo} from "react";
-import {makeAnOrder} from "../../utils/Api";
+import {useSelector, useDispatch} from "react-redux";
+import {useState, useCallback,} from 'react';
+import {fetchOrder} from '../../services/slices/orderSlice';
+import {constructorSlice} from "../../services/slices/burgerConstructorSlice";
 
+import {
+    constructorSubmitOrderSelector,
+    orderDataSelector,
+} from "../../services/selectors/orderSelectors";
+import {
+    totalPriceSelector,
+    constructorDataSelector
+} from "../../services/selectors/burgerConstructorSelectors";
+import {useDrop} from "react-dnd";
+import {v4 as uiv4} from 'uuid'
+import ConstructorItem from '../ConstructorItem/ConstructorItem';
 
 function BurgerConstructor() {
-    const [orderDetails, setOrderDetails] = useState({})
+    const dispatch = useDispatch()
+
     const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
-
-    const {
-        otherIngredients,
-        selectedBun,
-    } = useContext(IngredientContext)
-
+    const {selectedBun, otherIngredients} = useSelector(constructorDataSelector)
+    const {onLoad, onError} = useSelector(constructorSubmitOrderSelector)
+    const orderData = useSelector(orderDataSelector)
+    const totalPrice = useSelector(totalPriceSelector)
 
     const toggleModal = () => {
         setBurgerConstructorModalOpen(!burgerConstructorModalOpen)
     }
 
     const handleMakeAnOrder = () => {
-        //TODO добавить ux сообщение об ошибке, блок кнопки
-        const constructorData = [selectedBun, ...otherIngredients, selectedBun]
-        const orderData = {ingredients: constructorData.map(item => item._id)}
-        makeAnOrder(orderData).then(res => {
-            setOrderDetails(res)
-            setBurgerConstructorModalOpen(true)
-        }).catch(console.log)
+        dispatch(fetchOrder(orderData))
+        setBurgerConstructorModalOpen(true)
     }
 
-    const memoizedPrice = useMemo(() => {
-        if (otherIngredients && selectedBun) {
-            const constructorData = [selectedBun, ...otherIngredients, selectedBun]
-            return constructorData.reduce((acc, item) => acc + item.price, 0)
-        }
-    }, [otherIngredients, selectedBun])
+
+    const [{isHover, isBunHover}, dropTargetRef] = useDrop({
+        accept: 'ingredient',
+        collect: monitor => ({
+            isHover: monitor.getItem()?.type !== 'bun' && monitor.isOver(),
+            isBunHover: monitor.getItem()?.type === 'bun' && monitor.isOver()
+        }),
+        drop(item) {
+            dispatch(constructorSlice.actions.addIngredientToCart({...item, dragId: uiv4()}))
+        },
+    })
+
+
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        const dragCard = otherIngredients[dragIndex];
+        const newCards = [...otherIngredients]
+        newCards.splice(dragIndex, 1)
+        newCards.splice(hoverIndex, 0, dragCard)
+        dispatch(constructorSlice.actions.updateIngredientsInConstructor(newCards))
+    }, [otherIngredients, dispatch]);
+
 
     return (
-        <section className={`${styles.burgerConstructor} pt-25 pb-10`}>
-            {selectedBun && <div className='pl-8'>
-                <ConstructorElement
-                    type="top"
-                    isLocked={true}
-                    text={`${selectedBun.name} (верх)`}
-                    price={selectedBun.price}
-                    thumbnail={selectedBun.image_mobile}
-                />
+        <section ref={dropTargetRef} className={`${styles.burgerConstructor} pt-25 pb-10`}>
+            {selectedBun && <div className={`pl-8`}>
+                <div className={`${isBunHover ? styles.borderBunTop : ''}`}>
+                    <ConstructorElement
+                        type="top"
+                        isLocked={true}
+                        text={`${selectedBun.name} (верх)`}
+                        price={selectedBun.price}
+                        thumbnail={selectedBun.image_mobile}
+                    /></div>
+
             </div>}
-            <ul className={`${styles.container} pr-2`}>
+            <ul className={`${styles.container} ${isHover ? styles.borderIngredients : ''} pr-2`}>
                 {otherIngredients && otherIngredients.map(((item, index) => (
-                    item.type !== 'bun' && <li className={styles.constructorItem} key={index}>
-                        <DragIcon type="primary"/>
-                        <ConstructorElement
-                            text={item.name}
-                            price={item.price}
-                            thumbnail={item.image_mobile}/>
-                    </li>
+                    item.type !== 'bun' &&
+                    <ConstructorItem dragId={item.dragId}
+                                     index={index}
+                                     moveCard={moveCard}
+                                     item={item}
+                                     key={item.dragId}
+                    />
                 )))}
             </ul>
+
             {selectedBun && <div className='pl-8'>
-                <ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text={`${selectedBun.name} (низ)`}
-                    price={selectedBun.price}
-                    thumbnail={selectedBun.image_mobile}
-                />
+                <div className={`${isBunHover ? styles.borderBunBot : ''}`}>
+                    <ConstructorElement
+                        type="bottom"
+                        isLocked={true}
+                        text={`${selectedBun.name} (низ)`}
+                        price={selectedBun.price}
+                        thumbnail={selectedBun.image_mobile}
+                        moveCard={moveCard}
+                    />
+                </div>
             </div>}
             <div className={styles.price}>
-                {memoizedPrice && <div className={styles.currency}>
+                {totalPrice && <div className={styles.currency}>
                     <p className={`${styles.text} text text_type_digits-medium`}>
-                        {memoizedPrice}
+                        {totalPrice}
                     </p>
                     <CurrencyIcon type="primary"/>
                 </div>}
-
-                <Button onClick={handleMakeAnOrder} htmlType={'button'} type="primary" size="large">
+                <Button onClick={handleMakeAnOrder} htmlType={'button'} type="primary" size="large" disabled={onLoad}>
                     Оформить заказ
                 </Button>
+
             </div>
-            {burgerConstructorModalOpen &&
+            {
+                onError &&
+                <span className={`${styles.error} text text_type_main-default`}>Упс, произошла ошибка! Поробуйте еще раз.</span>
+            }
+
+            {burgerConstructorModalOpen && !onLoad && !onError &&
                 <Modal toggleModal={toggleModal}>
-                    <OrderDetails identifier={orderDetails.order.number}/>
+                    <OrderDetails/>
                 </Modal>
             }
         </section>

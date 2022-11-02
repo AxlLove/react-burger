@@ -1,0 +1,1 @@
+export const getIngredientsSelector = store=> store.info.ingredient;

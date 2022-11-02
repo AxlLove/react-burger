@@ -12,6 +12,7 @@
     height: 120px;
     object-fit: cover;
     object-position: center;
+    z-index: 3;
 }
 
 .price {
