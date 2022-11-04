@@ -7,8 +7,10 @@
 }
 .button {
     width: fit-content;
+    display: flex;
+    flex-direction: column;
 }
 
-.header {
-
+.submitError {
+    color: #b02828;
 }

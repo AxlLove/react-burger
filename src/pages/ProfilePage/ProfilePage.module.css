@@ -1,0 +1,13 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.content {
+    display: flex;
+    padding: 120px  360px 0;
+}
+
+.description {
+    width: 320px
+}

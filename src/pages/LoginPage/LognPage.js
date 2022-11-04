@@ -15,7 +15,7 @@ const LoginPage = () => {
             </Form>
             <div className={styles.linkContainer}>
                 <p className="text text_type_main-small text_color_inactive">Вы — новый пользователь? <Link className={`text text_type_main-small ${styles.link}`} to={'/register'}>Зарегестрироваться</Link></p>
-                <p className="text text_type_main-small text_color_inactive">Забыли пароль? <Link className={`text text_type_main-small ${styles.link}`}>Восстановить пароль</Link></p>
+                <p className="text text_type_main-small text_color_inactive">Забыли пароль? <Link className={`text text_type_main-small ${styles.link}`} to={'/forgot-password'}>Восстановить пароль</Link></p>
             </div>
         </div>
     </>
