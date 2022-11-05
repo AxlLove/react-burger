@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './App.module.css';
 import MainPage from "../../pages/MainPage/MainPage";
 import {Switch, Route} from "react-router-dom";
@@ -7,7 +7,15 @@ import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../../pages/ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from '../../pages/ResetPasswordPage/ResetPasswordPage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
+import {useDispatch} from 'react-redux'
+import {getUser} from '../../services/slices/userSlice'
+import {getCookie} from '../../utils/coockie'
+
 function App() {
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(getUser())
+    },[dispatch])
 
     return (
             <div className={styles.App}>
@@ -39,3 +47,9 @@ function App() {
 export default App;
 
 //TODO наладить работать сслок
+//TODO Наименование переменных
+//TODO Обработка ошибок
+//TODO Сделать кастомные инпуты
+
+//TODO очистить стор при выходе
+// Раскидать компоненты UI..

@@ -4,14 +4,18 @@ import ingredientReducer from "./slices/IngerdientSlice";
 import burgerConstructorReducer from './slices/burgerConstructorSlice'
 import orderReducer from'./slices/orderSlice'
 import IngredientInfoReducer from'./slices/ingredientInfoSlice'
-import userReducer from './slices/userSlice'
+import registerUserReducer from './slices/registerUserSlice'
+import userReduser from './slices/userSlice'
+import loginReducer from './slices/loginUserSlice'
 const store = configureStore({
     reducer: {
         ingredients: ingredientReducer,
         burgerConstructor: burgerConstructorReducer,
         order: orderReducer,
         info: IngredientInfoReducer,
-        user: userReducer
+        userRegister: registerUserReducer,
+        user: userReduser,
+        userLogin: loginReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
     devTools: true,

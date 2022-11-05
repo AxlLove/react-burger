@@ -1,10 +1,8 @@
 import {BASE_URL} from "./constants";
+import { getCookie } from "./coockie";
 
-const checkResponse = (response) => {
-    if (response.ok) {
-        return response.json();
-    }
-    return Promise.reject(response)
+const checkResponse = (res) => {
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 }
 
 const request = (url, options) => {
@@ -74,7 +72,7 @@ export const login = (email, password) => {
     return request(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json; charset=utf-8",
+            
         },
         body: JSON.stringify({
             email: email,
@@ -83,30 +81,36 @@ export const login = (email, password) => {
     })
 }
 
-export const logout = (token) => {
+export const userRequest = () => {
+    return request(`${BASE_URL}/auth/user`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            authorization: `Bearer ${getCookie('token')}`
+        }
+    })
+}
+
+export const logout = () => {
     return request(`${BASE_URL}/auth/logout`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
         },
         body: JSON.stringify({
-            //TODO {
-            //     "token": "значение refreshToken"
-            // }
+            token: localStorage.getItem('refreshToken')
         })
     })
 }
 
-export const refreshToken = (token) => {
+export const refreshToken = () => {
     return request(`${BASE_URL}/auth/token`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
         },
         body: JSON.stringify({
-            //TODO {
-            //     "token": "значение refreshToken"
-            // }
+            token: localStorage.getItem('refreshToken')
         })
     })
 }
