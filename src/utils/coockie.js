@@ -27,3 +27,6 @@ export function getCookie(name) {
     }
     document.cookie = updatedCookie;
   }
+export function deleteCookie(name) {
+  setCookie(name, null, { expires: -1 });
+} 

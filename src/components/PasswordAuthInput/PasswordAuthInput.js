@@ -61,7 +61,8 @@ export const PasswordAuthInput = ({
             error={error}
             onIconClick={onIconClick}
             errorText={'Некоректный пароль'}
-
+            minLength={3}
+            required={true}
             {...rest}
         />
     );

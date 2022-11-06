@@ -10,7 +10,7 @@ const initialState = {
         errorMessage: ''
 };
 
-export const loginUser = createAsyncThunk(`${sliceName}/login`, async function ({email, password},  ) {
+export const loginUser = createAsyncThunk(`${sliceName}/login`, async function ({email, password},  {rejectWithValue}) {
         console.log(email, password)
         return await
             login(email, password)
@@ -19,7 +19,7 @@ export const loginUser = createAsyncThunk(`${sliceName}/login`, async function (
                 return res
                 })
                 .catch((err) => {
-                    return err
+                    return rejectWithValue(err.message)
                 })
     }
 )
@@ -33,12 +33,17 @@ export const loginUserSlice = createSlice({
             state.onError = false
         },
         [loginUser.fulfilled]: (state) => {
-            state.onLoadRegister = false;
+            state.onLoad = false;
         },
         [loginUser.rejected]: (state, action) => {
             state.onLoad = false;
             state.onError = true;
-            state.errorMessage = action.payload.message
+            console.log(action.payload)
+            if(action.payload === 'email or password are incorrect') {
+                state.errorMessage = 'Такой пользователь уже зарегестрирован!'
+                return
+            }
+            state.errorMessage = 'На сервере произошла ошибка, попробуйте еще раз!'
 
         },
     }

@@ -34,9 +34,9 @@ const RegisterPage = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault()
-        // if(!ref.current.checkValidity()){
-        //     return
-        // }
+        if(!ref.current.checkValidity()){
+            return
+        }
         dispatch(registerUser(state))
     }
 
@@ -50,7 +50,7 @@ const RegisterPage = () => {
                    onSubmit={handleSubmit}
                     error={onError}
                      errorMessage={errorMessage}>
-                    <UserNameAuthInput required name={'name'} value={state.name} onChange={handleInputChange}/>
+                    <UserNameAuthInput name={'name'} value={state.name} onChange={handleInputChange}/>
                     <EmailAuthInput name={'email'} value={state.email} onChange={handleInputChange}/>
                     <PasswordAuthInput name={'password'} value={state.password} onChange={handleInputChange}/>
                 </Form>

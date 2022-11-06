@@ -72,7 +72,7 @@ export const login = (email, password) => {
     return request(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
-            
+            "Content-Type": "application/json; charset=utf-8",
         },
         body: JSON.stringify({
             email: email,
@@ -88,6 +88,20 @@ export const userRequest = () => {
             "Content-Type": "application/json; charset=utf-8",
             authorization: `Bearer ${getCookie('token')}`
         }
+    })
+}
+export const updateUser = (name, email, password) => {
+    return request(`${BASE_URL}/auth/user`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            authorization: `Bearer ${getCookie('token')}`
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+        })
     })
 }
 

@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-
-
+import {emailRegExp} from "../../utils/regExp";
 
 
 export const EmailAuthInput = ({
@@ -10,6 +9,7 @@ export const EmailAuthInput = ({
     onChange,
     ...rest
 }) => {
+
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
@@ -46,6 +46,8 @@ export const EmailAuthInput = ({
             onFocus={onFocus}
             error={error}
             errorText={'Некоректный E-mail'}
+            pattern={emailRegExp}
+            required={true}
             {...rest}
         />
     );

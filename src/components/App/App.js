@@ -14,8 +14,16 @@ import {getCookie} from '../../utils/coockie'
 function App() {
     const dispatch = useDispatch()
     useEffect(()=>{
+        if (!getCookie('token') || !localStorage.getItem('refreshToken')) {
+            return
+        }
         dispatch(getUser())
     },[dispatch])
+
+    useEffect(()=>{
+        console.log(getCookie('token'))
+        console.log(localStorage.getItem('refreshToken'))
+    },[])
 
     return (
             <div className={styles.App}>
@@ -49,7 +57,16 @@ export default App;
 //TODO наладить работать сслок
 //TODO Наименование переменных
 //TODO Обработка ошибок
-//TODO Сделать кастомные инпуты
+//TODO Сделать кастомные инпуты +
 
 //TODO очистить стор при выходе
-// Раскидать компоненты UI..
+//TODO Раскидать компоненты UI..
+
+//TODO проверить работу функции refreshToken есть сомгнения
+
+//TODO положить в костанту имя токена
+
+//TODO все таки вынести логику из userSlice
+
+//TODO Доработать  валидацию в редактировании профиля + посмотреть на иконку она должна пропадать при клике
+//TODO

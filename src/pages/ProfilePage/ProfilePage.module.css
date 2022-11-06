@@ -11,3 +11,17 @@
 .description {
     width: 320px
 }
+.buttons {
+    display: flex;
+    gap: 28px;
+    justify-content: end;
+}
+.cancelChanges {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #4C4CFF;;
+}
+.submitError {
+    color: #b02828;
+}

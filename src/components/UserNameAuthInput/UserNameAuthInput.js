@@ -16,7 +16,7 @@ export const UserNameAuthInput = ({
 
 
     const validateField = (value) => {
-        setError(value.length < 2 || value.length > 32);
+        setError(value.length <= 2 || value.length >= 32);
     };
 
     const onFocus = () => {
@@ -42,6 +42,8 @@ export const UserNameAuthInput = ({
             onFocus={onFocus}
             error={error}
             errorText={'Некоректное имя пользователя'}
+            maxLength={32}
+            minLength={3}
             {...rest}
         />
     );
