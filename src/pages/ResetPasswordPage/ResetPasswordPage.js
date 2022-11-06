@@ -3,11 +3,19 @@ import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import {Link} from "react-router-dom";
 import styles from './ResetPasswordPage.module.css'
-import {useState} from "react";
+import {useState, useRef} from "react";
 import {resetPassword} from "../../utils/Api";
-
+import {useHistory} from "react-router-dom";
+import { PasswordAuthInput } from "../../components/PasswordAuthInput/PasswordAuthInput";
+import { getUserInfo } from "../../services/selectors/userSelector";
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 const ResetPasswordPage = () => {
-    const [state, setState] = useState({
+    const ref = useRef()
+    const history = useHistory()
+    const {state} = useHistory();
+    const user = useSelector(getUserInfo)
+    const [form, setForm] = useState({
         password: "",
         token: '',
     });
@@ -15,22 +23,24 @@ const ResetPasswordPage = () => {
     const [submitErr, setSubmitErr] = useState(false)
 
     const handleInputChange = (event) => {
+        console.log(history.location.state)
         setSubmitErr(false)
         const target = event.target;
         const name = target.name;
         const value = target.value;
-        setState({
-            ...state,
+        setForm({
+            ...form,
             [name]: value,
         });
     };
     const handleSubmit = (e) => {
-        console.log(" ятут")
         e.preventDefault()
+        if(!ref.current.checkValidity()) {
+            return
+        }
         setButtonDisabled(true)
-        resetPassword(state.password, state.token).then(res=> {
-            //TODO переадресация или ответ об успехае?
-            console.log(res)
+        resetPassword(form.password, form.token).then(res=> {
+            history.push('/login')
         })
             .catch(res=> {
                 setSubmitErr(true)
@@ -40,31 +50,43 @@ const ResetPasswordPage = () => {
                 setButtonDisabled(false)
             })
     }
-
+    if(user){
+        return (
+          <Redirect
+            to={
+              '/' }
+          />
+        );
+      }
+      if(history.location.state !== '/forgot-password') {
+        return (
+            <Redirect
+              to={'/' }
+            />
+          );
+    }
     return (
         <>
             <AppHeader/>
             <div className={`${styles.resetPasswordPage}`}>
-                <Form header={'Восстановление пароля'}
+                <Form formref={ref} header={'Восстановление пароля'}
                       buttonName={'Сохранить'}
                       disabled={buttonDisabled}
                       error={submitErr}
                       onSubmit={handleSubmit}>
-                    <Input name={'password'}
-                           value={state.password}
-                           onChange={handleInputChange}
-                           placeholder="Введите новый пароль"
-                           icon="ShowIcon"
-                           type={'password'}/>
+                    <PasswordAuthInput 
+                            name={'password'}
+                           value={form.password}
+                           onChange={handleInputChange}/>
                     <Input name={'token'}
-                           value={state.token}
+                           value={form.token}
                            onChange={handleInputChange}
                            placeholder="Введите код из письма"
-                           type={"text"}/>
+                           type={"text"} required/>
                 </Form>
                 <div className={styles.linkContainer}>
                     <p className="text text_type_main-small text_color_inactive">Вспомнили пароль? <Link
-                        className={`text text_type_main-small ${styles.link}`}>Войти</Link></p>
+                        className={`text text_type_main-small ${styles.link}`} to='/login'>Войти</Link></p>
                 </div>
             </div>
         </>

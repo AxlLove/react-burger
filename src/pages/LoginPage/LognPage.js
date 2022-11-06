@@ -9,24 +9,28 @@ import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
 import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuthInput";
 import {loginRequestSelector} from "../../services/selectors/loginUserSelector";
 import {loginUser} from "../../services/slices/loginUserSlice";
-
-const LoginPage = () => {
+import { getUserInfo } from "../../services/selectors/userSelector";
+import { Redirect, useHistory } from "react-router-dom";
+const LoginPage = (props) => {
     const ref = useRef()
     const dispatch = useDispatch()
     const {onLoad, onError, errorMessage} = useSelector(loginRequestSelector)
-    const [state, setState] = useState({
+    const user = useSelector(getUserInfo)
+
+    const [form, setForm] = useState({
         email: '',
         password: '',
     });
 
-
+    const history = useHistory();
     const handleInputChange = (event) => {
+
         console.log(ref.current.checkValidity())
         const target = event.target;
         const name = target.name;
         const value = target.value;
-        setState({
-            ...state,
+        setForm({
+            ...form,
             [name]: value,
         });
     };
@@ -35,8 +39,18 @@ const LoginPage = () => {
         if(!ref.current.checkValidity()){
             return
         }
-       dispatch(loginUser(state))
+       dispatch(loginUser(form))
     }
+    if(user){
+        return (
+          <Redirect
+            to={
+                 history.location.state?.from || '/' 
+            }
+          />
+        );
+      }
+
     return (
         <>
             <AppHeader/>
@@ -48,8 +62,8 @@ const LoginPage = () => {
                       onSubmit={handleSubmit}
                       error={onError}
                       errorMessage={errorMessage}>
-                    <EmailAuthInput name={'email'} value={state.email} onChange={handleInputChange}/>
-                    <PasswordAuthInput name={'password'} value={state.password} onChange={handleInputChange}/>
+                    <EmailAuthInput name={'email'} value={form.email} onChange={handleInputChange}/>
+                    <PasswordAuthInput name={'password'} value={form.password} onChange={handleInputChange}/>
                 </Form>
                 <div className={styles.linkContainer}>
                     <p className="text text_type_main-small text_color_inactive">Вы — новый пользователь? <Link

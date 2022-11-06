@@ -10,6 +10,7 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import {useDispatch} from 'react-redux'
 import {getUser} from '../../services/slices/userSlice'
 import {getCookie} from '../../utils/coockie'
+import ProtetedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
     const dispatch = useDispatch()
@@ -21,8 +22,8 @@ function App() {
     },[dispatch])
 
     useEffect(()=>{
-        console.log(getCookie('token'))
-        console.log(localStorage.getItem('refreshToken'))
+        console.log('=>',getCookie('token'))
+        console.log(localStorage.getItem('=>>', 'refreshToken'))
     },[])
 
     return (
@@ -43,9 +44,9 @@ function App() {
                     <Route path={'/reset-password'}>
                         <ResetPasswordPage/>
                     </Route>
-                    <Route path={'/profile'}>
+                    <ProtetedRoute path={'/profile'}>
                         <ProfilePage/>
-                    </Route>
+                    </ProtetedRoute>
                 </Switch>
             </div>
 
@@ -69,4 +70,4 @@ export default App;
 //TODO все таки вынести логику из userSlice
 
 //TODO Доработать  валидацию в редактировании профиля + посмотреть на иконку она должна пропадать при клике
-//TODO
+//TODO Мможно переписать функциии сабмита на useCallback
