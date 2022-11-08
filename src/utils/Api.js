@@ -1,4 +1,4 @@
-import {BASE_URL} from "./constants";
+import {ACCESS_TOKEN_NAME, BASE_URL, REFRESH_TOKEN_NAME} from "./constants";
 import { getCookie } from "./coockie";
 
 const checkResponse = (res) => {
@@ -23,6 +23,7 @@ export const makeAnOrder = (ingredients) => {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
+            authorization: `Bearer ${getCookie(ACCESS_TOKEN_NAME)}`
         },
         body: JSON.stringify(ingredients)
     })
@@ -86,7 +87,7 @@ export const userRequest = () => {
         method: 'GET',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
-            authorization: `Bearer ${getCookie('token')}`
+            authorization: `Bearer ${getCookie(ACCESS_TOKEN_NAME)}`
         }
     })
 }
@@ -95,7 +96,7 @@ export const updateUser = (name, email, password) => {
         method: 'PATCH',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
-            authorization: `Bearer ${getCookie('token')}`
+            authorization: `Bearer ${getCookie(ACCESS_TOKEN_NAME)}`
         },
         body: JSON.stringify({
             name: name,
@@ -112,7 +113,7 @@ export const logout = () => {
             "Content-Type": "application/json; charset=utf-8",
         },
         body: JSON.stringify({
-            token: localStorage.getItem('refreshToken')
+            token: localStorage.getItem(REFRESH_TOKEN_NAME)
         })
     })
 }
@@ -124,7 +125,7 @@ export const refreshToken = () => {
             "Content-Type": "application/json; charset=utf-8",
         },
         body: JSON.stringify({
-            token: localStorage.getItem('refreshToken')
+            token: localStorage.getItem(REFRESH_TOKEN_NAME)
         })
     })
 }

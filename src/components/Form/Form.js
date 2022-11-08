@@ -1,5 +1,6 @@
 import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './Form.module.css'
+import PropTypes from "prop-types";
 const Form = ({formref, header, buttonName, children, error, onSubmit, disabled, errorMessage='При отправке формы произошла ошибка, попробуйте еще раз!'}) => {
     return (
         <>
@@ -16,5 +17,15 @@ const Form = ({formref, header, buttonName, children, error, onSubmit, disabled,
 
     )
 }
+Form.propTypes = {
+    formref: PropTypes.node,
+    header: PropTypes.string.isRequired,
+    buttonName: PropTypes.string.isRequired,
+    children: PropTypes.element,
+    error: PropTypes.bool.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string,
+};
 
 export default Form;

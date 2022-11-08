@@ -1,17 +1,12 @@
 import styles from './BurgerIngredients.module.css';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useState, useRef} from "react";
+import {useRef} from "react";
 import CardList from "../CardList/CardList";
-import Modal from "../Modal/Modal";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import {useDispatch} from "react-redux";
-import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
+
 import {useIntersectionObserver} from "../../hooks/useIntersectionObserver";
-import {BUN_INGREDIENT_TYPE, SAUCE_INGREDIENT_TYPE, MAIN_INGREDIENT_TYPE} from "../../utils/constants";
 
 function BurgerIngredients() {
-    const [isOpen, setIsOpen] = useState(false)
-    const dispatch = useDispatch()
+
 
     const mainRef = useRef()
     const bunRef = useRef()
@@ -21,18 +16,6 @@ function BurgerIngredients() {
         threshold: 0
     })
 
-
-    const handeCardClick = (item) => {
-        dispatch(ingredientInfoSlice.actions.addIngredientInfo(item))
-        openModal()
-    }
-    const openModal = () => {
-        setIsOpen(true)
-    }
-    const closeModal = () => {
-        setIsOpen(false)
-        dispatch(ingredientInfoSlice.actions.deleteIngredientInfo())
-    }
 
     const handleClickTab = (ref) => {
         ref.current.scrollIntoView({behavior: 'smooth'})
@@ -53,14 +36,10 @@ function BurgerIngredients() {
                 }}>Начинки</Tab>
             </nav>
             <div ref={containerRef} className={`${styles.ingredientsLists}`}>
-                <CardList listRef={bunRef} name={'Булки'} type={'bun'} handeCardClick={handeCardClick}/>
-                <CardList listRef={sauceRef} name={'Соусы'} type={'sauce'} handeCardClick={handeCardClick}/>
-                <CardList listRef={mainRef} name={'Начинки'} type={'main'} handeCardClick={handeCardClick}/>
-
+                <CardList listRef={bunRef} name={'Булки'} type={'bun'}/>
+                <CardList listRef={sauceRef} name={'Соусы'} type={'sauce'}/>
+                <CardList listRef={mainRef} name={'Начинки'} type={'main'}/>
             </div>
-            {isOpen && <Modal toggleModal={closeModal}>
-                <IngredientDetails/>
-            </Modal>}
 
         </section>
     )

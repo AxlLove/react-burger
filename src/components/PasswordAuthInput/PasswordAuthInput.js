@@ -1,15 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-
-
+import PropTypes from "prop-types";
 
 
 export const PasswordAuthInput = ({
-    value,
-    placeholder = 'Пароль',
-    onChange,
-    ...rest
-}) => {
+                                      value,
+                                      placeholder = 'Пароль',
+                                      onChange,
+                                      ...rest
+                                  }) => {
     const [visible, setVisible] = useState(false);
     const [currentIcon, setCurrentIcon] = useState('ShowIcon');
     const [error, setError] = useState(false);
@@ -66,4 +65,10 @@ export const PasswordAuthInput = ({
             {...rest}
         />
     );
+};
+
+PasswordAuthInput.propTypes = {
+    value: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
 };

@@ -1,22 +1,21 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {login} from "../../utils/Api";
-import { saveTokens } from "../../utils/tokens";
+import {saveTokens} from "../../utils/tokens";
 
 const sliceName = 'loginUser'
 
 const initialState = {
-        onLoad: false,
-        onError: false,
-        errorMessage: ''
+    onLoad: false,
+    onError: false,
+    errorMessage: ''
 };
 
-export const loginUser = createAsyncThunk(`${sliceName}/login`, async function ({email, password},  {rejectWithValue}) {
-        console.log(email, password)
+export const loginUser = createAsyncThunk(`${sliceName}/login`, async function ({email, password}, {rejectWithValue}) {
         return await
             login(email, password)
                 .then((res) => {
                     saveTokens(res)
-                return res
+                    return res
                 })
                 .catch((err) => {
                     return rejectWithValue(err.message)
@@ -27,7 +26,7 @@ export const loginUser = createAsyncThunk(`${sliceName}/login`, async function (
 export const loginUserSlice = createSlice({
     name: sliceName,
     initialState,
-    extraReducers:  {
+    extraReducers: {
         [loginUser.pending]: (state) => {
             state.onLoad = true;
             state.onError = false
@@ -38,9 +37,8 @@ export const loginUserSlice = createSlice({
         [loginUser.rejected]: (state, action) => {
             state.onLoad = false;
             state.onError = true;
-            console.log(action.payload)
-            if(action.payload === 'email or password are incorrect') {
-                state.errorMessage = 'Такой пользователь уже зарегестрирован!'
+            if (action.payload === 'email or password are incorrect') {
+                state.errorMessage = 'E-mail ли пароль введены неверно!'
                 return
             }
             state.errorMessage = 'На сервере произошла ошибка, попробуйте еще раз!'

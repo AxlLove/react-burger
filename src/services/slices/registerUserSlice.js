@@ -1,22 +1,25 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {register} from "../../utils/Api";
-import { saveTokens } from "../../utils/tokens";
+import {saveTokens} from "../../utils/tokens";
 
 const sliceName = 'registerUser'
 
 const initialState = {
-        onLoad: false,
-        onError: false,
-        errorMessage: ''
+    onLoad: false,
+    onError: false,
+    errorMessage: ''
 };
 
-export const registerUser = createAsyncThunk(`${sliceName}/register`, async function ({email, password, name}, {rejectWithValue}) {
-        console.log(email, password, name)
+export const registerUser = createAsyncThunk(`${sliceName}/register`, async function ({
+                                                                                          email,
+                                                                                          password,
+                                                                                          name
+                                                                                      }, {rejectWithValue}) {
         return await
             register(email, password, name)
                 .then((res) => {
                     saveTokens(res)
-                return res
+                    return res
                 })
                 .catch((err) => {
                     return rejectWithValue(err.message)
@@ -27,7 +30,7 @@ export const registerUser = createAsyncThunk(`${sliceName}/register`, async func
 export const registerUserSlice = createSlice({
     name: sliceName,
     initialState,
-    extraReducers:  {
+    extraReducers: {
         [registerUser.pending]: (state) => {
             state.onLoad = true;
             state.onError = false
@@ -39,7 +42,7 @@ export const registerUserSlice = createSlice({
             state.onLoad = false;
             state.onError = true;
             console.log(action.payload)
-            if(action.payload === 'User already exists') {
+            if (action.payload === 'User already exists') {
                 state.errorMessage = 'Такой пользователь уже зарегестрирован!'
                 return
             }

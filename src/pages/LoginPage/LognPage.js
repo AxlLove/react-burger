@@ -1,5 +1,4 @@
 import Form from "../../components/Form/Form";
-import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import {Link} from "react-router-dom";
 import styles from './LoginPage.module.css'
@@ -24,8 +23,6 @@ const LoginPage = (props) => {
 
     const history = useHistory();
     const handleInputChange = (event) => {
-
-        console.log(ref.current.checkValidity())
         const target = event.target;
         const name = target.name;
         const value = target.value;

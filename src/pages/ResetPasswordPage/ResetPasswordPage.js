@@ -6,14 +6,14 @@ import styles from './ResetPasswordPage.module.css'
 import {useState, useRef} from "react";
 import {resetPassword} from "../../utils/Api";
 import {useHistory} from "react-router-dom";
-import { PasswordAuthInput } from "../../components/PasswordAuthInput/PasswordAuthInput";
-import { getUserInfo } from "../../services/selectors/userSelector";
-import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuthInput";
+import {getUserInfo} from "../../services/selectors/userSelector";
+import {Redirect} from "react-router-dom";
+import {useSelector} from "react-redux";
+
 const ResetPasswordPage = () => {
     const ref = useRef()
     const history = useHistory()
-    const {state} = useHistory();
     const user = useSelector(getUserInfo)
     const [form, setForm] = useState({
         password: "",
@@ -23,7 +23,6 @@ const ResetPasswordPage = () => {
     const [submitErr, setSubmitErr] = useState(false)
 
     const handleInputChange = (event) => {
-        console.log(history.location.state)
         setSubmitErr(false)
         const target = event.target;
         const name = target.name;
@@ -35,35 +34,34 @@ const ResetPasswordPage = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(!ref.current.checkValidity()) {
+        if (!ref.current.checkValidity()) {
             return
         }
         setButtonDisabled(true)
-        resetPassword(form.password, form.token).then(res=> {
+        resetPassword(form.password, form.token).then(res => {
             history.push('/login')
         })
-            .catch(res=> {
+            .catch(res => {
                 setSubmitErr(true)
-                console.log(res)
             })
-            .finally(()=>{
+            .finally(() => {
                 setButtonDisabled(false)
             })
     }
-    if(user){
-        return (
-          <Redirect
-            to={
-              '/' }
-          />
-        );
-      }
-      if(history.location.state !== '/forgot-password') {
+    if (user) {
         return (
             <Redirect
-              to={'/' }
+                to={
+                    '/'}
             />
-          );
+        );
+    }
+    if (history.location.state !== '/forgot-password') {
+        return (
+            <Redirect
+                to={'/'}
+            />
+        );
     }
     return (
         <>
@@ -74,10 +72,10 @@ const ResetPasswordPage = () => {
                       disabled={buttonDisabled}
                       error={submitErr}
                       onSubmit={handleSubmit}>
-                    <PasswordAuthInput 
-                            name={'password'}
-                           value={form.password}
-                           onChange={handleInputChange}/>
+                    <PasswordAuthInput
+                        name={'password'}
+                        value={form.password}
+                        onChange={handleInputChange}/>
                     <Input name={'token'}
                            value={form.token}
                            onChange={handleInputChange}

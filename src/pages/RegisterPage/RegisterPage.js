@@ -6,11 +6,12 @@ import {useRef, useState} from "react";
 import {registerUser} from "../../services/slices/registerUserSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {PasswordAuthInput} from '../../components/PasswordAuthInput/PasswordAuthInput'
-import { EmailAuthInput } from "../../components/EmailAuthInput/EmailAuthInput";
-import { UserNameAuthInput } from "../../components/UserNameAuthInput/UserNameAuthInput";
+import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
+import {UserNameAuthInput} from "../../components/UserNameAuthInput/UserNameAuthInput";
 import {registerRequestSelector} from '../../services/selectors/registerUserSelectors';
-import { getUserInfo } from "../../services/selectors/userSelector";
-import { Redirect, useHistory } from "react-router-dom";
+import {getUserInfo} from "../../services/selectors/userSelector";
+import {Redirect, useHistory} from "react-router-dom";
+
 const RegisterPage = () => {
     const ref = useRef()
     const dispatch = useDispatch()
@@ -23,7 +24,6 @@ const RegisterPage = () => {
     const user = useSelector(getUserInfo)
     const history = useHistory()
     const handleInputChange = (event) => {
-        console.log(ref.current.checkValidity())
         const target = event.target;
         const name = target.name;
         const value = target.value;
@@ -31,35 +31,34 @@ const RegisterPage = () => {
             ...form,
             [name]: value,
         });
-        console.log(form)
     };
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(!ref.current.checkValidity()){
+        if (!ref.current.checkValidity()) {
             return
         }
         dispatch(registerUser(form))
     }
 
-    if(user){
+    if (user) {
         return (
-          <Redirect
-            to={
-                 history.location.state?.from || '/' 
-            }
-          />
+            <Redirect
+                to={
+                    history.location.state?.from || '/'
+                }
+            />
         );
-      }
+    }
     return (
         <>
             <AppHeader/>
             <div className={`${styles.registerPage}`}>
-                <Form formref={ref}  header={'Регистрация'}
-                 buttonName={'Зарегистрироваться'}
-                  disabled={onLoad}
-                   onSubmit={handleSubmit}
-                    error={onError}
-                     errorMessage={errorMessage}>
+                <Form formref={ref} header={'Регистрация'}
+                      buttonName={'Зарегистрироваться'}
+                      disabled={onLoad}
+                      onSubmit={handleSubmit}
+                      error={onError}
+                      errorMessage={errorMessage}>
                     <UserNameAuthInput name={'name'} value={form.name} onChange={handleInputChange}/>
                     <EmailAuthInput name={'email'} value={form.email} onChange={handleInputChange}/>
                     <PasswordAuthInput name={'password'} value={form.password} onChange={handleInputChange}/>

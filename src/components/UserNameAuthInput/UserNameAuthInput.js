@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
 
 
@@ -47,4 +48,10 @@ export const UserNameAuthInput = ({
             {...rest}
         />
     );
+};
+
+UserNameAuthInput.propTypes = {
+    value: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
 };

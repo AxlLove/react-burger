@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {emailRegExp} from "../../utils/regExp";
+import PropTypes, {string} from "prop-types";
+
 
 
 export const EmailAuthInput = ({
@@ -51,4 +53,10 @@ export const EmailAuthInput = ({
             {...rest}
         />
     );
+};
+
+EmailAuthInput.propTypes = {
+    value: string.isRequired,
+    placeholder: string.isRequired,
+    onChange: PropTypes.func.isRequired,
 };
