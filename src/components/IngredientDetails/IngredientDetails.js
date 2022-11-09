@@ -2,7 +2,7 @@ import styles from './IngredientDetails.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {getIngredientsSelector} from '../../services/selectors/ingrediensSelectors'
 import {getIngredientInfoSelector} from  '../../services/selectors/IngredientInfoSelectors'
-import {useParams} from "react-router-dom";
+import {useParams, useRouteMatch} from "react-router-dom";
 import {useEffect} from "react";
 import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
 import PropTypes from "prop-types";
@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 function IngredientDetails({children}) {
     const ingredient = useSelector(getIngredientInfoSelector)
     const ingredients = useSelector(getIngredientsSelector)
+    const {isExact} = useRouteMatch()
     const dispatch = useDispatch()
     const {ingredientId} = useParams()
 
@@ -19,6 +20,11 @@ function IngredientDetails({children}) {
             dispatch(ingredientInfoSlice.actions.addIngredientInfo(ingredients.find(item=> item._id === ingredientId)))
         }
     }, [ingredientId, ingredients, dispatch])
+    useEffect(()=> {
+        if(!isExact) {
+            dispatch(ingredientInfoSlice.actions.deleteIngredientInfo())
+        }
+    }, [isExact, dispatch])
 
     return (
         <div className={`${styles.ingredientDetails}`}>

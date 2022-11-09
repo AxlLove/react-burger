@@ -12,6 +12,7 @@ import ProfilePage from "../../pages/ProfilePage/ProfilePage";
 import Modal from "../Modal/Modal";
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import AppHeader from "../AppHeader/AppHeader";
+import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 
 const ModalSwitch = () => {
     const dispatch = useDispatch()
@@ -66,6 +67,9 @@ const ModalSwitch = () => {
                         </>
                     }
                 />
+                 <Route path={'*'}>
+                    <NotFoundPage/>
+                </Route>
 
             </Switch>
             {background && (<Route

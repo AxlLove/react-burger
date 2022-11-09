@@ -18,10 +18,10 @@ const Form = ({formref, header, buttonName, children, error, onSubmit, disabled,
     )
 }
 Form.propTypes = {
-    formref: PropTypes.node,
+    formref: PropTypes.object,
     header: PropTypes.string.isRequired,
     buttonName: PropTypes.string.isRequired,
-    children: PropTypes.element,
+    children: PropTypes.arrayOf(PropTypes.element),
     error: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,

@@ -18,8 +18,8 @@ const ProfilePage = () => {
     const [state, setState] = useState({name: '', email: '', password: ''});
 
     useEffect(() => {
-        setState({...state, ...initialInput})
-    }, [initialInput, state])
+        setState({...initialInput, password: ''})
+    }, [initialInput])
 
     const handleInputChange = (event) => {
         const target = event.target;
@@ -59,7 +59,7 @@ const ProfilePage = () => {
                     <EmailInput name={'email'} value={state.email} onChange={handleInputChange} placeholder={'Логин'}
                                 icon={"EditIcon"} isIcon={true}/>
                     <PasswordInput name={'password'} value={state.password} onChange={handleInputChange}
-                                   autoComplete={'off'} icon={"EditIcon"}/>
+                                    icon={"EditIcon"}/>
 
                     {change && (<div className={styles.buttons}>
                         <button

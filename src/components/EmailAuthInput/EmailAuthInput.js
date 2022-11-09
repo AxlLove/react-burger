@@ -57,6 +57,6 @@ export const EmailAuthInput = ({
 
 EmailAuthInput.propTypes = {
     value: string.isRequired,
-    placeholder: string.isRequired,
+    placeholder: string,
     onChange: PropTypes.func.isRequired,
 };

@@ -46,6 +46,5 @@ function Card({card}) {
 
 Card.propTypes = {
     card: ingredientType.isRequired,
-    handeCardClick: PropTypes.func.isRequired
 };
 export default Card;
