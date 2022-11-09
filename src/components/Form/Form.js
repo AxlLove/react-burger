@@ -21,7 +21,7 @@ Form.propTypes = {
     formref: PropTypes.object,
     header: PropTypes.string.isRequired,
     buttonName: PropTypes.string.isRequired,
-    children: PropTypes.arrayOf(PropTypes.element),
+    children: PropTypes.node,
     error: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
