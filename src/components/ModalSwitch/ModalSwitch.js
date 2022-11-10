@@ -1,7 +1,6 @@
 import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
 import {useHistory, useLocation, Switch, Route} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import styles from "../App/App.module.css";
 import MainPage from "../../pages/MainPage/MainPage";
 import LoginPage from "../../pages/LoginPage/LognPage";
 import RegisterPage from "../../pages/RegisterPage/RegisterPage";
@@ -13,6 +12,8 @@ import Modal from "../Modal/Modal";
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import AppHeader from "../AppHeader/AppHeader";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import styles from './ModalSwitch.module.css'
+import ProfileOrdersPage from "../../pages/ProfileOrdersPage/ProfileOrdersPage";
 
 const ModalSwitch = () => {
     const dispatch = useDispatch()
@@ -28,42 +29,41 @@ const ModalSwitch = () => {
     };
 
     return (
-        <div className={styles.App}>
+        <>
+        <AppHeader/>
+        <main className={styles.main}>
             <Switch location={background || location}>
-                <Route exact={true} path={'/'}>
+                <Route exact={true} path={'/'} >
                     <MainPage/>
                 </Route>
-                <Route path={'/login'}>
-                    <LoginPage/>
+                <Route path={'/login'} exact={true} onlyUnAuth={true}>
+                    <LoginPage />
                 </Route>
-                <Route path={'/register'}>
+                <Route path={'/register'} exact={true} onlyUnAuth={true}>
                     <RegisterPage/>
                 </Route>
-                <Route path={'/forgot-password'}>
+                <Route path={'/forgot-password'} exact={true} onlyUnAuth={true}>
                     <ForgotPasswordPage/>
                 </Route>
-                <Route path={'/reset-password'}>
+                <Route path={'/reset-password'} exact={true} onlyUnAuth={true}>
                     <ResetPasswordPage/>
                 </Route>
-                <ProtectedRoute path={'/profile'} exact>
+                <ProtectedRoute path={'/profile'} exact={true} >
                     <ProfilePage/>
                 </ProtectedRoute>
-                <ProtectedRoute path={'/feed'}>
-                    <AppHeader/>
+                <ProtectedRoute path={'/feed'} exact={true}>
+                    <div/>
                 </ProtectedRoute>
                 <ProtectedRoute path={'/profile/orders'} exact={true}>
-                    <AppHeader/>
+                    <ProfileOrdersPage></ProfileOrdersPage>
                 </ProtectedRoute>
                 <Route
                     path='/ingredients/:ingredientId' exact={true}
                     children={
                         <>
-                            <AppHeader/>
-                            <div style={{marginTop: '100px', display: 'flex', justifyContent: "center"}}>
-                                <IngredientDetails><h2 className={'text text_type_main-large'}
-                                                       style={{alignSelf: 'center'}}>Детали инредиента</h2>
+                            <div className={styles.ingredientPageContainer}>
+                                <IngredientDetails><h2 className={`text text_type_main-large ${styles.ingredientPageHeader}`}>Детали ингредиента</h2>
                                 </IngredientDetails></div>
-
                         </>
                     }
                 />
@@ -76,14 +76,13 @@ const ModalSwitch = () => {
                 path='/ingredients/:ingredientId' exact={true}
                 children={
                     <Modal onClose={handleModalClose}>
-                        <IngredientDetails><h2 className={'text text_type_main-large pl-10 pt-15'}
-                                               style={{alignSelf: 'start'}}>Детали инредиента</h2>
+                        <IngredientDetails><h2 className={`text text_type_main-large pl-10 pt-15 ${styles.ingredientModalHeader}`}>Детали ингредиента</h2>
                         </IngredientDetails>
                     </Modal>
                 }
             />)}
-
-        </div>
+        </main>
+        </>
     );
 };
 

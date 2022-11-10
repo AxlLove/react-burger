@@ -40,18 +40,16 @@ const RegisterPage = () => {
         dispatch(registerUser(form))
     }
 
-    if (user) {
-        return (
-            <Redirect
-                to={
-                    history.location.state?.from || '/'
-                }
-            />
-        );
-    }
+    // if (user) {
+    //     return (
+    //         <Redirect
+    //             to={
+    //                 history.location.state?.from || '/'
+    //             }
+    //         />
+    //     );
+    // }
     return (
-        <>
-            <AppHeader/>
             <div className={`${styles.registerPage}`}>
                 <Form formref={ref} header={'Регистрация'}
                       buttonName={'Зарегистрироваться'}
@@ -68,9 +66,6 @@ const RegisterPage = () => {
                         className={`text text_type_main-small ${styles.link}`} to={'/login'}>Войти</Link></p>
                 </div>
             </div>
-        </>
-
-
     )
 }
 export default RegisterPage;

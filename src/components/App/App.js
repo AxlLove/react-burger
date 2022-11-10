@@ -12,6 +12,7 @@ function App() {
         if (!getCookie(ACCESS_TOKEN_NAME) || !localStorage.getItem(REFRESH_TOKEN_NAME)) {
             return
         }
+        console.log(getCookie(ACCESS_TOKEN_NAME))
         dispatch(getUser())
     }, [dispatch])
 

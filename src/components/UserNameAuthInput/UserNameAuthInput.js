@@ -42,7 +42,7 @@ export const UserNameAuthInput = ({
             onBlur={onBlur}
             onFocus={onFocus}
             error={error}
-            errorText={'Некоректное имя пользователя'}
+            errorText={'Некоректное имя пользователя, длина должна быть не менее 3х символов и не превышать 32'}
             maxLength={32}
             minLength={3}
             {...rest}

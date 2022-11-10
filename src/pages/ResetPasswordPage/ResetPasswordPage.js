@@ -48,24 +48,15 @@ const ResetPasswordPage = () => {
                 setButtonDisabled(false)
             })
     }
-    if (user) {
-        return (
-            <Redirect
-                to={
-                    '/'}
-            />
-        );
-    }
-    if (history.location.state !== '/forgot-password') {
-        return (
-            <Redirect
-                to={'/'}
-            />
-        );
-    }
+
+    // if (history.location.state !== '/forgot-password') {
+    //     return (
+    //         <Redirect
+    //             to={'/'}
+    //         />
+    //     );
+    // }
     return (
-        <>
-            <AppHeader/>
             <div className={`${styles.resetPasswordPage}`}>
                 <Form formref={ref} header={'Восстановление пароля'}
                       buttonName={'Сохранить'}
@@ -87,9 +78,6 @@ const ResetPasswordPage = () => {
                         className={`text text_type_main-small ${styles.link}`} to='/login'>Войти</Link></p>
                 </div>
             </div>
-        </>
-
-
     )
 }
 export default ResetPasswordPage;

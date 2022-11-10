@@ -40,16 +40,14 @@ const ForgotPasswordPage = () => {
                 setButtonDisabled(false)
             })
     }
-    if (user) {
-        return (
-            <Redirect
-                to={'/'}
-            />
-        );
-    }
+    // if (user) {
+    //     return (
+    //         <Redirect
+    //             to={'/'}
+    //         />
+    //     );
+    // }
     return (
-        <>
-            <AppHeader/>
             <div className={`${styles.forgotPasswordPage}`}>
                 <Form formref={ref} header={'Восстановление пароля'}
                       buttonName={'Восстановить'}
@@ -63,8 +61,6 @@ const ForgotPasswordPage = () => {
                         className={`text text_type_main-small ${styles.link}`} to={'/login'}>Войти</Link></p>
                 </div>
             </div>
-        </>
-
 
     )
 }

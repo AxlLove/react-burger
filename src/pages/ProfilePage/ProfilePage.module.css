@@ -6,11 +6,10 @@
 .content {
     display: flex;
     padding: 120px  360px 0;
+    gap: 60px;
 }
 
-.description {
-    width: 320px
-}
+
 .buttons {
     display: flex;
     gap: 28px;

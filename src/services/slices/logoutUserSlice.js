@@ -13,12 +13,15 @@ const initialState = {
 
 export const logoutUser = createAsyncThunk(`${sliceName}/logout`, async function (_, {rejectWithValue}) {
         return await logout()
-            .then(() => {
-                deleteCookie(ACCESS_TOKEN_NAME)
-                localStorage.removeItem(REFRESH_TOKEN_NAME)
+            .then((res) => {
+                return res
             })
             .catch((err) => {
                 return rejectWithValue(err.message)
+            })
+            .finally(()=> {
+                deleteCookie(ACCESS_TOKEN_NAME)
+                localStorage.removeItem(REFRESH_TOKEN_NAME)
             })
     }
 )

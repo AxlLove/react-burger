@@ -1,0 +1,19 @@
+.main {
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 1920px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ingredientPageContainer {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+.ingredientPageHeader {
+    align-self: center;
+}
+.ingredientModalHeader {
+    align-self: start;
+}

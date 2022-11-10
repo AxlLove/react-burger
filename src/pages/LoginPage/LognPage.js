@@ -42,15 +42,13 @@ const LoginPage = (props) => {
         return (
           <Redirect
             to={
-                 history.location.state?.from || '/' 
+                 history.location.state?.from || '/'
             }
           />
         );
       }
 
     return (
-        <>
-            <AppHeader/>
             <div className={`${styles.loginPage}`}>
                 <Form formref={ref}
                       header={'Вход'}
@@ -71,8 +69,6 @@ const LoginPage = (props) => {
                         пароль</Link></p>
                 </div>
             </div>
-        </>
-
 
     )
 }

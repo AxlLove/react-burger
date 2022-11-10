@@ -14,9 +14,7 @@ const MainPage = () => {
     const onLoad = useSelector(ingredientDataLoadSelector)
 
     return (
-        <>
-            <AppHeader/>
-            <main className={styles.main}>
+            <div className={styles.main}>
                 {
                     onLoad ? <Preloader style={{marginTop: '300px'}}/> :
                         <>
@@ -26,8 +24,7 @@ const MainPage = () => {
                             </DndProvider>
                         </>
                 }
-            </main>
-        </>
+            </div>
     )
 }
 

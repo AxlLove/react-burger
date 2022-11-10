@@ -12,8 +12,8 @@ export const EmailAuthInput = ({
     ...rest
 }) => {
 
-    const validateEmail = (email) => {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const validateEmail = (email) => {;
+        const re = new RegExp(emailRegExp)
         return re.test(email);
     };
     const [error, setError] = useState(false);

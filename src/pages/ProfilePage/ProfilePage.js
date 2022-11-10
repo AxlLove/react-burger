@@ -45,15 +45,9 @@ const ProfilePage = () => {
     }
 
     return (
-        <>
-            <AppHeader/>
             <div className={`${styles.content}`}>
-                <div className={`${styles.navigation} pr-15`}>
-                    <NavBar/>
-                    <p className={`${styles.description} pt-20 text text_type_main-small text_color_inactive`}>В этом
-                        разделе вы можете
-                        изменить свои персональные данные</p>
-                </div>
+                <NavBar text={'В этом разделе вы можете изменить свои персональные данные'}>
+                </NavBar>
                 {!!initialInput && (<form ref={ref} className={styles.form}>
                     <NameInput name={'name'} value={state.name} onChange={handleInputChange} icon={"EditIcon"}/>
                     <EmailInput name={'email'} value={state.email} onChange={handleInputChange} placeholder={'Логин'}
@@ -72,9 +66,6 @@ const ProfilePage = () => {
                         className={`${styles.submitError} text text_type_main-small`}>{errorMessage}</span>}
                 </form>)}
             </div>
-        </>
-
-
     )
 }
 export default ProfilePage;

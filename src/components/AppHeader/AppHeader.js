@@ -1,9 +1,14 @@
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './AppHeader.module.css';
-import {NavLink, useRouteMatch} from 'react-router-dom'
+import {NavLink, useLocation, useRouteMatch} from 'react-router-dom'
+import {useEffect} from "react";
 
 function AppHeader() {
     const {path} = useRouteMatch()
+    const {isExact} = useRouteMatch()
+     const location = useLocation()
+
+
     return (
         <header className={styles.header}>
             <nav className={styles.content}>
