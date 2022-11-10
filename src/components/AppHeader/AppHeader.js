@@ -17,13 +17,13 @@ function AppHeader() {
                         className={`text text_type_main-default ${styles.link} pt-4 pb-4 pr-5 pl-6`}
                         activeClassName={styles.textActive}
                         exact to={{pathname: `/`}}>
-                        <BurgerIcon type={`${path === '/' ? 'primary' : 'secondary'}`}/>
+                        <BurgerIcon type={'secondary'}/>
                         Конструктор
                     </NavLink>
 
                     <NavLink className={`text text_type_main-default ${styles.link} pt-4 pb-4 pr-5 pl-6`}
                              activeClassName={styles.textActive} to={{pathname: `/feed`}}>
-                        <ListIcon type={`${path.includes('/feed') ? 'primary' : 'secondary'}`}/>
+                        <ListIcon type={'secondary'}/>
                         Лента заказов
                     </NavLink>
                 </div>
@@ -32,7 +32,7 @@ function AppHeader() {
 
                 <NavLink className={`text text_type_main-default ${styles.link} pt-4 pb-4 pr-5 pl-6`}
                          activeClassName={styles.textActive} to={{pathname: `/profile`}}>
-                    <ProfileIcon type={`${path.includes('/profile') ? 'primary' : 'secondary'}`}/>
+                    <ProfileIcon type={'secondary'}/>
                     Личный кабинет
                 </NavLink>
             </nav>

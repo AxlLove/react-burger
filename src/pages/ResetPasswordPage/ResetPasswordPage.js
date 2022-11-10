@@ -49,13 +49,13 @@ const ResetPasswordPage = () => {
             })
     }
 
-    // if (history.location.state !== '/forgot-password') {
-    //     return (
-    //         <Redirect
-    //             to={'/'}
-    //         />
-    //     );
-    // }
+    if (history.location.state !== '/forgot-password') {
+        return (
+            <Redirect
+                to={'/'}
+            />
+        );
+    }
     return (
             <div className={`${styles.resetPasswordPage}`}>
                 <Form formref={ref} header={'Восстановление пароля'}

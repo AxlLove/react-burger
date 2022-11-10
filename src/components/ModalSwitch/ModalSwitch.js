@@ -14,12 +14,13 @@ import AppHeader from "../AppHeader/AppHeader";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 import styles from './ModalSwitch.module.css'
 import ProfileOrdersPage from "../../pages/ProfileOrdersPage/ProfileOrdersPage";
+import OnlyUnAuthRoute from "../OnlyUnAuthRoute/OnlyUnAuthRoute";
 
 const ModalSwitch = () => {
     const dispatch = useDispatch()
     const location = useLocation();
     const history = useHistory();
-    let background = location.state && location.state.background;
+    const  background = location.state && location.state.background;
 
     const handleModalClose = () => {
         dispatch(
@@ -36,18 +37,18 @@ const ModalSwitch = () => {
                 <Route exact={true} path={'/'} >
                     <MainPage/>
                 </Route>
-                <Route path={'/login'} exact={true} onlyUnAuth={true}>
+                <OnlyUnAuthRoute path={'/login'} exact={true}>
                     <LoginPage />
-                </Route>
-                <Route path={'/register'} exact={true} onlyUnAuth={true}>
+                </OnlyUnAuthRoute>
+                <OnlyUnAuthRoute path={'/register'} exact={true}>
                     <RegisterPage/>
-                </Route>
-                <Route path={'/forgot-password'} exact={true} onlyUnAuth={true}>
+                </OnlyUnAuthRoute>
+                <OnlyUnAuthRoute path={'/forgot-password'} exact={true}>
                     <ForgotPasswordPage/>
-                </Route>
-                <Route path={'/reset-password'} exact={true} onlyUnAuth={true}>
+                </OnlyUnAuthRoute>
+                <OnlyUnAuthRoute path={'/reset-password'} exact={true}>
                     <ResetPasswordPage/>
-                </Route>
+                </OnlyUnAuthRoute>
                 <ProtectedRoute path={'/profile'} exact={true} >
                     <ProfilePage/>
                 </ProtectedRoute>

@@ -30,7 +30,7 @@ export const PasswordAuthInput = ({
     };
 
     const validateField = (value) => {
-        setError(value.length <= 2);
+        setError(value.length <= 4);
     };
 
     const onFocus = () => {
@@ -59,8 +59,8 @@ export const PasswordAuthInput = ({
             onFocus={onFocus}
             error={error}
             onIconClick={onIconClick}
-            errorText={'Некоректный пароль'}
-            minLength={3}
+            errorText={'Пароль должен содержать не менее пяти символов'}
+            minLength={5}
             required={true}
             {...rest}
         />

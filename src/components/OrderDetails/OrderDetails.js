@@ -1,9 +1,9 @@
 import image from '../../images/done.png'
 import styles from './OrderDetails.module.css'
 import {useSelector} from 'react-redux';
-
+import {orderNumberSelector} from '../../services/selectors/orderSelectors'
 function OrderDetails() {
-    const identifier = useSelector(store => store.order?.orderDetails?.order?.number)
+    const identifier = useSelector(orderNumberSelector)
 
 
     return (

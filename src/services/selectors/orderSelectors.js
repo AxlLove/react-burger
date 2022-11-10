@@ -5,3 +5,5 @@ export const orderDataSelector = (store) => {
     return {ingredients: dataId}
 }
 export const constructorSubmitOrderSelector = (store) => ({onLoad: store?.order?.onLoad, onError: store?.order?.onError});
+
+export const orderNumberSelector = store => store.order?.orderDetails?.order?.number

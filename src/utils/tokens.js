@@ -6,7 +6,7 @@ export const saveTokens = (response) => {
         authToken = response['accessToken'].split('Bearer ')[1];
     }
     if(authToken) {
-        setCookie('token', authToken, {expires: 1200});
+        setCookie('token', authToken, {expires: 2400});
     }
     if(response['refreshToken']) {
         localStorage.setItem('refreshToken', response['refreshToken']);

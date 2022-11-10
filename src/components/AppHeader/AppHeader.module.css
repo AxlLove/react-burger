@@ -20,11 +20,18 @@
     gap: 8px;
     text-decoration: none;
     color: #8585AD;
+    fill: #8585AD;
 }
 
 .textActive {
     color: #F2F2F3;
 }
+
+.textActive  svg {
+    fill: white
+}
+
+
 
 .link:hover {
     opacity: .8;

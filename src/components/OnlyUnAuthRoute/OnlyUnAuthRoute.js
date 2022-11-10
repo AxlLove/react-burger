@@ -1,13 +1,12 @@
 import {useSelector} from "react-redux";
-import {Route, Redirect} from "react-router-dom";
+import {Route, Redirect, useHistory} from "react-router-dom";
 import {getUserInfo} from "../../services/selectors/userSelector";
 import {getUserLoadSelector} from "../../services/selectors/getUserSelector";
 
-
-const ProtectedRoute = ({children, ...rest}) => {
+const OnlyUnAuthRoute = ({children, ...rest}) => {
     const user = useSelector(getUserInfo)
     const userLoad = useSelector(getUserLoadSelector)
-
+    const history = useHistory()
     if (userLoad) {
         return null
     }
@@ -15,16 +14,15 @@ const ProtectedRoute = ({children, ...rest}) => {
     return (
         <Route
             {...rest}
-            render={({location}) => user ? (
+            render={() => !user ? (
                     children
                 ) :
                 (<Redirect
-                    to={{pathname: '/login', state: {from: location}}}/>)
+                    to={history.location.state?.from || '/'}/>)
             }
         />
     );
 }
 
 
-export default ProtectedRoute
-
+export default OnlyUnAuthRoute
