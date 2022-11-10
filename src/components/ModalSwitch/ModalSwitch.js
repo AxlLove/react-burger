@@ -52,9 +52,9 @@ const ModalSwitch = () => {
                 <ProtectedRoute path={'/profile'} exact={true} >
                     <ProfilePage/>
                 </ProtectedRoute>
-                <ProtectedRoute path={'/feed'} exact={true}>
+                <Route path={'/feed'} exact={true}>
                     <div/>
-                </ProtectedRoute>
+                </Route>
                 <ProtectedRoute path={'/profile/orders'} exact={true}>
                     <ProfileOrdersPage></ProfileOrdersPage>
                 </ProtectedRoute>

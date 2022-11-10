@@ -2,6 +2,7 @@ import {useSelector} from "react-redux";
 import {Route, Redirect} from "react-router-dom";
 import {getUserInfo} from "../../services/selectors/userSelector";
 import {getUserLoadSelector} from "../../services/selectors/getUserSelector";
+import PropTypes from "prop-types";
 
 
 const ProtectedRoute = ({children, ...rest}) => {
@@ -25,6 +26,9 @@ const ProtectedRoute = ({children, ...rest}) => {
     );
 }
 
+ProtectedRoute.propTypes = {
+    children: PropTypes.element,
+};
 
 export default ProtectedRoute
 

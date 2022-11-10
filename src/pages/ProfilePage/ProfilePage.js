@@ -1,5 +1,4 @@
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import AppHeader from "../../components/AppHeader/AppHeader";
 import styles from './ProfilePage.module.css'
 import NavBar from "../../components/NavBar/NavBar";
 import {useEffect, useRef, useState} from "react";

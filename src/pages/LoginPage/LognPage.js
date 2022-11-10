@@ -1,5 +1,4 @@
 import Form from "../../components/Form/Form";
-import AppHeader from "../../components/AppHeader/AppHeader";
 import {Link} from "react-router-dom";
 import styles from './LoginPage.module.css'
 import {useRef, useState} from "react";
@@ -8,20 +7,18 @@ import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
 import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuthInput";
 import {loginRequestSelector} from "../../services/selectors/loginUserSelector";
 import {loginUser} from "../../services/slices/loginUserSlice";
-import { getUserInfo } from "../../services/selectors/userSelector";
-import { Redirect, useHistory } from "react-router-dom";
+
+
 const LoginPage = (props) => {
     const ref = useRef()
     const dispatch = useDispatch()
     const {onLoad, onError, errorMessage} = useSelector(loginRequestSelector)
-    const user = useSelector(getUserInfo)
 
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
 
-    const history = useHistory();
     const handleInputChange = (event) => {
         const target = event.target;
         const name = target.name;

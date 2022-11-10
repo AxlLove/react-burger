@@ -1,5 +1,4 @@
 import Form from "../../components/Form/Form";
-import AppHeader from "../../components/AppHeader/AppHeader";
 import {Link} from "react-router-dom";
 import styles from './ForgotPasswordPage.module.css'
 import {useState, useRef} from "react";
@@ -7,9 +6,6 @@ import {resetPasswordEmailSent} from "../../utils/Api";
 import {useHistory} from "react-router-dom";
 import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
 import {emailRegExp} from "../../utils/regExp";
-import {getUserInfo} from "../../services/selectors/userSelector";
-import {Redirect} from "react-router-dom";
-import {useSelector} from "react-redux";
 
 const ForgotPasswordPage = () => {
     const ref = useRef()
@@ -17,7 +13,6 @@ const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const [submitErr, setSubmitErr] = useState(false)
-    const user = useSelector(getUserInfo)
 
     const onChange = (e) => {
         setSubmitErr(false)

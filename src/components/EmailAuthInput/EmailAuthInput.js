@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {emailRegExp} from "../../utils/regExp";
+import {emailRegExp, emailRegExpPattern} from "../../utils/regExp";
 import PropTypes, {string} from "prop-types";
 
 
@@ -13,8 +13,7 @@ export const EmailAuthInput = ({
 }) => {
 
     const validateEmail = (email) => {;
-        const re = new RegExp(emailRegExp)
-        return re.test(email);
+        return emailRegExp.test(email);
     };
     const [error, setError] = useState(false);
 
@@ -48,7 +47,7 @@ export const EmailAuthInput = ({
             onFocus={onFocus}
             error={error}
             errorText={'Некоректный E-mail'}
-            pattern={emailRegExp}
+            pattern={emailRegExpPattern}
             required={true}
             {...rest}
         />

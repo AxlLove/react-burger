@@ -1,5 +1,4 @@
 import Form from "../../components/Form/Form";
-import AppHeader from "../../components/AppHeader/AppHeader";
 import {Link} from "react-router-dom";
 import styles from './RegisterPage.module.css'
 import {useRef, useState} from "react";
@@ -9,8 +8,7 @@ import {PasswordAuthInput} from '../../components/PasswordAuthInput/PasswordAuth
 import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
 import {UserNameAuthInput} from "../../components/UserNameAuthInput/UserNameAuthInput";
 import {registerRequestSelector} from '../../services/selectors/registerUserSelectors';
-import {getUserInfo} from "../../services/selectors/userSelector";
-import {Redirect, useHistory} from "react-router-dom";
+
 
 const RegisterPage = () => {
     const ref = useRef()
@@ -21,8 +19,7 @@ const RegisterPage = () => {
         email: '',
         password: '',
     });
-    const user = useSelector(getUserInfo)
-    const history = useHistory()
+
     const handleInputChange = (event) => {
         const target = event.target;
         const name = target.name;

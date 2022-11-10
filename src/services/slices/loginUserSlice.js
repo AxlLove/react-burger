@@ -38,7 +38,7 @@ export const loginUserSlice = createSlice({
             state.onLoad = false;
             state.onError = true;
             if (action.payload === 'email or password are incorrect') {
-                state.errorMessage = 'E-mail ли пароль введены неверно!'
+                state.errorMessage = 'E-mail или пароль введены неверно!'
                 return
             }
             state.errorMessage = 'На сервере произошла ошибка, попробуйте еще раз!'

@@ -1,20 +1,16 @@
 import Form from "../../components/Form/Form";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import AppHeader from "../../components/AppHeader/AppHeader";
 import {Link} from "react-router-dom";
 import styles from './ResetPasswordPage.module.css'
 import {useState, useRef} from "react";
 import {resetPassword} from "../../utils/Api";
 import {useHistory} from "react-router-dom";
 import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuthInput";
-import {getUserInfo} from "../../services/selectors/userSelector";
 import {Redirect} from "react-router-dom";
-import {useSelector} from "react-redux";
 
 const ResetPasswordPage = () => {
     const ref = useRef()
     const history = useHistory()
-    const user = useSelector(getUserInfo)
     const [form, setForm] = useState({
         password: "",
         token: '',
