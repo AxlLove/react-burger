@@ -40,13 +40,7 @@ const ForgotPasswordPage = () => {
                 setButtonDisabled(false)
             })
     }
-    // if (user) {
-    //     return (
-    //         <Redirect
-    //             to={'/'}
-    //         />
-    //     );
-    // }
+
     return (
             <div className={`${styles.forgotPasswordPage}`}>
                 <Form formref={ref} header={'Восстановление пароля'}

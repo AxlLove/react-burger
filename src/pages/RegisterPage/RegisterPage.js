@@ -40,15 +40,6 @@ const RegisterPage = () => {
         dispatch(registerUser(form))
     }
 
-    // if (user) {
-    //     return (
-    //         <Redirect
-    //             to={
-    //                 history.location.state?.from || '/'
-    //             }
-    //         />
-    //     );
-    // }
     return (
             <div className={`${styles.registerPage}`}>
                 <Form formref={ref} header={'Регистрация'}

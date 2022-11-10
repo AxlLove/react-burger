@@ -38,15 +38,7 @@ const LoginPage = (props) => {
         }
        dispatch(loginUser(form))
     }
-    // if(user){
-    //     return (
-    //       <Redirect
-    //         to={
-    //              history.location.state?.from || '/'
-    //         }
-    //       />
-    //     );
-    //   }
+
 
     return (
             <div className={`${styles.loginPage}`}>
