@@ -1,0 +1,26 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.content {
+    display: flex;
+    padding: 120px  360px 0;
+    gap: 60px;
+}
+
+
+.buttons {
+    display: flex;
+    gap: 28px;
+    justify-content: end;
+}
+.cancelChanges {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #4C4CFF;;
+}
+.submitError {
+    color: #b02828;
+}

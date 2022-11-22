@@ -6,10 +6,3 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.main {
-    display: flex; 
-    gap: 60px;
-    align-items: flex-start;
-    justify-content: center;
-}
-

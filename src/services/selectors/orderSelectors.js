@@ -4,7 +4,6 @@ export const orderDataSelector = (store) => {
     const dataId = data.map(item => item?._id)
     return {ingredients: dataId}
 }
-export const constructorSubmitOrderSelector = (store) => ({
-    onLoad: store.ingredients.onLoadOrder,
-    onError: store.ingredients.onErrorOrder
-});
+export const constructorSubmitOrderSelector = (store) => ({onLoad: store?.order?.onLoad, onError: store?.order?.onError});
+
+export const orderNumberSelector = store => store.order?.orderDetails?.order?.number

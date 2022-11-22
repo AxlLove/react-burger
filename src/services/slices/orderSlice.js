@@ -1,39 +1,44 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {makeAnOrder} from "../../utils/Api";
+import {makeAnOrder, refreshToken} from "../../utils/Api";
+import {saveTokens} from "../../utils/tokens";
 
 const sliceName = 'order'
 
 const initialState = {
     orderDetails: null,
-    onLoadOrder: false,
-    onErrorOrder: false,
+    onLoad: false,
+    onError: false,
 };
 
-export const fetchOrder = createAsyncThunk(`${sliceName}/fetchOrder`, async function (orderData) {
-        return await
-            makeAnOrder(orderData).then(res => {
-                return res
-            })
-                .catch((res) => {
-                    throw new Error(`Ошибка ${res}`)
-                })
+export const fetchOrder = createAsyncThunk(`${sliceName}/fetchOrder`, async function (orderData, {rejectWithValue}) {
+
+        try {
+            return await makeAnOrder(orderData)
+        } catch (err) {
+            if (err.message === 'jwt expired') {
+                const tokens = await refreshToken()
+                saveTokens(tokens)
+                return await makeAnOrder(orderData)
+            }
+            return rejectWithValue(err.message)
+        }
     }
 )
 export const orderSlice = createSlice({
     name: sliceName,
     initialState,
-    extraReducers:  {
+    extraReducers: {
         [fetchOrder.pending]: (state) => {
-            state.onLoadOrder = true;
-            state.onErrorOrder = false
+            state.onLoad = true;
+            state.onError = false
         },
         [fetchOrder.fulfilled]: (state, action) => {
-            state.onLoadOrder = false;
+            state.onLoad = false;
             state.orderDetails = action.payload
         },
         [fetchOrder.rejected]: (state) => {
-            state.onLoadOrder = false;
-            state.onErrorOrder = true
+            state.onLoad = false;
+            state.onError = true
         },
     }
 })

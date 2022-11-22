@@ -36,7 +36,7 @@ export const ingredientSlice = createSlice({
             state.constructorData.push(action.payload)
         },
     },
-    extraReducers:  {
+    extraReducers: {
         [fetchIngredients.pending]: (state) => {
             state.onLoad = true;
             state.onError = false

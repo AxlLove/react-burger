@@ -1,1 +1,1 @@
-export const getIngredientsSelector = store=> store.info.ingredient;
+export const getIngredientInfoSelector = store=> store?.info?.ingredient;

@@ -1,0 +1,31 @@
+.page {
+    width: 100%;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.header {
+    font-weight: 400;
+    font-size: 140px;
+    line-height: 169px;
+    text-align: center;
+    margin: 246px auto 0;
+
+}
+.message {
+    text-align: center;
+    margin: 5px auto 0;
+}
+
+.link {
+    margin: 184px auto 60px;
+    text-decoration: none;
+    color: #3456F3;
+    cursor: pointer;
+    transition: visibility 0s, opacity 0.5s;
+}
+.link:hover {
+    opacity: .7;
+}

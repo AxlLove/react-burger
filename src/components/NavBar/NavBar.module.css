@@ -1,0 +1,32 @@
+.links {
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+}
+
+.link {
+    text-decoration: none;
+    color: #8585AD;
+    transition: linear .2s;
+    width: 100%;
+    height: 64px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.linkTypeButton {
+    border: none;
+    background: none ;
+}
+
+.activeLink {
+    color: #F2F2F3;
+}
+.link:hover {
+    opacity: .8;
+}
+
+.description {
+    width: 300px
+}

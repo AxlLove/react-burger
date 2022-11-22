@@ -1,6 +1,5 @@
 import styles from './BurgerConstructor.module.css'
-import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
-import PropTypes from "prop-types";
+import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import {useSelector, useDispatch} from "react-redux";
@@ -19,10 +18,14 @@ import {
 import {useDrop} from "react-dnd";
 import {v4 as uiv4} from 'uuid'
 import ConstructorItem from '../ConstructorItem/ConstructorItem';
+import {getUserInfo} from "../../services/selectors/userSelector";
+import {useHistory} from "react-router-dom";
+import Preloader from "../Preloader/Preloader";
 
 function BurgerConstructor() {
     const dispatch = useDispatch()
-
+    const history = useHistory()
+    const user = useSelector(getUserInfo)
     const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
     const {selectedBun, otherIngredients} = useSelector(constructorDataSelector)
     const {onLoad, onError} = useSelector(constructorSubmitOrderSelector)
@@ -34,6 +37,10 @@ function BurgerConstructor() {
     }
 
     const handleMakeAnOrder = () => {
+        if (!user) {
+            history.push('/login')
+            return
+        }
         dispatch(fetchOrder(orderData))
         setBurgerConstructorModalOpen(true)
     }
@@ -115,8 +122,13 @@ function BurgerConstructor() {
             }
 
             {burgerConstructorModalOpen && !onLoad && !onError &&
-                <Modal toggleModal={toggleModal}>
+                <Modal onClose={toggleModal}>
                     <OrderDetails/>
+                </Modal>
+            }
+            {onLoad &&
+                <Modal>
+                    <Preloader></Preloader>
                 </Modal>
             }
         </section>

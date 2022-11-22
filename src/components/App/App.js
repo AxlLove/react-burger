@@ -1,46 +1,29 @@
-import React from 'react';
-import {useState, useEffect} from "react";
-import styles from './App.module.css';
-import AppHeader from '../AppHeader/AppHeader';
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import Preloader from "../Preloader/Preloader";
+import React, {useEffect} from 'react';
+import {useDispatch} from 'react-redux'
+import {getUser} from '../../services/slices/getUserSlice'
+import ModalSwitch from "../ModalSwitch/ModalSwitch";
 import {fetchIngredients} from "../../services/slices/IngerdientSlice";
-import {Provider, useDispatch, useSelector} from "react-redux";
-import {ingredientDataLoadSelector} from "../../services/selectors/ingrediensSelectors";
-import {DndProvider} from 'react-dnd'
-import {HTML5Backend} from 'react-dnd-html5-backend';
-
 
 function App() {
-    const onLoad = useSelector(ingredientDataLoadSelector)
     const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getUser())
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(fetchIngredients())
     }, [dispatch])
 
-
     return (
-
-        <div className={styles.App}>
-            <AppHeader/>
-            <main className={styles.main}>
-                {
-                    onLoad ? <Preloader/> :
-                        <>
-                            <DndProvider backend={HTML5Backend}>
-                                <BurgerIngredients/>
-                                <BurgerConstructor/>
-                            </DndProvider>
-                        </>
-                }
-            </main>
-
-        </div>
-
-
+        <ModalSwitch/>
     );
 }
 
 export default App;
+
+
+//TODO Раскидать компоненты UI..
+
+//TODO Доработать  валидацию в редактировании профиля + посмотреть на иконку она должна пропадать при клике
+// TODO все таки разобраться с модалкой ORDER
+//

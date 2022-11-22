@@ -1,0 +1,16 @@
+.form {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+.button {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.submitError {
+    color: #b02828;
+}

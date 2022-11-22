@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import {getIngredientsSelector} from "../../services/selectors/ingrediensSelectors";
 
-function CardList({type, name, handeCardClick, listRef}) {
+function CardList({type, name, listRef}) {
     const ingredients = useSelector(getIngredientsSelector)
     return (
         <div name={name} ref={listRef}>
@@ -12,8 +12,7 @@ function CardList({type, name, handeCardClick, listRef}) {
             <ul  className={`${styles.list} pt-6`}>
                 {ingredients.map((card) => (
                     card.type === type &&
-                    <Card handeCardClick={handeCardClick}
-                          card={card}
+                    <Card card={card}
                           key={card._id}/>
                 ))}
             </ul>
@@ -24,7 +23,6 @@ function CardList({type, name, handeCardClick, listRef}) {
 CardList.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    handeCardClick: PropTypes.func.isRequired,
     listRef: PropTypes.object.isRequired,
 };
 
