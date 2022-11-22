@@ -6,11 +6,14 @@ import {fetchIngredients} from "../../services/slices/IngerdientSlice";
 
 function App() {
     const dispatch = useDispatch()
+
     useEffect(() => {
+        // @ts-ignore
         dispatch(getUser())
     }, [dispatch])
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(fetchIngredients())
     }, [dispatch])
 
@@ -26,4 +29,5 @@ export default App;
 
 //TODO Доработать  валидацию в редактировании профиля + посмотреть на иконку она должна пропадать при клике
 // TODO все таки разобраться с модалкой ORDER
-//
+//TODO Удалить APP.module.css
+

@@ -8,16 +8,16 @@ import {useIntersectionObserver} from "../../hooks/useIntersectionObserver";
 function BurgerIngredients() {
 
 
-    const mainRef = useRef()
-    const bunRef = useRef()
-    const sauceRef = useRef()
+    const mainRef = useRef<HTMLDivElement>(null)
+    const bunRef = useRef<HTMLDivElement>(null)
+    const sauceRef = useRef<HTMLDivElement>(null)
     const [containerRef, current] = useIntersectionObserver({
         rootMargin: '0px 0px -90% 0px',
         threshold: 0
     })
 
 
-    const handleClickTab = (ref) => {
+    const handleClickTab = (ref: HTMLDivElement) => {
         ref.current.scrollIntoView({behavior: 'smooth'})
     }
 

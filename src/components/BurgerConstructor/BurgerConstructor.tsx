@@ -22,6 +22,34 @@ import {getUserInfo} from "../../services/selectors/userSelector";
 import {useHistory} from "react-router-dom";
 import Preloader from "../Preloader/Preloader";
 
+
+interface IIngredient {
+    _id: string;
+    name: string;
+    type: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+    __v?: number;
+}
+//TODO вынести тип
+interface IIngredientWithUniqueId extends IIngredient {
+    dragId: string;
+}
+interface IDragCollect {
+    isHover: boolean;
+    isBunHover: boolean;
+}
+interface ITestInterface<IIngredientWithUniqueId, IDragCollect > {
+    DragObject: IIngredientWithUniqueId;
+    CollectedProps: IDragCollect,
+}
+
 function BurgerConstructor() {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -41,14 +69,15 @@ function BurgerConstructor() {
             history.push('/login')
             return
         }
+        // @ts-ignore
         dispatch(fetchOrder(orderData))
         setBurgerConstructorModalOpen(true)
     }
 
 
-    const [{isHover, isBunHover}, dropTargetRef] = useDrop({
+    const [{isHover, isBunHover}, dropTargetRef] = useDrop<IIngredientWithUniqueId, unknown, IDragCollect>({
         accept: 'ingredient',
-        collect: monitor => ({
+        collect: (monitor) => ({
             isHover: monitor.getItem()?.type !== 'bun' && monitor.isOver(),
             isBunHover: monitor.getItem()?.type === 'bun' && monitor.isOver()
         }),
@@ -58,7 +87,7 @@ function BurgerConstructor() {
     })
 
 
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const moveCard = useCallback((dragIndex: number, hoverIndex: number): void => {
         const dragCard = otherIngredients[dragIndex];
         const newCards = [...otherIngredients]
         newCards.splice(dragIndex, 1)
@@ -81,7 +110,7 @@ function BurgerConstructor() {
 
             </div>}
             <ul className={`${styles.container} ${isHover ? styles.borderIngredients : ''} pr-2`}>
-                {otherIngredients && otherIngredients.map(((item, index) => (
+                {otherIngredients && otherIngredients.map(((item: IIngredientWithUniqueId, index: number) => (
                     item.type !== 'bun' &&
                     <ConstructorItem dragId={item.dragId}
                                      index={index}
@@ -100,7 +129,6 @@ function BurgerConstructor() {
                         text={`${selectedBun.name} (низ)`}
                         price={selectedBun.price}
                         thumbnail={selectedBun.image_mobile}
-                        moveCard={moveCard}
                     />
                 </div>
             </div>}
@@ -128,7 +156,7 @@ function BurgerConstructor() {
             }
             {onLoad &&
                 <Modal>
-                    <Preloader></Preloader>
+                    <Preloader/>
                 </Modal>
             }
         </section>

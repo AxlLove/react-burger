@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {FC} from 'react'
 import './Preloader.css'
 
-const Preloader = ({load, style}) => {
+interface IPreloaderProps {
+    load?: boolean;
+    style?: React.CSSProperties;
+}
+const Preloader: FC<IPreloaderProps> = ({load, style}) => {
     return (
         <div style={style} className={`preloader ${load ? 'preloader_visible': ''}`}>
             <div className="preloader__container">
