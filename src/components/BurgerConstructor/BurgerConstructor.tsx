@@ -45,10 +45,6 @@ interface IDragCollect {
     isHover: boolean;
     isBunHover: boolean;
 }
-interface ITestInterface<IIngredientWithUniqueId, IDragCollect > {
-    DragObject: IIngredientWithUniqueId;
-    CollectedProps: IDragCollect,
-}
 
 function BurgerConstructor() {
     const dispatch = useDispatch()

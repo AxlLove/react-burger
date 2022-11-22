@@ -1,25 +1,27 @@
 import styles from './BurgerIngredients.module.css';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useRef} from "react";
+import React, {FC, useRef} from "react";
 import CardList from "../CardList/CardList";
 
 import {useIntersectionObserver} from "../../hooks/useIntersectionObserver";
 
-function BurgerIngredients() {
+const BurgerIngredients: FC = () =>  {
 
 
     const mainRef = useRef<HTMLDivElement>(null)
     const bunRef = useRef<HTMLDivElement>(null)
     const sauceRef = useRef<HTMLDivElement>(null)
+
     const [containerRef, current] = useIntersectionObserver({
         rootMargin: '0px 0px -90% 0px',
         threshold: 0
     })
 
-
-    const handleClickTab = (ref: HTMLDivElement) => {
-        ref.current.scrollIntoView({behavior: 'smooth'})
-    }
+    const handleClickTab = (ref: React.RefObject<HTMLDivElement>) => {
+        if (ref  && ref.current) {
+            ref.current.scrollIntoView({behavior: 'smooth'})
+        }
+    } 
 
     return (
         <section className={styles.burgerIngredients}>

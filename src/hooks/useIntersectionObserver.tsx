@@ -8,7 +8,7 @@ interface IOptions {
 }
 
 export const useIntersectionObserver = (options: IOptions) => {
-    const containerRef = useRef<HTMLElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
     const [current, setCurrent] = useState<string | null>('Булки')
 
     const callback = (entries : Array<IntersectionObserverEntry>) => {
@@ -32,6 +32,6 @@ export const useIntersectionObserver = (options: IOptions) => {
 
     }, [containerRef, options])
 
-    return [containerRef, current, setCurrent]
+    return [containerRef, current]
 
 }
