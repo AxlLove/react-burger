@@ -21,26 +21,8 @@ import ConstructorItem from '../ConstructorItem/ConstructorItem';
 import {getUserInfo} from "../../services/selectors/userSelector";
 import {useHistory} from "react-router-dom";
 import Preloader from "../Preloader/Preloader";
+import {IIngredientWithUniqueId} from "../../types/types";
 
-
-interface IIngredient {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    __v?: number;
-}
-//TODO вынести тип
-interface IIngredientWithUniqueId extends IIngredient {
-    dragId: string;
-}
 interface IDragCollect {
     isHover: boolean;
     isBunHover: boolean;

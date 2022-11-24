@@ -3,6 +3,7 @@ import styles from "./CardList.module.css";
 import {useSelector} from "react-redux";
 import {getIngredientsSelector} from "../../services/selectors/ingrediensSelectors";
 import React, { FC } from "react";
+import {IIngredientWithUniqueId} from "../../types/types";
 
 type TIngredientType = 'bun' | 'sauce' | 'main';
 type TIngredientName = 'Булки' | 'Соусы' | 'Начинки';
@@ -13,24 +14,6 @@ interface ICardListProps {
     listRef: React.RefObject<HTMLDivElement>;
 }
 
-interface IIngredient {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    __v?: number;
-}
-//TODO вынести тип
-interface IIngredientWithUniqueId extends IIngredient {
-    dragId: string;
-}
 //TODO вынести 
 const CardList: FC <ICardListProps> = ({type, name, listRef}) => {
     const ingredients = useSelector(getIngredientsSelector)

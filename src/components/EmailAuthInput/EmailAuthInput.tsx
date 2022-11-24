@@ -1,26 +1,31 @@
-import React, { useRef, useState } from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {emailRegExp, emailRegExpPattern} from "../../utils/regExp";
-import PropTypes, {string} from "prop-types";
 
 
+interface IEmailAuthInputProps {
+    value: string;
+    placeholder?: string | 'E-mail';
+    onChange(e: React.ChangeEvent<HTMLInputElement>): void;
 
-export const EmailAuthInput = ({
+}
+
+export const EmailAuthInput: FC<IEmailAuthInputProps> = ({
     value,
     placeholder = 'E-mail',
     onChange,
     ...rest
 }) => {
 
-    const validateEmail = (email) => {;
+    const validateEmail = (email: string) => {
         return emailRegExp.test(email);
     };
+
     const [error, setError] = useState(false);
 
     const inputRef = useRef(null);
 
-
-    const validateField = (value) => {
+    const validateField = (value: string) => {
         setError(!validateEmail(value));
     };
 
@@ -28,13 +33,14 @@ export const EmailAuthInput = ({
         setError(false);
     };
 
-    const onBlur = (e) => {
+    const onBlur = (e: React.FocusEvent<HTMLInputElement> ) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
             setError(false);
         }
     };
+
 
     return (
         <Input
@@ -52,10 +58,4 @@ export const EmailAuthInput = ({
             {...rest}
         />
     );
-};
-
-EmailAuthInput.propTypes = {
-    value: string.isRequired,
-    placeholder: string,
-    onChange: PropTypes.func.isRequired,
 };

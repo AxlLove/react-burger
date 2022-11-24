@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
+interface IUserNameAuthInput {
+    value: string;
+    placeholder: string;
+    onChange: ()=> void;
+}
 
-
-
-export const UserNameAuthInput = ({
+export const UserNameAuthInput: FC<IUserNameAuthInput> = ({
     value,
     placeholder = 'Имя',
     onChange,
@@ -16,7 +18,7 @@ export const UserNameAuthInput = ({
     const inputRef = useRef(null);
 
 
-    const validateField = (value) => {
+    const validateField = (value: string) => {
         setError(value.length <= 2 || value.length >= 32);
     };
 
@@ -24,7 +26,7 @@ export const UserNameAuthInput = ({
         setError(false);
     };
 
-    const onBlur = (e) => {
+    const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
@@ -48,10 +50,4 @@ export const UserNameAuthInput = ({
             {...rest}
         />
     );
-};
-
-UserNameAuthInput.propTypes = {
-    value: PropTypes.string.isRequired,
-    placeholder: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
 };

@@ -1,11 +1,11 @@
 import {useSelector} from "react-redux";
-import {Route, Redirect} from "react-router-dom";
+import {Route, Redirect, RouteProps} from "react-router-dom";
 import {getUserInfo} from "../../services/selectors/userSelector";
 import {getUserLoadSelector} from "../../services/selectors/getUserSelector";
-import PropTypes from "prop-types";
+import React, {FC} from "react";
 
 
-const ProtectedRoute = ({children, ...rest}) => {
+const ProtectedRoute: FC <React.HTMLAttributes<HTMLElement> & RouteProps> = ({children, ...rest}) => {
     const user = useSelector(getUserInfo)
     const userLoad = useSelector(getUserLoadSelector)
 
@@ -25,10 +25,6 @@ const ProtectedRoute = ({children, ...rest}) => {
         />
     );
 }
-
-ProtectedRoute.propTypes = {
-    children: PropTypes.element,
-};
 
 export default ProtectedRoute
 

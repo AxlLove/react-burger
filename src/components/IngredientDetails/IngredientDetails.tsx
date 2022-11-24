@@ -3,25 +3,26 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getIngredientsSelector} from '../../services/selectors/ingrediensSelectors'
 import {getIngredientInfoSelector} from  '../../services/selectors/IngredientInfoSelectors'
 import {useParams, useRouteMatch} from "react-router-dom";
-import {useEffect} from "react";
+import React, {FC, useEffect} from "react";
 import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
-import PropTypes from "prop-types";
+import {IIngredientWithUniqueId} from "../../types/types";
 
 
-function IngredientDetails({children}) {
+const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children}) => {
     const ingredient = useSelector(getIngredientInfoSelector)
     const ingredients = useSelector(getIngredientsSelector)
     const {isExact} = useRouteMatch()
     const dispatch = useDispatch()
-    const {ingredientId} = useParams()
+    const {ingredientId} = useParams<{ingredientId?: string}>()
 
     useEffect(()=> {
         if(ingredients) {
-            dispatch(ingredientInfoSlice.actions.addIngredientInfo(ingredients.find(item=> item._id === ingredientId)))
+            dispatch(ingredientInfoSlice.actions.addIngredientInfo(ingredients.find((item: IIngredientWithUniqueId) => item._id === ingredientId)))
         }
     }, [ingredientId, ingredients, dispatch])
     useEffect(()=> {
         if(!isExact) {
+            // @ts-ignore
             dispatch(ingredientInfoSlice.actions.deleteIngredientInfo())
         }
     }, [isExact, dispatch])
@@ -53,8 +54,5 @@ function IngredientDetails({children}) {
 
     )
 }
-IngredientDetails.propTypes = {
-    children: PropTypes.element,
-};
 
 export default IngredientDetails;

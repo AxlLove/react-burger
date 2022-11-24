@@ -1,9 +1,18 @@
-import React, {useRef, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
 
-export const NameInput = ({
+interface INameInput {
+    value: string;
+    placeholder?: string | 'E-mail';
+    onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+    size: 'small' | 'default';
+    icon: 'HideIcon' | 'ShowIcon' | 'EditIcon';
+    extraClass: string;
+}
+
+
+export const NameInput: FC<INameInput> = ({
                               value,
                               placeholder = 'Имя',
                               onChange,
@@ -17,7 +26,7 @@ export const NameInput = ({
     const [fieldDisabled, setDisabled] = useState(icon === 'EditIcon');
     const [error, setError] = useState(false);
 
-    const inputRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const onIconClick = () => {
         if (currentIcon === 'ShowIcon') {
@@ -28,7 +37,7 @@ export const NameInput = ({
         setTimeout(() => inputRef.current?.focus(), 0);
     };
 
-    const validateField = (value) => {
+    const validateField = (value: string) => {
         setError(value.length < 2);
     };
 
@@ -36,7 +45,7 @@ export const NameInput = ({
         setError(false);
     };
 
-    const onBlur = (e) => {
+    const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
@@ -69,13 +78,4 @@ export const NameInput = ({
             {...rest}
         />
     );
-};
-
-NameInput.propTypes = {
-    value: PropTypes.string.isRequired,
-    placeholder: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-    size: PropTypes.string,
-    icon: PropTypes.string,
-    extraClass: PropTypes.string,
 };

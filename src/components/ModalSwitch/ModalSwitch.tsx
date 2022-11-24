@@ -15,17 +15,21 @@ import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 import styles from './ModalSwitch.module.css'
 import ProfileOrdersPage from "../../pages/ProfileOrdersPage/ProfileOrdersPage";
 import OnlyUnAuthRoute from "../OnlyUnAuthRoute/OnlyUnAuthRoute";
+import {FC} from "react";
+import { Location } from "history"
 
-const ModalSwitch = () => {
+interface ILocationState {
+  background?: Location;
+}
+const ModalSwitch: FC = () => {
     const dispatch = useDispatch()
-    const location = useLocation();
+    const location = useLocation<ILocationState>();
     const history = useHistory();
-    const  background = location.state && location.state.background;
+    const  background = location?.state && location?.state?.background  ;
 
     const handleModalClose = () => {
-        dispatch(
-            ingredientInfoSlice.actions.deleteIngredientInfo()
-        );
+        // @ts-ignore
+        dispatch(ingredientInfoSlice.actions.deleteIngredientInfo());
         history.goBack();
     };
 
@@ -56,7 +60,7 @@ const ModalSwitch = () => {
                     <div/>
                 </Route>
                 <ProtectedRoute path={'/profile/orders'} exact={true}>
-                    <ProfileOrdersPage></ProfileOrdersPage>
+                    <ProfileOrdersPage/>
                 </ProtectedRoute>
                 <Route
                     path='/ingredients/:ingredientId' exact={true}

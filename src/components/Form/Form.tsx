@@ -1,7 +1,18 @@
 import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './Form.module.css'
-import PropTypes from "prop-types";
-const Form = ({formref, header, buttonName, children, error, onSubmit, disabled, errorMessage='При отправке формы произошла ошибка, попробуйте еще раз!'}) => {
+import React, {FC} from "react";
+
+interface IForm extends React.FormHTMLAttributes<HTMLFormElement>{
+    formref: React.RefObject<HTMLFormElement>;
+    header: string;
+    buttonName: string;
+    error: string;
+    onSubmit: () => void;
+    disabled?: boolean;
+    errorMessage?: string;
+}
+
+const Form: FC <IForm> = ({formref, header, buttonName, children, error, onSubmit, disabled, errorMessage='При отправке формы произошла ошибка, попробуйте еще раз!'}) => {
     return (
         <>
             <form ref={formref}  className={styles.form} noValidate>
@@ -17,15 +28,6 @@ const Form = ({formref, header, buttonName, children, error, onSubmit, disabled,
 
     )
 }
-Form.propTypes = {
-    formref: PropTypes.object,
-    header: PropTypes.string.isRequired,
-    buttonName: PropTypes.string.isRequired,
-    children: PropTypes.node,
-    error: PropTypes.bool.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
-    errorMessage: PropTypes.string,
-};
+
 
 export default Form;

@@ -2,12 +2,16 @@ import styles from "./NavBar.module.css";
 import {NavLink} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logoutUser} from "../../services/slices/logoutUserSlice";
-import PropTypes from "prop-types";
-import Modal from "../Modal/Modal";
+import {FC} from "react";
 
-const NavBar = ({text}) => {
+interface INavBarProps{
+    text: string;
+}
+
+const NavBar: FC<INavBarProps> = ({text}) => {
     const dispatch = useDispatch()
     const logOut = () => {
+        // @ts-ignore
         dispatch(logoutUser())
     }
 
@@ -28,7 +32,4 @@ const NavBar = ({text}) => {
     )
 }
 
-NavBar.propTypes = {
-    text: PropTypes.string
-};
 export default NavBar

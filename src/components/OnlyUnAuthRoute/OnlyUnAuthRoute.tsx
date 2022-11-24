@@ -1,13 +1,17 @@
 import {useSelector} from "react-redux";
-import {Route, Redirect, useHistory} from "react-router-dom";
+import {Route, Redirect, useHistory, RouteProps} from "react-router-dom";
 import {getUserInfo} from "../../services/selectors/userSelector";
 import {getUserLoadSelector} from "../../services/selectors/getUserSelector";
-import PropTypes from "prop-types";
+import React, {FC} from "react";
+import {Location} from "history";
 
-const OnlyUnAuthRoute = ({children, ...rest}) => {
+interface ILocationState {
+    from?: Location;
+}
+const OnlyUnAuthRoute: FC <React.HTMLAttributes<HTMLElement> & RouteProps> = ({children, ...rest}) => {
     const user = useSelector(getUserInfo)
     const userLoad = useSelector(getUserLoadSelector)
-    const history = useHistory()
+    const history = useHistory<ILocationState>()
     if (userLoad) {
         return null
     }
@@ -25,8 +29,5 @@ const OnlyUnAuthRoute = ({children, ...rest}) => {
     );
 }
 
-OnlyUnAuthRoute.propTypes = {
-    children: PropTypes.element,
-};
 
 export default OnlyUnAuthRoute

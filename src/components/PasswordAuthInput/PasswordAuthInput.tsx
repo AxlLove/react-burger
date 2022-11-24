@@ -1,19 +1,25 @@
-import React, {useRef, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-
-
-export const PasswordAuthInput = ({
+//TODO Раз это инпут специально для пароля имеет смысл убрать плейсхолдер из пропсов так же с имейлом
+// повторяю код можно вынести интерфейс
+interface PasswordAuthInputProps {
+    value: string;
+    placeholder: string;
+    onChange: ()=> void;
+}
+type icon = 'HideIcon' | 'ShowIcon' | 'EditIcon';
+//TODO можно вынести
+export const PasswordAuthInput: FC<PasswordAuthInputProps> = ({
                                       value,
                                       placeholder = 'Пароль',
                                       onChange,
                                       ...rest
                                   }) => {
     const [visible, setVisible] = useState(false);
-    const [currentIcon, setCurrentIcon] = useState('ShowIcon');
+    const [currentIcon, setCurrentIcon] = useState<icon>('ShowIcon');
     const [error, setError] = useState(false);
 
-    const inputRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const onIconClick = () => {
         if (currentIcon === 'HideIcon') {
@@ -29,7 +35,7 @@ export const PasswordAuthInput = ({
         setTimeout(() => inputRef.current?.focus(), 0);
     };
 
-    const validateField = (value) => {
+    const validateField = (value: string) => {
         setError(value.length <= 4);
     };
 
@@ -37,7 +43,7 @@ export const PasswordAuthInput = ({
         setError(false);
     };
 
-    const onBlur = (e) => {
+    const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
@@ -65,10 +71,4 @@ export const PasswordAuthInput = ({
             {...rest}
         />
     );
-};
-
-PasswordAuthInput.propTypes = {
-    value: PropTypes.string.isRequired,
-    placeholder: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
 };
