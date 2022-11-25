@@ -9,8 +9,8 @@ import {loginRequestSelector} from "../../services/selectors/loginUserSelector";
 import {loginUser} from "../../services/slices/loginUserSlice";
 
 
-const LoginPage = (props) => {
-    const ref = useRef()
+const LoginPage = () => {
+    const ref = useRef<HTMLFormElement>(null)
     const dispatch = useDispatch()
     const {onLoad, onError, errorMessage} = useSelector(loginRequestSelector)
 
@@ -19,7 +19,7 @@ const LoginPage = (props) => {
         password: '',
     });
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const target = event.target;
         const name = target.name;
         const value = target.value;
@@ -28,11 +28,11 @@ const LoginPage = (props) => {
             [name]: value,
         });
     };
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if(!ref.current.checkValidity()){
+    const handleSubmit = () => {
+        if(ref.current && !ref.current.checkValidity()){
             return
         }
+                // @ts-ignore
        dispatch(loginUser(form))
     }
 

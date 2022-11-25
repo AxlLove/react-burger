@@ -6,8 +6,7 @@ const ProfileOrdersPage = () => {
 
     return (
         <div className={`${styles.content}`}>
-            <NavBar text={'В этом разделе вы можете посмотреть свои заказы'}>
-            </NavBar>
+            <NavBar text={'В этом разделе вы можете посмотреть свои заказы'}/>
         </div>
     )
 }

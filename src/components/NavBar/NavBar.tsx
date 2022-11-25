@@ -16,7 +16,6 @@ const NavBar: FC<INavBarProps> = ({text}) => {
     }
 
     return (
-        <>
             <ul className={`${styles.links}`}>
                 <NavLink className={`${styles.link} text text_type_main-medium`} activeClassName={styles.activeLink} exact
                          to={'/profile'}>Профиль</NavLink>
@@ -27,8 +26,6 @@ const NavBar: FC<INavBarProps> = ({text}) => {
                 </button>
                 <p className={`${styles.description} pt-20 text text_type_main-small text_color_inactive`}>{text}</p>
             </ul>
-
-        </>
     )
 }
 

@@ -3,7 +3,7 @@ import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {emailRegExp, emailRegExpPattern} from "../../utils/regExp";
 
 
-interface IEmailAuthInputProps {
+interface IEmailAuthInputProps extends Pick<React.HTMLProps<HTMLInputElement>, 'pattern' | 'name'> {
     value: string;
     placeholder?: string | 'E-mail';
     onChange(e: React.ChangeEvent<HTMLInputElement>): void;
@@ -23,7 +23,7 @@ export const EmailAuthInput: FC<IEmailAuthInputProps> = ({
 
     const [error, setError] = useState(false);
 
-    const inputRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const validateField = (value: string) => {
         setError(!validateEmail(value));

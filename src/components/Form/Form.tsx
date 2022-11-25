@@ -6,7 +6,7 @@ interface IForm extends React.FormHTMLAttributes<HTMLFormElement>{
     formref: React.RefObject<HTMLFormElement>;
     header: string;
     buttonName: string;
-    error: string;
+    error: boolean;
     onSubmit: () => void;
     disabled?: boolean;
     errorMessage?: string;

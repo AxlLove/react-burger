@@ -2,16 +2,14 @@ import React, {FC, useRef, useState} from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 //TODO Раз это инпут специально для пароля имеет смысл убрать плейсхолдер из пропсов так же с имейлом
 // повторяю код можно вынести интерфейс
-interface PasswordAuthInputProps {
+interface PasswordAuthInputProps extends Pick<React.HTMLProps<HTMLInputElement>, 'name'> {
     value: string;
-    placeholder: string;
-    onChange: ()=> void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>)=> void;
 }
 type icon = 'HideIcon' | 'ShowIcon' | 'EditIcon';
 //TODO можно вынести
 export const PasswordAuthInput: FC<PasswordAuthInputProps> = ({
                                       value,
-                                      placeholder = 'Пароль',
                                       onChange,
                                       ...rest
                                   }) => {
