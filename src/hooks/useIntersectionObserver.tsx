@@ -11,10 +11,10 @@ export const useIntersectionObserver = (options: IOptions) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const [current, setCurrent] = useState<string | null>('Булки')
 
-    const callback = (entries : Array<IntersectionObserverEntry>) => {
+    const callback = (entries: Array<IntersectionObserverEntry>) => {
         entries.forEach(entry=>{
             if(entry.isIntersecting) {
-                setCurrent(entry.target.getAttribute("name"))
+                setCurrent(entry.target.getAttribute("id"))
             }
         })
     }
@@ -32,6 +32,7 @@ export const useIntersectionObserver = (options: IOptions) => {
 
     }, [containerRef, options])
 
-    return [containerRef, current]
+    return {containerRef, current}
 
 }
+ 
