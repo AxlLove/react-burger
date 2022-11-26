@@ -1,7 +1,8 @@
+import { ISuccesfullTokenRefresh } from "./Api";
 import { TOKEN_LIFETIME } from "./constants";
 import { setCookie } from "./coockie"
 
-export const saveTokens = (response) => {
+export const saveTokens = (response: ISuccesfullTokenRefresh) => {
     let authToken = ''
     if(response['accessToken']) {
         authToken = response['accessToken'].split('Bearer ')[1];

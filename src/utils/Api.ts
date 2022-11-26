@@ -7,6 +7,7 @@ const checkResponse = (res: Response) => {
 }
 
 type TReqMethod = 'GET' | 'POST' | 'PUT' | 'PATCH';
+
 interface IHeaders {
     [key: string]: string;
 }
@@ -16,9 +17,57 @@ interface IOptions {
     body?: string;
 }
 
+interface ISuccessfullRequest {
+    success: boolean;
+    message: string;
+}
+interface IUser {
+    email: string;
+    name: string;
+}
+interface ISuccessfullUserRequest {
+        success: boolean;
+        user: IUser;
+        accessToken: string;
+        refreshToken: string;
+}
+export interface ISuccesfullTokenRefresh {
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+}
+interface ISuccessfullGetUserRequest  {
+    success: boolean;
+    user: IUser;
+}
+interface IOrder {
+    createdAt: string;
+    ingredients: Array<IIngredient>
+    name: string;
+    number: number;
+    owner: {
+        createdAt: string;
+        name: string;
+        email: string;
+        updatedAt: string;
+    }
+    price: number;
+    status: string;
+    updatedAt: string;
+    _id: string;
+}
+
+interface ISuccessOrderRequest {
+    name: string;
+    order: IOrder;
+    success: boolean;
+}
+
+
 const request = <T> (url: string, options: IOptions): Promise<T> => {
     return fetch(url, options).then(checkResponse)
 }
+
 
 export const getIngredients = () => {
     return  request<Array<IIngredient>>(`${BASE_URL}/ingredients`, {
@@ -29,8 +78,8 @@ export const getIngredients = () => {
     })
 }
 
-export const makeAnOrder = (ingredients: Array<IIngredientWithUniqueId>) => {
-    return request(`${BASE_URL}/orders`, {
+export const makeAnOrder = (ingredients: Array<string>) => {
+    return request<ISuccessOrderRequest>(`${BASE_URL}/orders`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -41,7 +90,7 @@ export const makeAnOrder = (ingredients: Array<IIngredientWithUniqueId>) => {
 }
 
 export const resetPasswordEmailSent = (email: string) => {
-    return request(`${BASE_URL}/password-reset`, {
+    return request<ISuccessfullRequest>(`${BASE_URL}/password-reset`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -52,7 +101,7 @@ export const resetPasswordEmailSent = (email: string) => {
     })
 }
 export const resetPassword = (password: string, token: string) => {
-    return request(`${BASE_URL}/password-reset/reset`, {
+    return request<ISuccessfullRequest>(`${BASE_URL}/password-reset/reset`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -67,7 +116,7 @@ export const resetPassword = (password: string, token: string) => {
 
 // auth
 export const register = (email: string, password: string, name: string) => {
-    return request(`${BASE_URL}/auth/register`, {
+    return request<ISuccessfullUserRequest>(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -81,7 +130,7 @@ export const register = (email: string, password: string, name: string) => {
 }
 
 export const login = (email: string, password: string) => {
-    return request(`${BASE_URL}/auth/login`, {
+    return request<ISuccessfullUserRequest>(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -94,7 +143,7 @@ export const login = (email: string, password: string) => {
 }
 
 export const userRequest = () => {
-    return request(`${BASE_URL}/auth/user`, {
+    return request<ISuccessfullGetUserRequest>(`${BASE_URL}/auth/user`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -103,7 +152,7 @@ export const userRequest = () => {
     })
 }
 export const updateUser = (name: string, email: string, password: string) => {
-    return request(`${BASE_URL}/auth/user`, {
+    return request<ISuccessfullGetUserRequest>(`${BASE_URL}/auth/user`, {
         method: 'PATCH',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -118,7 +167,7 @@ export const updateUser = (name: string, email: string, password: string) => {
 }
 
 export const logout = () => {
-    return request(`${BASE_URL}/auth/logout`, {
+    return request<ISuccessfullRequest>(`${BASE_URL}/auth/logout`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -130,7 +179,7 @@ export const logout = () => {
 }
 
 export const refreshToken = () => {
-    return request(`${BASE_URL}/auth/token`, {
+    return request<ISuccesfullTokenRefresh>(`${BASE_URL}/auth/token`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -143,3 +192,4 @@ export const refreshToken = () => {
 
 
 //TODO файл разрастается , можно переписать на классы и затипипизировать все в классах
+//TODO !!

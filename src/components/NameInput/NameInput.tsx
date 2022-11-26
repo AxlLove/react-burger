@@ -2,13 +2,13 @@ import React, {FC, useRef, useState} from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 
 
-interface INameInput {
+interface INameInput extends Pick<React.HTMLProps<HTMLInputElement>, 'name'> {
     value: string;
     placeholder?: string | 'E-mail';
     onChange(e: React.ChangeEvent<HTMLInputElement>): void;
-    size: 'small' | 'default';
+    size?: 'small' | 'default';
     icon: 'HideIcon' | 'ShowIcon' | 'EditIcon';
-    extraClass: string;
+    extraClass?: string;
 }
 
 

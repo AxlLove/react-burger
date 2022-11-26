@@ -9,7 +9,7 @@ import {updateUserRequestSelector} from "../../services/selectors/updateUserSele
 import {updateUserInfo} from "../../services/slices/updateUserSlice";
 
 const ProfilePage = () => {
-    const ref = useRef()
+    const ref = useRef<HTMLFormElement>(null)
     const dispatch = useDispatch()
     const {onLoad, onError, errorMessage} = useSelector(updateUserRequestSelector)
     const [change, setChange] = useState(false)
@@ -20,7 +20,7 @@ const ProfilePage = () => {
         setState({...initialInput, password: ''})
     }, [initialInput])
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const target = event.target;
         const name = target.name;
         const value = target.value;
@@ -39,18 +39,18 @@ const ProfilePage = () => {
         setState({...initialInput, password: ''})
     }
     const handleSubmit = () => {
+                        // @ts-ignore
         dispatch(updateUserInfo(state))
         setChange(false)
     }
 
     return (
             <div className={`${styles.content}`}>
-                <NavBar text={'В этом разделе вы можете изменить свои персональные данные'}>
-                </NavBar>
+                <NavBar text={'В этом разделе вы можете изменить свои персональные данные'}/>
                 {!!initialInput && (<form ref={ref} className={styles.form}>
                     <NameInput name={'name'} value={state.name} onChange={handleInputChange} icon={"EditIcon"}/>
                     <EmailInput name={'email'} value={state.email} onChange={handleInputChange} placeholder={'Логин'}
-                                icon={"EditIcon"} isIcon={true}/>
+                                 isIcon={true}/>
                     <PasswordInput name={'password'} value={state.password} onChange={handleInputChange}
                                     icon={"EditIcon"}/>
 
