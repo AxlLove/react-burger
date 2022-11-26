@@ -1,7 +1,7 @@
 import Form from "../../components/Form/Form";
 import {Link} from "react-router-dom";
 import styles from './LoginPage.module.css'
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
 import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuthInput";

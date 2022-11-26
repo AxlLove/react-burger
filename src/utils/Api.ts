@@ -1,16 +1,27 @@
 import {ACCESS_TOKEN_NAME, BASE_URL, REFRESH_TOKEN_NAME} from "./constants";
 import { getCookie } from "./coockie";
+import {IIngredient, IIngredientWithUniqueId} from "../types/types";
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 }
 
-const request = (url, options) => {
+type TReqMethod = 'GET' | 'POST' | 'PUT' | 'PATCH';
+interface IHeaders {
+    [key: string]: string;
+}
+interface IOptions {
+    method: TReqMethod;
+    headers: IHeaders
+    body?: string;
+}
+
+const request = <T> (url: string, options: IOptions): Promise<T> => {
     return fetch(url, options).then(checkResponse)
 }
 
 export const getIngredients = () => {
-    return  request(`${BASE_URL}/ingredients`, {
+    return  request<Array<IIngredient>>(`${BASE_URL}/ingredients`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -18,7 +29,7 @@ export const getIngredients = () => {
     })
 }
 
-export const makeAnOrder = (ingredients) => {    
+export const makeAnOrder = (ingredients: Array<IIngredientWithUniqueId>) => {
     return request(`${BASE_URL}/orders`, {
         method: 'POST',
         headers: {
@@ -29,7 +40,7 @@ export const makeAnOrder = (ingredients) => {
     })
 }
 
-export const resetPasswordEmailSent = (email) => {
+export const resetPasswordEmailSent = (email: string) => {
     return request(`${BASE_URL}/password-reset`, {
         method: 'POST',
         headers: {
@@ -40,7 +51,7 @@ export const resetPasswordEmailSent = (email) => {
         })
     })
 }
-export const resetPassword = (password, token) => {
+export const resetPassword = (password: string, token: string) => {
     return request(`${BASE_URL}/password-reset/reset`, {
         method: 'POST',
         headers: {
@@ -55,7 +66,7 @@ export const resetPassword = (password, token) => {
 
 
 // auth
-export const register = (email, password, name) => {
+export const register = (email: string, password: string, name: string) => {
     return request(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
@@ -69,7 +80,7 @@ export const register = (email, password, name) => {
     })
 }
 
-export const login = (email, password) => {
+export const login = (email: string, password: string) => {
     return request(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
@@ -91,7 +102,7 @@ export const userRequest = () => {
         }
     })
 }
-export const updateUser = (name, email, password) => {
+export const updateUser = (name: string, email: string, password: string) => {
     return request(`${BASE_URL}/auth/user`, {
         method: 'PATCH',
         headers: {

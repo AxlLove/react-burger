@@ -1,11 +1,23 @@
-export function getCookie(name) {
+
+interface ICookieKeys {
+  [key: string]: number | Date | string | undefined | boolean;
+}
+interface ICookie extends ICookieKeys {
+  expires?: number | Date | string ;
+  path?: string,
+  domain?: string,
+  secure?: boolean,
+  sameSite?: 'Lax' | 'None' | 'Strict'
+}
+type TValue = null | string
+export function getCookie(name: string) {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
   
-  export function setCookie(name, value, props) {
+  export function setCookie(name: string, value: TValue, props?: ICookie) : void {
     props = props || {};
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -13,10 +25,10 @@ export function getCookie(name) {
       d.setTime(d.getTime() + exp * 1000);
       exp = props.expires = d;
     }
-    if (exp && exp.toUTCString) {
+    if ( exp instanceof Date && exp.toUTCString) {
       props.expires = exp.toUTCString();
     }
-    value = encodeURIComponent(value);
+     value = value ? encodeURIComponent(value): "";
     let updatedCookie = name + '=' + value;
     for (const propName in props) {
       updatedCookie += '; ' + propName;
@@ -27,6 +39,7 @@ export function getCookie(name) {
     }
     document.cookie = updatedCookie;
   }
-export function deleteCookie(name) {
+export function deleteCookie(name: string) {
   setCookie(name, null, { expires: -1 });
 } 
+//TODO менял немного токены, протестировать работу

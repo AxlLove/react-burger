@@ -2,14 +2,14 @@ import Form from "../../components/Form/Form";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
 import styles from './ResetPasswordPage.module.css'
-import {useState, useRef} from "react";
+import React, {useState, useRef} from "react";
 import {resetPassword} from "../../utils/Api";
 import {useHistory} from "react-router-dom";
 import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuthInput";
 import {Redirect} from "react-router-dom";
 
 const ResetPasswordPage = () => {
-    const ref = useRef()
+    const ref = useRef<HTMLFormElement>(null)
     const history = useHistory()
     const [form, setForm] = useState({
         password: "",
@@ -18,7 +18,7 @@ const ResetPasswordPage = () => {
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const [submitErr, setSubmitErr] = useState(false)
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSubmitErr(false)
         const target = event.target;
         const name = target.name;
@@ -28,9 +28,8 @@ const ResetPasswordPage = () => {
             [name]: value,
         });
     };
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if (!ref.current.checkValidity()) {
+    const handleSubmit = () => {
+        if (ref.current && !ref.current.checkValidity()) {
             return
         }
         setButtonDisabled(true)

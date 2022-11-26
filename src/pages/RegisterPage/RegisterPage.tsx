@@ -1,7 +1,7 @@
 import Form from "../../components/Form/Form";
 import {Link} from "react-router-dom";
 import styles from './RegisterPage.module.css'
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {registerUser} from "../../services/slices/registerUserSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {PasswordAuthInput} from '../../components/PasswordAuthInput/PasswordAuthInput'
@@ -11,7 +11,7 @@ import {registerRequestSelector} from '../../services/selectors/registerUserSele
 
 
 const RegisterPage = () => {
-    const ref = useRef()
+    const ref = useRef<HTMLFormElement>(null)
     const dispatch = useDispatch()
     const {onLoad, onError, errorMessage} = useSelector(registerRequestSelector)
     const [form, setForm] = useState({
@@ -20,7 +20,7 @@ const RegisterPage = () => {
         password: '',
     });
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const target = event.target;
         const name = target.name;
         const value = target.value;
@@ -29,11 +29,11 @@ const RegisterPage = () => {
             [name]: value,
         });
     };
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if (!ref.current.checkValidity()) {
+    const handleSubmit = () => {
+        if (ref.current && !ref.current.checkValidity()) {
             return
         }
+        // @ts-ignore
         dispatch(registerUser(form))
     }
 
