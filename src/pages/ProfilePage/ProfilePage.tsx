@@ -39,32 +39,32 @@ const ProfilePage = () => {
         setState({...initialInput, password: ''})
     }
     const handleSubmit = () => {
-                        // @ts-ignore
+        // @ts-ignore
         dispatch(updateUserInfo(state))
         setChange(false)
     }
 
     return (
-            <div className={`${styles.content}`}>
-                <NavBar text={'В этом разделе вы можете изменить свои персональные данные'}/>
-                {!!initialInput && (<form ref={ref} className={styles.form}>
-                    <NameInput name={'name'} value={state.name} onChange={handleInputChange} icon={"EditIcon"}/>
-                    <EmailInput name={'email'} value={state.email} onChange={handleInputChange} placeholder={'Логин'}
-                                 isIcon={true}/>
-                    <PasswordInput name={'password'} value={state.password} onChange={handleInputChange}
-                                    icon={"EditIcon"}/>
+        <div className={`${styles.content}`}>
+            <NavBar text={'В этом разделе вы можете изменить свои персональные данные'}/>
+            {!!initialInput && (<form ref={ref} className={styles.form}>
+                <NameInput name={'name'} value={state.name} onChange={handleInputChange} icon={"EditIcon"}/>
+                <EmailInput name={'email'} value={state.email} onChange={handleInputChange} placeholder={'Логин'}
+                            isIcon={true}/>
+                <PasswordInput name={'password'} value={state.password} onChange={handleInputChange}
+                               icon={"EditIcon"}/>
 
-                    {change && (<div className={styles.buttons}>
-                        <button
-                            className={`${styles.cancelChanges} text text_type_main-default text_color_inactive`}
-                            onClick={handleCancelChanges}>Отменить
-                        </button>
-                        <Button disabled={onLoad} htmlType={"button"} onClick={handleSubmit}>Сохранить</Button>
-                    </div>)}
-                    {onError && <span
-                        className={`${styles.submitError} text text_type_main-small`}>{errorMessage}</span>}
-                </form>)}
-            </div>
+                {change && (<div className={styles.buttons}>
+                    <button
+                        className={`${styles.cancelChanges} text text_type_main-default text_color_inactive`}
+                        onClick={handleCancelChanges}>Отменить
+                    </button>
+                    <Button disabled={onLoad} htmlType={"button"} onClick={handleSubmit}>Сохранить</Button>
+                </div>)}
+                {onError && <span
+                    className={`${styles.submitError} text text_type_main-small`}>{errorMessage}</span>}
+            </form>)}
+        </div>
     )
 }
 export default ProfilePage;

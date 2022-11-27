@@ -1,9 +1,10 @@
 import styles from './ModalOverlay.module.css'
-import PropTypes from "prop-types";
 import React, {FC} from "react";
+
 interface IModalOverlayProps extends React.HTMLAttributes<HTMLDivElement> {
     onClose?: () => void
 }
+
 const ModalOverlay: FC<IModalOverlayProps> = ({onClose}) => {
 
     return (

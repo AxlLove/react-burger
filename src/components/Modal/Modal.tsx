@@ -6,9 +6,10 @@ import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 const modalRoot = document.getElementById('react-modals') as Element
 
-interface IModalProps extends React.HTMLAttributes<HTMLElement>{
+interface IModalProps extends React.HTMLAttributes<HTMLElement> {
     onClose?: () => void;
 }
+
 const Modal: FC<IModalProps> = ({onClose, children}) => {
     useEffect(() => {
         const closeModalPressEsc = (e: KeyboardEvent) => {
@@ -16,22 +17,22 @@ const Modal: FC<IModalProps> = ({onClose, children}) => {
                 onClose()
             }
         }
-            document.addEventListener('keyup', closeModalPressEsc)
-            return () => {
-                document.removeEventListener('keyup', closeModalPressEsc)
-            }
+        document.addEventListener('keyup', closeModalPressEsc)
+        return () => {
+            document.removeEventListener('keyup', closeModalPressEsc)
+        }
     }, [onClose])
 
 
     return ReactDOM.createPortal(
         <>
-                    <ModalOverlay onClose={onClose}/>
-                    <div className={styles.modal} onClick={event => event.stopPropagation()}>
-                        <button className={styles.button} type={"button"} onClick={onClose}>
-                            <CloseIcon type="primary"/>
-                        </button>
-                        {children}
-                    </div>
+            <ModalOverlay onClose={onClose}/>
+            <div className={styles.modal} onClick={event => event.stopPropagation()}>
+                <button className={styles.button} type={"button"} onClick={onClose}>
+                    <CloseIcon type="primary"/>
+                </button>
+                {children}
+            </div>
         </>
         ,
         modalRoot

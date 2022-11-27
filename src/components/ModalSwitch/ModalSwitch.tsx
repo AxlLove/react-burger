@@ -16,16 +16,17 @@ import styles from './ModalSwitch.module.css'
 import ProfileOrdersPage from "../../pages/ProfileOrdersPage/ProfileOrdersPage";
 import OnlyUnAuthRoute from "../OnlyUnAuthRoute/OnlyUnAuthRoute";
 import {FC} from "react";
-import { Location } from "history"
+import {Location} from "history"
 
 interface ILocationState {
-  background?: Location;
+    background?: Location;
 }
+
 const ModalSwitch: FC = () => {
     const dispatch = useDispatch()
     const location = useLocation<ILocationState>();
     const history = useHistory();
-    const  background = location?.state && location?.state?.background  ;
+    const background = location?.state && location?.state?.background;
 
     const handleModalClose = () => {
         // @ts-ignore
@@ -35,58 +36,62 @@ const ModalSwitch: FC = () => {
 
     return (
         <>
-        <AppHeader/>
-        <main className={styles.main}>
-            <Switch location={background || location}>
-                <Route exact={true} path={'/'} >
-                    <MainPage/>
-                </Route>
-                <OnlyUnAuthRoute path={'/login'} exact={true}>
-                    <LoginPage />
-                </OnlyUnAuthRoute>
-                <OnlyUnAuthRoute path={'/register'} exact={true}>
-                    <RegisterPage/>
-                </OnlyUnAuthRoute>
-                <OnlyUnAuthRoute path={'/forgot-password'} exact={true}>
-                    <ForgotPasswordPage/>
-                </OnlyUnAuthRoute>
-                <OnlyUnAuthRoute path={'/reset-password'} exact={true}>
-                    <ResetPasswordPage/>
-                </OnlyUnAuthRoute>
-                <ProtectedRoute path={'/profile'} exact={true} >
-                    <ProfilePage/>
-                </ProtectedRoute>
-                <Route path={'/feed'} exact={true}>
-                    <div/>
-                </Route>
-                <ProtectedRoute path={'/profile/orders'} exact={true}>
-                    <ProfileOrdersPage/>
-                </ProtectedRoute>
-                <Route
+            <AppHeader/>
+            <main className={styles.main}>
+                <Switch location={background || location}>
+                    <Route exact={true} path={'/'}>
+                        <MainPage/>
+                    </Route>
+                    <OnlyUnAuthRoute path={'/login'} exact={true}>
+                        <LoginPage/>
+                    </OnlyUnAuthRoute>
+                    <OnlyUnAuthRoute path={'/register'} exact={true}>
+                        <RegisterPage/>
+                    </OnlyUnAuthRoute>
+                    <OnlyUnAuthRoute path={'/forgot-password'} exact={true}>
+                        <ForgotPasswordPage/>
+                    </OnlyUnAuthRoute>
+                    <OnlyUnAuthRoute path={'/reset-password'} exact={true}>
+                        <ResetPasswordPage/>
+                    </OnlyUnAuthRoute>
+                    <ProtectedRoute path={'/profile'} exact={true}>
+                        <ProfilePage/>
+                    </ProtectedRoute>
+                    <Route path={'/feed'} exact={true}>
+                        <div/>
+                    </Route>
+                    <ProtectedRoute path={'/profile/orders'} exact={true}>
+                        <ProfileOrdersPage/>
+                    </ProtectedRoute>
+                    <Route
+                        path='/ingredients/:ingredientId' exact={true}
+                        children={
+                            <>
+                                <div className={styles.ingredientPageContainer}>
+                                    <IngredientDetails><h2
+                                        className={`text text_type_main-large ${styles.ingredientPageHeader}`}>Детали
+                                        ингредиента</h2>
+                                    </IngredientDetails></div>
+                            </>
+                        }
+                    />
+                    <Route path={'*'}>
+                        <NotFoundPage/>
+                    </Route>
+
+                </Switch>
+                {background && (<Route
                     path='/ingredients/:ingredientId' exact={true}
                     children={
-                        <>
-                            <div className={styles.ingredientPageContainer}>
-                                <IngredientDetails><h2 className={`text text_type_main-large ${styles.ingredientPageHeader}`}>Детали ингредиента</h2>
-                                </IngredientDetails></div>
-                        </>
+                        <Modal onClose={handleModalClose}>
+                            <IngredientDetails><h2
+                                className={`text text_type_main-large pl-10 pt-15 ${styles.ingredientModalHeader}`}>Детали
+                                ингредиента</h2>
+                            </IngredientDetails>
+                        </Modal>
                     }
-                />
-                 <Route path={'*'}>
-                    <NotFoundPage/>
-                </Route>
-
-            </Switch>
-            {background && (<Route
-                path='/ingredients/:ingredientId' exact={true}
-                children={
-                    <Modal onClose={handleModalClose}>
-                        <IngredientDetails><h2 className={`text text_type_main-large pl-10 pt-15 ${styles.ingredientModalHeader}`}>Детали ингредиента</h2>
-                        </IngredientDetails>
-                    </Modal>
-                }
-            />)}
-        </main>
+                />)}
+            </main>
         </>
     );
 };

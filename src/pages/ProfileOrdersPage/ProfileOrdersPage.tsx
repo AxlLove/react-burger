@@ -1,7 +1,6 @@
 import styles from "./ProfileOrdersPage.module.css";
 import NavBar from "../../components/NavBar/NavBar";
 
-
 const ProfileOrdersPage = () => {
 
     return (

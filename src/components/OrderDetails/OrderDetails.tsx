@@ -2,9 +2,9 @@ import image from '../../images/done.png'
 import styles from './OrderDetails.module.css'
 import {useSelector} from 'react-redux';
 import {orderNumberSelector} from '../../services/selectors/orderSelectors'
+
 function OrderDetails() {
     const identifier = useSelector(orderNumberSelector)
-
 
     return (
         <div className={`${styles.orderDetails} pt-30 pb-30`}>

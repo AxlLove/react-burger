@@ -8,7 +8,8 @@ import {Location} from "history";
 interface ILocationState {
     from?: Location;
 }
-const OnlyUnAuthRoute: FC <React.HTMLAttributes<HTMLElement> & RouteProps> = ({children, ...rest}) => {
+
+const OnlyUnAuthRoute: FC<React.HTMLAttributes<HTMLElement> & RouteProps> = ({children, ...rest}) => {
     const user = useSelector(getUserInfo)
     const userLoad = useSelector(getUserLoadSelector)
     const history = useHistory<ILocationState>()

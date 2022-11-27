@@ -5,7 +5,7 @@ import {getUserLoadSelector} from "../../services/selectors/getUserSelector";
 import React, {FC} from "react";
 
 
-const ProtectedRoute: FC <React.HTMLAttributes<HTMLElement> & RouteProps> = ({children, ...rest}) => {
+const ProtectedRoute: FC<React.HTMLAttributes<HTMLElement> & RouteProps> = ({children, ...rest}) => {
     const user = useSelector(getUserInfo)
     const userLoad = useSelector(getUserLoadSelector)
 

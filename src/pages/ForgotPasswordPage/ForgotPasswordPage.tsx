@@ -36,19 +36,19 @@ const ForgotPasswordPage = () => {
     }
 
     return (
-            <div className={`${styles.forgotPasswordPage}`}>
-                <Form formref={ref} header={'Восстановление пароля'}
-                      buttonName={'Восстановить'}
-                      error={submitErr}
-                      onSubmit={onSubmit}
-                      disabled={buttonDisabled}>
-                    <EmailAuthInput pattern={emailRegExpPattern} value={email} onChange={onChange}/>
-                </Form>
-                <div className={styles.linkContainer}>
-                    <p className="text text_type_main-small text_color_inactive">Вспомнили пароль?<Link
-                        className={`text text_type_main-small ${styles.link}`} to={'/login'}>Войти</Link></p>
-                </div>
+        <div className={`${styles.forgotPasswordPage}`}>
+            <Form formref={ref} header={'Восстановление пароля'}
+                  buttonName={'Восстановить'}
+                  error={submitErr}
+                  onSubmit={onSubmit}
+                  disabled={buttonDisabled}>
+                <EmailAuthInput pattern={emailRegExpPattern} value={email} onChange={onChange}/>
+            </Form>
+            <div className={styles.linkContainer}>
+                <p className="text text_type_main-small text_color_inactive">Вспомнили пароль?<Link
+                    className={`text text_type_main-small ${styles.link}`} to={'/login'}>Войти</Link></p>
             </div>
+        </div>
 
     )
 }

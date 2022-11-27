@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import styles from './NotFoundPage.module.css'
 
-function NotFoundPage () {
+function NotFoundPage() {
     return (
         <div className={styles.page}>
             <h2 className={`${styles.header} text text_type_main-large`}>404</h2>
@@ -11,4 +11,5 @@ function NotFoundPage () {
 
     )
 }
+
 export default NotFoundPage;

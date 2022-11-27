@@ -52,27 +52,27 @@ const ResetPasswordPage = () => {
         );
     }
     return (
-            <div className={`${styles.resetPasswordPage}`}>
-                <Form formref={ref} header={'Восстановление пароля'}
-                      buttonName={'Сохранить'}
-                      disabled={buttonDisabled}
-                      error={submitErr}
-                      onSubmit={handleSubmit}>
-                    <PasswordAuthInput
-                        name={'password'}
-                        value={form.password}
-                        onChange={handleInputChange}/>
-                    <Input name={'token'}
-                           value={form.token}
-                           onChange={handleInputChange}
-                           placeholder="Введите код из письма"
-                           type={"text"} required/>
-                </Form>
-                <div className={styles.linkContainer}>
-                    <p className="text text_type_main-small text_color_inactive">Вспомнили пароль? <Link
-                        className={`text text_type_main-small ${styles.link}`} to='/login'>Войти</Link></p>
-                </div>
+        <div className={`${styles.resetPasswordPage}`}>
+            <Form formref={ref} header={'Восстановление пароля'}
+                  buttonName={'Сохранить'}
+                  disabled={buttonDisabled}
+                  error={submitErr}
+                  onSubmit={handleSubmit}>
+                <PasswordAuthInput
+                    name={'password'}
+                    value={form.password}
+                    onChange={handleInputChange}/>
+                <Input name={'token'}
+                       value={form.token}
+                       onChange={handleInputChange}
+                       placeholder="Введите код из письма"
+                       type={"text"} required/>
+            </Form>
+            <div className={styles.linkContainer}>
+                <p className="text text_type_main-small text_color_inactive">Вспомнили пароль? <Link
+                    className={`text text_type_main-small ${styles.link}`} to='/login'>Войти</Link></p>
             </div>
+        </div>
     )
 }
 export default ResetPasswordPage;

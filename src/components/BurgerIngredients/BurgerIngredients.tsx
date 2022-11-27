@@ -5,8 +5,7 @@ import CardList from "../CardList/CardList";
 
 import {useIntersectionObserver} from "../../hooks/useIntersectionObserver";
 
-const BurgerIngredients: FC = () =>  {
-
+const BurgerIngredients: FC = () => {
 
     const mainRef = useRef<HTMLDivElement>(null)
     const bunRef = useRef<HTMLDivElement>(null)
@@ -18,10 +17,10 @@ const BurgerIngredients: FC = () =>  {
     })
 
     const handleClickTab = (ref: React.RefObject<HTMLDivElement>) => {
-        if (ref  && ref.current) {
+        if (ref && ref.current) {
             ref.current.scrollIntoView({behavior: 'smooth'})
         }
-    } 
+    }
 
     return (
         <section className={styles.burgerIngredients}>

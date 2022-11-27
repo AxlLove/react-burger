@@ -1,7 +1,7 @@
 import styles from './IngredientDetails.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {getIngredientsSelector} from '../../services/selectors/ingrediensSelectors'
-import {getIngredientInfoSelector} from  '../../services/selectors/IngredientInfoSelectors'
+import {getIngredientInfoSelector} from '../../services/selectors/IngredientInfoSelectors'
 import {useParams, useRouteMatch} from "react-router-dom";
 import React, {FC, useEffect} from "react";
 import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
@@ -13,15 +13,15 @@ const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children})
     const ingredients = useSelector(getIngredientsSelector)
     const {isExact} = useRouteMatch()
     const dispatch = useDispatch()
-    const {ingredientId} = useParams<{ingredientId?: string}>()
+    const {ingredientId} = useParams<{ ingredientId?: string }>()
 
-    useEffect(()=> {
-        if(ingredients) {
+    useEffect(() => {
+        if (ingredients) {
             dispatch(ingredientInfoSlice.actions.addIngredientInfo(ingredients.find((item: IIngredientWithUniqueId) => item._id === ingredientId)))
         }
     }, [ingredientId, ingredients, dispatch])
-    useEffect(()=> {
-        if(!isExact) {
+    useEffect(() => {
+        if (!isExact) {
             // @ts-ignore
             dispatch(ingredientInfoSlice.actions.deleteIngredientInfo())
         }

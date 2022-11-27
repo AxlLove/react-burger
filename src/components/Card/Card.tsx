@@ -11,6 +11,7 @@ import {FC} from "react";
 interface ICardProps {
     card: IIngredientWithUniqueId;
 }
+
 const Card: FC<ICardProps> = ({card}) => {
 
     const location = useLocation();
@@ -34,7 +35,7 @@ const Card: FC<ICardProps> = ({card}) => {
             className={styles.link}
         >
             <li className={`${styles.card}`}>
-                {typeof counter === 'number' && counter > 0 &&  <Counter count={counter} size="default"/>}
+                {typeof counter === 'number' && counter > 0 && <Counter count={counter} size="default"/>}
                 <img ref={dragRef} style={{opacity}} className={`${styles.image}`} src={card.image} alt={card.name}/>
                 <div className={`${styles.price} mt-1`}>
                     <p className={`text text_type_digits-default ${styles.wordBreak}`}>{card.price}</p>

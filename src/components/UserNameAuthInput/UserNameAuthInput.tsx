@@ -1,16 +1,16 @@
 import React, {FC, useRef, useState} from 'react';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 
-interface IUserNameAuthInput extends Pick<React.HTMLProps<HTMLInputElement>, 'name' > {
+interface IUserNameAuthInput extends Pick<React.HTMLProps<HTMLInputElement>, 'name'> {
     value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>)=> void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const UserNameAuthInput: FC<IUserNameAuthInput> = ({
-    value,
-    onChange,
-    ...rest
-}) => {
+                                                              value,
+                                                              onChange,
+                                                              ...rest
+                                                          }) => {
     const [error, setError] = useState(false);
 
     const inputRef = useRef(null);

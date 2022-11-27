@@ -5,17 +5,15 @@ import {emailRegExp, emailRegExpPattern} from "../../utils/regExp";
 
 interface IEmailAuthInputProps extends Pick<React.HTMLProps<HTMLInputElement>, 'pattern' | 'name'> {
     value: string;
-    placeholder?: string | 'E-mail';
-    onChange(e: React.ChangeEvent<HTMLInputElement>): void;
 
+    onChange(e: React.ChangeEvent<HTMLInputElement>): void;
 }
 
 export const EmailAuthInput: FC<IEmailAuthInputProps> = ({
-    value,
-    placeholder = 'E-mail',
-    onChange,
-    ...rest
-}) => {
+                                                             value,
+                                                             onChange,
+                                                             ...rest
+                                                         }) => {
 
     const validateEmail = (email: string) => {
         return emailRegExp.test(email);
@@ -33,7 +31,7 @@ export const EmailAuthInput: FC<IEmailAuthInputProps> = ({
         setError(false);
     };
 
-    const onBlur = (e: React.FocusEvent<HTMLInputElement> ) => {
+    const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {

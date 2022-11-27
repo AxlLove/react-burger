@@ -12,17 +12,17 @@ const MainPage = () => {
     const onLoad = useSelector(ingredientDataLoadSelector)
 
     return (
-            <div className={styles.main}>
-                {
-                    onLoad ? <Preloader style={{marginTop: '300px'}}/> :
-                        <>
-                            <DndProvider backend={HTML5Backend}>
-                                <BurgerIngredients/>
-                                <BurgerConstructor/>
-                            </DndProvider>
-                        </>
-                }
-            </div>
+        <div className={styles.main}>
+            {
+                onLoad ? <Preloader style={{marginTop: '300px'}}/> :
+                    <>
+                        <DndProvider backend={HTML5Backend}>
+                            <BurgerIngredients/>
+                            <BurgerConstructor/>
+                        </DndProvider>
+                    </>
+            }
+        </div>
     )
 }
 

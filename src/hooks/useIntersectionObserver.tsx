@@ -12,21 +12,21 @@ export const useIntersectionObserver = (options: IOptions) => {
     const [current, setCurrent] = useState<string | null>('Булки')
 
     const callback = (entries: Array<IntersectionObserverEntry>) => {
-        entries.forEach(entry=>{
-            if(entry.isIntersecting) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
                 setCurrent(entry.target.getAttribute("id"))
             }
         })
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         const containerChild: NodeListOf<ChildNode> | undefined = containerRef.current?.childNodes
         const observer = new IntersectionObserver(callback, {root: containerRef.current, ...options})
-        containerChild?.forEach(item=>{
+        containerChild?.forEach(item => {
             observer.observe(item as Element)
         })
         return () => {
-            containerChild?.forEach(item=> observer.unobserve(item as Element))
+            containerChild?.forEach(item => observer.unobserve(item as Element))
         }
 
 

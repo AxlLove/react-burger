@@ -38,22 +38,22 @@ const RegisterPage = () => {
     }
 
     return (
-            <div className={`${styles.registerPage}`}>
-                <Form formref={ref} header={'Регистрация'}
-                      buttonName={'Зарегистрироваться'}
-                      disabled={onLoad}
-                      onSubmit={handleSubmit}
-                      error={onError}
-                      errorMessage={errorMessage}>
-                    <UserNameAuthInput name={'name'} value={form.name} onChange={handleInputChange}/>
-                    <EmailAuthInput name={'email'} value={form.email} onChange={handleInputChange}/>
-                    <PasswordAuthInput name={'password'} value={form.password} onChange={handleInputChange}/>
-                </Form>
-                <div className={styles.linkContainer}>
-                    <p className="text text_type_main-small text_color_inactive">Уже зарегистрированы? <Link
-                        className={`text text_type_main-small ${styles.link}`} to={'/login'}>Войти</Link></p>
-                </div>
+        <div className={`${styles.registerPage}`}>
+            <Form formref={ref} header={'Регистрация'}
+                  buttonName={'Зарегистрироваться'}
+                  disabled={onLoad}
+                  onSubmit={handleSubmit}
+                  error={onError}
+                  errorMessage={errorMessage}>
+                <UserNameAuthInput name={'name'} value={form.name} onChange={handleInputChange}/>
+                <EmailAuthInput name={'email'} value={form.email} onChange={handleInputChange}/>
+                <PasswordAuthInput name={'password'} value={form.password} onChange={handleInputChange}/>
+            </Form>
+            <div className={styles.linkContainer}>
+                <p className="text text_type_main-small text_color_inactive">Уже зарегистрированы? <Link
+                    className={`text text_type_main-small ${styles.link}`} to={'/login'}>Войти</Link></p>
             </div>
+        </div>
     )
 }
 export default RegisterPage;

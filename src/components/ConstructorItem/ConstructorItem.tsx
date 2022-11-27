@@ -12,9 +12,11 @@ interface IConstructorItem {
     item: IIngredientWithUniqueId;
     moveCard: (dragIndex: number, hoverIndex: number) => void;
 }
+
 interface ICollectProps {
     handlerId: string | null | symbol;
 }
+
 const ConstructorItem: FC<IConstructorItem> = ({dragId, index, item, moveCard}) => {
     const {price, name, image_mobile} = item
     const dispatch = useDispatch()
@@ -43,7 +45,7 @@ const ConstructorItem: FC<IConstructorItem> = ({dragId, index, item, moveCard}) 
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
 
-            if(typeof clientOffset?.y !== 'number') {
+            if (typeof clientOffset?.y !== 'number') {
                 return;
             }
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;

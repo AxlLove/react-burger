@@ -1,8 +1,8 @@
-import { ISuccesfullTokenRefresh } from "./Api";
+import { ISuccessfulTokenRefresh } from "./Api";
 import { TOKEN_LIFETIME } from "./constants";
 import { setCookie } from "./coockie"
 
-export const saveTokens = (response: ISuccesfullTokenRefresh) => {
+export const saveTokens = (response: ISuccessfulTokenRefresh) => {
     let authToken = ''
     if(response['accessToken']) {
         authToken = response['accessToken'].split('Bearer ')[1];
@@ -14,5 +14,3 @@ export const saveTokens = (response: ISuccesfullTokenRefresh) => {
         localStorage.setItem('refreshToken', response['refreshToken']);
     }
 }
-
-//TODO вернуться после API
