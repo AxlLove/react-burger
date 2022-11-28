@@ -4,9 +4,14 @@ const selectOtherIngredient = store => store?.burgerConstructor?.constructorData
 const selectBun = store => store?.burgerConstructor?.bun
 
 export const totalPriceSelector = createSelector(selectBun, selectOtherIngredient, (selectBun, selectOtherIngredient) => {
-        if(selectBun && selectOtherIngredient) {
+        if(selectOtherIngredient) {
             const data = [selectBun, ...selectOtherIngredient, selectBun]
-            return data.reduce((subtotal, item) => subtotal + item?.price, 0)
+            return data.reduce((subtotal, item) => {
+                if (!item) {
+                    return subtotal
+                }
+               return  subtotal + item?.price
+            }, 0)
         }
     }
 )

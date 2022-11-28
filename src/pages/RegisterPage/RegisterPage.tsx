@@ -1,40 +1,32 @@
 import Form from "../../components/Form/Form";
 import {Link} from "react-router-dom";
 import styles from './RegisterPage.module.css'
-import React, {useRef, useState} from "react";
+import React, {useRef} from "react";
 import {registerUser} from "../../services/slices/registerUserSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {PasswordAuthInput} from '../../components/PasswordAuthInput/PasswordAuthInput'
 import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
 import {UserNameAuthInput} from "../../components/UserNameAuthInput/UserNameAuthInput";
 import {registerRequestSelector} from '../../services/selectors/registerUserSelectors';
+import {useForm} from "../../hooks/useForm";
 
 
 const RegisterPage = () => {
     const ref = useRef<HTMLFormElement>(null)
     const dispatch = useDispatch()
     const {onLoad, onError, errorMessage} = useSelector(registerRequestSelector)
-    const [form, setForm] = useState({
+    const {formValues, handleChange} = useForm({
         name: "",
         email: '',
         password: '',
-    });
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const target = event.target;
-        const name = target.name;
-        const value = target.value;
-        setForm({
-            ...form,
-            [name]: value,
-        });
-    };
-    const handleSubmit = () => {
+    })
+    const handleSubmit = (event: React.SyntheticEvent) => {
+        event.preventDefault()
         if (ref.current && !ref.current.checkValidity()) {
             return
         }
         // @ts-ignore
-        dispatch(registerUser(form))
+        dispatch(registerUser(formValues))
     }
 
     return (
@@ -45,9 +37,9 @@ const RegisterPage = () => {
                   onSubmit={handleSubmit}
                   error={onError}
                   errorMessage={errorMessage}>
-                <UserNameAuthInput name={'name'} value={form.name} onChange={handleInputChange}/>
-                <EmailAuthInput name={'email'} value={form.email} onChange={handleInputChange}/>
-                <PasswordAuthInput name={'password'} value={form.password} onChange={handleInputChange}/>
+                <UserNameAuthInput name={'name'} value={formValues.name} onChange={handleChange}/>
+                <EmailAuthInput name={'email'} value={formValues.email} onChange={handleChange}/>
+                <PasswordAuthInput name={'password'} value={formValues.password} onChange={handleChange}/>
             </Form>
             <div className={styles.linkContainer}>
                 <p className="text text_type_main-small text_color_inactive">Уже зарегистрированы? <Link

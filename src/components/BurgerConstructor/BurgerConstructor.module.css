@@ -57,3 +57,33 @@
     box-shadow:  0 0 16px 8px rgba(51, 51, 255, .25), 0 0 8px 8px rgba(51, 51, 255, .25);
     width: fit-content;
 }
+
+.noIngredient {
+    padding: 16px 24px;
+    display: inline-block;
+    background: #2f2f37;
+    max-width: 536px;
+    width: 536px;
+    min-height: 80px;
+    font-family: 'Jet Brains Mono';
+    font-size: 16px;
+    line-height: 24px;
+    color: #F2F2F3;
+    flex-grow: 1;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bunTop {
+    border-radius: var(--top-constructor-item-border-radius);
+}
+.bunBot {
+    border-radius: var(--bottom-constructor-item-border-radius);
+}
+
+.middle {
+    border-radius: var(--common-border-radius-s);
+    background: var(--background-element);
+}
+

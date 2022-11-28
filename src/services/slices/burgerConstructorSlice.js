@@ -1,6 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchIngredients} from "./IngerdientSlice";
-
 const sliceName = 'constructor'
 
 
@@ -32,11 +30,6 @@ export const constructorSlice = createSlice({
             state.constructorData.splice(index, 1)
         },
     },
-    extraReducers: builder => {
-        builder.addCase(fetchIngredients.fulfilled, (state, action) => {
-            state.bun = action.payload.bun
-        })
-    }
 })
 const {reducer} = constructorSlice;
 

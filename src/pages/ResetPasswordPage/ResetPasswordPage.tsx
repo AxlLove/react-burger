@@ -2,38 +2,34 @@ import Form from "../../components/Form/Form";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
 import styles from './ResetPasswordPage.module.css'
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, SyntheticEvent} from "react";
 import {resetPassword} from "../../utils/Api";
 import {useHistory} from "react-router-dom";
 import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuthInput";
 import {Redirect} from "react-router-dom";
+import {useForm} from "../../hooks/useForm";
 
 const ResetPasswordPage = () => {
     const ref = useRef<HTMLFormElement>(null)
     const history = useHistory()
-    const [form, setForm] = useState({
+    const {formValues, handleChange} = useForm({
         password: "",
         token: '',
-    });
+    })
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const [submitErr, setSubmitErr] = useState(false)
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSubmitErr(false)
-        const target = event.target;
-        const name = target.name;
-        const value = target.value;
-        setForm({
-            ...form,
-            [name]: value,
-        });
+        handleChange(event)
     };
-    const handleSubmit = () => {
+    const handleSubmit = (event: SyntheticEvent) => {
+        event.preventDefault()
         if (ref.current && !ref.current.checkValidity()) {
             return
         }
         setButtonDisabled(true)
-        resetPassword(form.password, form.token).then(res => {
+        resetPassword(formValues.password, formValues.token).then(res => {
             history.push('/login')
         })
             .catch(res => {
@@ -60,10 +56,10 @@ const ResetPasswordPage = () => {
                   onSubmit={handleSubmit}>
                 <PasswordAuthInput
                     name={'password'}
-                    value={form.password}
+                    value={formValues.password}
                     onChange={handleInputChange}/>
                 <Input name={'token'}
-                       value={form.token}
+                       value={formValues.token}
                        onChange={handleInputChange}
                        placeholder="Введите код из письма"
                        type={"text"} required/>

@@ -1,7 +1,7 @@
 import Form from "../../components/Form/Form";
 import {Link} from "react-router-dom";
 import styles from './ForgotPasswordPage.module.css'
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, SyntheticEvent} from "react";
 import {resetPasswordEmailSent} from "../../utils/Api";
 import {useHistory} from "react-router-dom";
 import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
@@ -18,7 +18,8 @@ const ForgotPasswordPage = () => {
         setSubmitErr(false)
         setEmail(e.target.value)
     }
-    const onSubmit = () => {
+    const onSubmit = (event: SyntheticEvent) => {
+        event.preventDefault()
         if (ref.current && !ref.current.checkValidity()) {
             return
         }

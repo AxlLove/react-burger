@@ -38,13 +38,25 @@ function BurgerConstructor() {
     const orderData = useSelector(orderDataSelector)
     const totalPrice = useSelector(totalPriceSelector)
 
+    const [noBunErr, setNoBunErr] = useState(false)
+    const [noIngredientErr, setNoIngredientErr] = useState(false)
     const toggleModal = () => {
         setBurgerConstructorModalOpen(!burgerConstructorModalOpen)
     }
 
     const handleMakeAnOrder = () => {
+        setNoBunErr(false)
+        setNoIngredientErr(false)
         if (!user) {
             history.push('/login')
+            return
+        }
+        if (!selectedBun) {
+            setNoBunErr(true)
+            return
+        }
+        if (otherIngredients && otherIngredients.length === 0) {
+            setNoIngredientErr(true)
             return
         }
         // @ts-ignore
@@ -76,47 +88,61 @@ function BurgerConstructor() {
 
     return (
         <section ref={dropTargetRef} className={`${styles.burgerConstructor} pt-25 pb-10`}>
-            {selectedBun && <div className={`pl-8`}>
-                <div className={`${isBunHover ? styles.borderBunTop : ''}`}>
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text={`${selectedBun.name} (верх)`}
-                        price={selectedBun.price}
-                        thumbnail={selectedBun.image_mobile}
-                    /></div>
-
-            </div>}
-            <ul className={`${styles.container} ${isHover ? styles.borderIngredients : ''} pr-2`}>
-                {otherIngredients && otherIngredients.map(((item: IIngredientWithUniqueId, index: number) => (
-                    item.type !== 'bun' &&
-                    <ConstructorItem dragId={item.dragId}
-                                     index={index}
-                                     moveCard={moveCard}
-                                     item={item}
-                                     key={item.dragId}
-                    />
-                )))}
-            </ul>
-
-            {selectedBun && <div className='pl-8'>
-                <div className={`${isBunHover ? styles.borderBunBot : ''}`}>
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        text={`${selectedBun.name} (низ)`}
-                        price={selectedBun.price}
-                        thumbnail={selectedBun.image_mobile}
-                    />
+            {selectedBun ? <div className={`pl-8`}>
+                    <div className={`${isBunHover ? styles.borderBunTop : ''}`}>
+                        <ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text={`${selectedBun.name} (верх)`}
+                            price={selectedBun.price}
+                            thumbnail={selectedBun.image_mobile}
+                        /></div>
+                </div> :
+                <div className={`${isBunHover && styles.borderBunTop} ${styles.noIngredient} ${styles.bunTop} ml-8`}>
+                    <p className={`$text text_type_main-default`}>Выберите булочку</p>
                 </div>
-            </div>}
+            }
+            {otherIngredients && otherIngredients.length > 0 ?
+                <ul className={`${styles.container} ${isHover ? styles.borderIngredients : ''} pr-2`}>
+                    {otherIngredients && otherIngredients.map(((item: IIngredientWithUniqueId, index: number) => (
+                        item.type !== 'bun' &&
+                        <ConstructorItem dragId={item.dragId}
+                                         index={index}
+                                         moveCard={moveCard}
+                                         item={item}
+                                         key={item.dragId}
+                        />
+                    )))}
+                </ul>
+                :
+                <div className={`${isHover && styles.borderIngredients} ${styles.noIngredient} ${styles.middle} ml-8`}>
+                    <p className={`$text text_type_main-default`}>Выберите ингредиенты</p>
+                </div>
+            }
+
+            {selectedBun ? <div className='pl-8'>
+                    <div className={`${isBunHover ? styles.borderBunBot : ''}`}>
+                        <ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={`${selectedBun.name} (низ)`}
+                            price={selectedBun.price}
+                            thumbnail={selectedBun.image_mobile}
+                        />
+                    </div>
+                </div> :
+                <div className={`${isBunHover && styles.borderBunBot} ${styles.noIngredient} ${styles.bunBot} ml-8`}>
+                    <p className={`$text text_type_main-default`}>Выберите булочку</p>
+                </div>}
+
             <div className={styles.price}>
-                {totalPrice && <div className={styles.currency}>
+                <div className={styles.currency}>
                     <p className={`${styles.text} text text_type_digits-medium`}>
                         {totalPrice}
                     </p>
                     <CurrencyIcon type="primary"/>
-                </div>}
+                </div>
+
                 <Button onClick={handleMakeAnOrder} htmlType={'button'} type="primary" size="large" disabled={onLoad}>
                     Оформить заказ
                 </Button>
@@ -125,6 +151,14 @@ function BurgerConstructor() {
             {
                 onError &&
                 <span className={`${styles.error} text text_type_main-default`}>Упс, произошла ошибка! Поробуйте еще раз.</span>
+            }
+            {
+                noBunErr &&
+                <span className={`${styles.error} text text_type_main-default`}>Выберите булочку</span>
+            }
+            {
+                noIngredientErr &&
+                <span className={`${styles.error} text text_type_main-default`}>Выберите минимум один ингредиент</span>
             }
 
             {burgerConstructorModalOpen && !onLoad && !onError &&
