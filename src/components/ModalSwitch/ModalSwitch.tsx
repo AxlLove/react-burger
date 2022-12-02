@@ -66,6 +66,7 @@ const ModalSwitch: FC = () => {
                     <Route
                         path='/ingredients/:ingredientId' exact={true}
                         children={
+                        //TODO можно добавить прелоадер
                             <>
                                 <div className={styles.ingredientPageContainer}>
                                     <IngredientDetails><h2
