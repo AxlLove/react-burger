@@ -9,7 +9,7 @@ import userReducer from './slices/userSlice'
 import loginReducer from './slices/loginUserSlice'
 import updateUserReducer from './slices/updateUserSlice'
 import getUserReducer from './slices/getUserSlice'
-import {logoutUserSlice} from "./slices/logoutUserSlice";
+import logoutUserSlice from "./slices/logoutUserSlice";
 
 const store = configureStore({
     reducer: {
@@ -28,6 +28,10 @@ const store = configureStore({
     devTools: true,
 })
 
+
+
 export default store;
 
+
+export type RootState = ReturnType<typeof store.getState>
 //TODO возмоно стоит вынести экшены из слайсов
