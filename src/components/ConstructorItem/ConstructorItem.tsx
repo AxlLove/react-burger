@@ -1,5 +1,5 @@
 import styles from './ConstructorItem.module.css'
-import {useDispatch} from 'react-redux'
+import { useAppDispatch } from '../../services/hooks/hooks';
 import {constructorSlice} from "../../services/slices/burgerConstructorSlice";
 import {DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
 import React, {FC, useRef} from 'react'
@@ -19,7 +19,7 @@ interface ICollectProps {
 
 const ConstructorItem: FC<IConstructorItem> = ({dragId, index, item, moveCard}) => {
     const {price, name, image_mobile} = item
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const deleteIngredient = (id: string) => {
         dispatch(constructorSlice.actions.deleteIngredient(id))

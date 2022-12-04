@@ -3,19 +3,20 @@ import {Link} from "react-router-dom";
 import styles from './RegisterPage.module.css'
 import React, {useRef} from "react";
 import {registerUser} from "../../services/slices/registerUserSlice";
-import {useDispatch, useSelector} from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import {PasswordAuthInput} from '../../components/PasswordAuthInput/PasswordAuthInput'
 import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
 import {UserNameAuthInput} from "../../components/UserNameAuthInput/UserNameAuthInput";
 import {registerRequestSelector} from '../../services/selectors/registerUserSelectors';
 import {useForm} from "../../hooks/useForm";
 
+type TRegisterForm = {name: string; email: string; password: string}
 
 const RegisterPage = () => {
     const ref = useRef<HTMLFormElement>(null)
-    const dispatch = useDispatch()
-    const {onLoad, onError, errorMessage} = useSelector(registerRequestSelector)
-    const {formValues, handleChange} = useForm({
+    const dispatch = useAppDispatch()
+    const {onLoad, onError, errorMessage} = useAppSelector(registerRequestSelector)
+    const {formValues, handleChange} = useForm<TRegisterForm>({
         name: "",
         email: '',
         password: '',
@@ -25,7 +26,6 @@ const RegisterPage = () => {
         if (ref.current && !ref.current.checkValidity()) {
             return
         }
-        // @ts-ignore
         dispatch(registerUser(formValues))
     }
 

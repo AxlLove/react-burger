@@ -1,6 +1,6 @@
 import styles from "./NavBar.module.css";
 import {NavLink} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import { useAppDispatch } from "../../services/hooks/hooks";
 import {logoutUser} from "../../services/slices/logoutUserSlice";
 import {FC} from "react";
 
@@ -9,9 +9,8 @@ interface INavBarProps {
 }
 
 const NavBar: FC<INavBarProps> = ({text}) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const logOut = () => {
-        // @ts-ignore
         dispatch(logoutUser())
     }
 

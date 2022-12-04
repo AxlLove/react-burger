@@ -5,7 +5,7 @@ import {getIngredientInfoSelector} from '../../services/selectors/IngredientInfo
 import {useParams, useRouteMatch} from "react-router-dom";
 import React, {FC, useEffect} from "react";
 import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
-import {IIngredientWithUniqueId} from "../../types/types";
+import {IIngredient, IIngredientWithUniqueId} from "../../types/types";
 
 
 const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children}) => {
@@ -17,7 +17,7 @@ const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children})
 
     useEffect(() => {
         if (ingredients) {
-            dispatch(ingredientInfoSlice.actions.addIngredientInfo(ingredients.find((item: IIngredientWithUniqueId) => item._id === ingredientId)))
+            dispatch(ingredientInfoSlice.actions.addIngredientInfo(ingredients.find((item: IIngredient) => item._id === ingredientId)))
         }
     }, [ingredientId, ingredients, dispatch])
     useEffect(() => {

@@ -1,22 +1,22 @@
 import styles from './Card.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {counterSelector} from '../../services/selectors/ingrediensSelectors'
-import {useSelector} from 'react-redux';
+import { useAppSelector } from '../../services/hooks/hooks';
 import {useDrag} from "react-dnd";
 import {Link} from 'react-router-dom'
 import {useLocation} from "react-router-dom";
-import {IIngredientWithUniqueId} from "../../types/types";
+import {IIngredient} from "../../types/types";
 import {FC} from "react";
 
 interface ICardProps {
-    card: IIngredientWithUniqueId;
+    card: IIngredient;
 }
 
 const Card: FC<ICardProps> = ({card}) => {
 
     const location = useLocation();
     const ingredientId = card._id
-    const counter = useSelector(counterSelector(card))
+    const counter = useAppSelector(counterSelector(card))
     const [{opacity}, dragRef] = useDrag({
         type: 'ingredient',
         item: card,

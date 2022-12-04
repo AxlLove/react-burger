@@ -47,7 +47,7 @@ interface ISuccessfulGetUserRequest {
     user: IUser;
 }
 
-interface ISuccessOrderRequest {
+export interface ISuccessOrderRequest {
     name: string;
     order: IOrder;
     success: boolean;
@@ -71,7 +71,7 @@ export const getIngredients = () => {
     })
 }
 
-export const makeAnOrder = (ingredients: Array<string>) => {
+export const makeAnOrder = (ingredients: {ingredients: Array<string>}) => {
     return request<ISuccessOrderRequest>(`${BASE_URL}/orders`, {
         method: 'POST',
         headers: {

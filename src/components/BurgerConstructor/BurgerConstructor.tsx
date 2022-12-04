@@ -2,10 +2,10 @@ import styles from './BurgerConstructor.module.css'
 import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import {useSelector, useDispatch} from "react-redux";
+import { useAppDispatch, useAppSelector} from "../../services/hooks/hooks";
 import {useState, useCallback,} from 'react';
 import {fetchOrder} from '../../services/slices/orderSlice';
-import {constructorSlice} from "../../services/slices/burgerConstructorSlice";
+import {addIngredientToCart, updateIngredientsInConstructor} from "../../services/slices/burgerConstructorSlice";
 
 import {
     constructorSubmitOrderSelector,
@@ -23,20 +23,21 @@ import {useHistory} from "react-router-dom";
 import Preloader from "../Preloader/Preloader";
 import {IIngredientWithUniqueId} from "../../types/types";
 
+
 interface IDragCollect {
     isHover: boolean;
     isBunHover: boolean;
 }
 
 function BurgerConstructor() {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const history = useHistory()
-    const user = useSelector(getUserInfo)
+    const user = useAppSelector(getUserInfo)
     const [burgerConstructorModalOpen, setBurgerConstructorModalOpen] = useState(false)
-    const {selectedBun, otherIngredients} = useSelector(constructorDataSelector)
-    const {onLoad, onError} = useSelector(constructorSubmitOrderSelector)
-    const orderData = useSelector(orderDataSelector)
-    const totalPrice = useSelector(totalPriceSelector)
+    const {selectedBun, otherIngredients} = useAppSelector(constructorDataSelector)
+    const {onLoad, onError} = useAppSelector(constructorSubmitOrderSelector)
+    const orderData = useAppSelector(orderDataSelector)
+    const totalPrice = useAppSelector(totalPriceSelector)
 
     const [noBunErr, setNoBunErr] = useState(false)
     const [noIngredientErr, setNoIngredientErr] = useState(false)
@@ -59,7 +60,7 @@ function BurgerConstructor() {
             setNoIngredientErr(true)
             return
         }
-        // @ts-ignore
+
         dispatch(fetchOrder(orderData))
         setBurgerConstructorModalOpen(true)
     }
@@ -72,19 +73,17 @@ function BurgerConstructor() {
             isBunHover: monitor.getItem()?.type === 'bun' && monitor.isOver()
         }),
         drop(item) {
-            dispatch(constructorSlice.actions.addIngredientToCart({...item, dragId: uiv4()}))
+            dispatch(addIngredientToCart({...item, dragId: uiv4()}))
         },
     })
 
 
     const moveCard = useCallback((dragIndex: number, hoverIndex: number): void => {
-
-        //TODO any в константах
         const dragCard = otherIngredients[dragIndex];
         const newCards = [...otherIngredients]
         newCards.splice(dragIndex, 1)
         newCards.splice(hoverIndex, 0, dragCard)
-        dispatch(constructorSlice.actions.updateIngredientsInConstructor(newCards))
+        dispatch(updateIngredientsInConstructor(newCards))
     }, [otherIngredients, dispatch]);
 
 

@@ -5,9 +5,15 @@ import {updateUserInfo} from "./updateUserSlice";
 import {getUser} from "./getUserSlice";
 import {logoutUser} from "./logoutUserSlice";
 
+interface IUserInfo {
+    userInfo: {
+        email: string;
+        name: string;
+    } | null
+}
 const sliceName = 'user'
 
-const initialState = {
+const initialState: IUserInfo = {
     userInfo: null,
 };
 
@@ -15,6 +21,7 @@ const initialState = {
 export const userSlice = createSlice({
     name: sliceName,
     initialState,
+    reducers: {},
     extraReducers: builder => {
         builder
             .addCase(getUser.fulfilled, (state, action) => {
