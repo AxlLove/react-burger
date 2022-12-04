@@ -78,6 +78,8 @@ function BurgerConstructor() {
 
 
     const moveCard = useCallback((dragIndex: number, hoverIndex: number): void => {
+
+        //TODO any в константах
         const dragCard = otherIngredients[dragIndex];
         const newCards = [...otherIngredients]
         newCards.splice(dragIndex, 1)

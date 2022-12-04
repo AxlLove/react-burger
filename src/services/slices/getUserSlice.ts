@@ -11,15 +11,18 @@ const initialState = {
 };
 
 export const getUser = createAsyncThunk(`${sliceName}/getUser`, async function (_, {rejectWithValue}) {
+    //TODO ???
         try {
             return await userRequest()
         } catch (err) {
-            if (err.message === 'jwt expired') {
+            const { message } = err as { message: string }
+            console.log(message)
+            if ( message === 'jwt expired') {
                 const tokens = await refreshToken()
                 saveTokens(tokens)
                 return await userRequest()
             }
-            return rejectWithValue(err.message)
+            return rejectWithValue(message)
         }
     }
 )
@@ -28,18 +31,20 @@ export const getUser = createAsyncThunk(`${sliceName}/getUser`, async function (
 export const getUserUserSlice = createSlice({
     name: sliceName,
     initialState,
-    extraReducers: {
-        [getUser.pending]: (state) => {
-            state.onLoad = true;
-            state.onError = false;
-        },
-        [getUser.fulfilled]: (state) => {
-            state.onLoad = false;
-        },
-        [getUser.rejected]: (state) => {
-            state.onLoad = false;
-            state.onError = true;
-        },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(getUser.pending, (state)=> {
+                state.onLoad = true;
+                state.onError = false;
+            })
+            .addCase(getUser.fulfilled, (state) => {
+                state.onLoad = false;
+            })
+            .addCase(getUser.rejected, (state) => {
+                state.onLoad = false;
+                state.onError = true;
+            })
     }
 })
 const {reducer} = getUserUserSlice;

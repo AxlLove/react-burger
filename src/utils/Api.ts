@@ -8,6 +8,10 @@ interface IHeaders {
     [key: string]: string;
 }
 
+interface ISuccessfulGetIngredientRequest {
+    success: boolean;
+    data: Array<IIngredient>
+}
 interface IOptions {
     method: TReqMethod;
     headers: IHeaders
@@ -59,7 +63,7 @@ const request = <T>(url: string, options: IOptions): Promise<T> => {
 
 
 export const getIngredients = () => {
-    return request<Array<IIngredient>>(`${BASE_URL}/ingredients`, {
+    return request<ISuccessfulGetIngredientRequest>(`${BASE_URL}/ingredients`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
