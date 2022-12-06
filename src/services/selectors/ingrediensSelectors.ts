@@ -18,6 +18,25 @@ export const counterSelector = (card: IIngredient) => createSelector(selectBun, 
     }
 )
 
+export const feedSelector = (feed: Array<string>) => createSelector(getIngredientsSelector, (getIngredientsSelector)=> {
+    return feed.reduce<Array<IIngredient>>((arr, current) => {
+        const item = getIngredientsSelector.find((item)=> item._id === current)
+        if (item) {
+            arr.push(item);
+        }
+        return arr;
+    }, [])
+});
+export const feedPriceSelector = (feed: Array<string>) => createSelector(getIngredientsSelector, (getIngredientsSelector)=> {
+    return feed.reduce<number>((acc, current) => {
+        const item = getIngredientsSelector.find((item)=> item._id === current)
+        if (item) {
+         item && item.type === 'bun'?  acc += item.price * 2: acc += item.price
+        }
+        return acc;
+    }, 0)
+});
 
+//TODO разобраться как считаем булку
 //TODO можно заменить методом reduce
 

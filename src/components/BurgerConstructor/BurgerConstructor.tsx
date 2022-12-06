@@ -60,8 +60,9 @@ function BurgerConstructor() {
             setNoIngredientErr(true)
             return
         }
-
-        dispatch(fetchOrder(orderData))
+        if(orderData) {
+            dispatch(fetchOrder(orderData))
+        }
         setBurgerConstructorModalOpen(true)
     }
 

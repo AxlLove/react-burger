@@ -1,6 +1,6 @@
-import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
+import {deleteIngredientInfo} from "../../services/slices/ingredientInfoSlice";
 import {useHistory, useLocation, Switch, Route} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../services/hooks/hooks";
 import MainPage from "../../pages/MainPage/MainPage";
 import LoginPage from "../../pages/LoginPage/LognPage";
 import RegisterPage from "../../pages/RegisterPage/RegisterPage";
@@ -17,20 +17,20 @@ import ProfileOrdersPage from "../../pages/ProfileOrdersPage/ProfileOrdersPage";
 import OnlyUnAuthRoute from "../OnlyUnAuthRoute/OnlyUnAuthRoute";
 import {FC} from "react";
 import {Location} from "history"
+import FeedPage from "../../pages/FeedPage/FeedPage";
 
 interface ILocationState {
     background?: Location;
 }
 
 const ModalSwitch: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const location = useLocation<ILocationState>();
     const history = useHistory();
     const background = location?.state && location?.state?.background;
 
     const handleModalClose = () => {
-        // @ts-ignore
-        dispatch(ingredientInfoSlice.actions.deleteIngredientInfo());
+        dispatch(deleteIngredientInfo());
         history.goBack();
     };
 
@@ -58,15 +58,22 @@ const ModalSwitch: FC = () => {
                         <ProfilePage/>
                     </ProtectedRoute>
                     <Route path={'/feed'} exact={true}>
+                        <FeedPage/>
+                    </Route>
+                    <Route path={'/feed/:id'} exact={true}>
                         <div/>
                     </Route>
                     <ProtectedRoute path={'/profile/orders'} exact={true}>
+                        <ProfileOrdersPage/>
+                    </ProtectedRoute>
+                    <ProtectedRoute path={'/profile/orders/:id'} exact={true}>
                         <ProfileOrdersPage/>
                     </ProtectedRoute>
                     <Route
                         path='/ingredients/:ingredientId' exact={true}
                         children={
                         //TODO можно добавить прелоадер
+                            //TODO можно поставить флаг и рендерить хедер от флага
                             <>
                                 <div className={styles.ingredientPageContainer}>
                                     <IngredientDetails><h2

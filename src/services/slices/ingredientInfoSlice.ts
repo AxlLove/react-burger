@@ -19,7 +19,7 @@ export const ingredientInfoSlice = createSlice({
         addIngredientInfo: (state, action) => {
             state.ingredient = action.payload
         },
-        deleteIngredientInfo: (state, action) => {
+        deleteIngredientInfo: (state) => {
             state.ingredient = null
         },
     },

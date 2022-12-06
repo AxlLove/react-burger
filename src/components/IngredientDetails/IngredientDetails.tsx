@@ -4,7 +4,7 @@ import {getIngredientsSelector} from '../../services/selectors/ingrediensSelecto
 import {getIngredientInfoSelector} from '../../services/selectors/IngredientInfoSelectors'
 import {useParams, useRouteMatch} from "react-router-dom";
 import React, {FC, useEffect} from "react";
-import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
+import {addIngredientInfo, deleteIngredientInfo} from "../../services/slices/ingredientInfoSlice";
 import {IIngredient, IIngredientWithUniqueId} from "../../types/types";
 
 
@@ -17,13 +17,12 @@ const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children})
 
     useEffect(() => {
         if (ingredients) {
-            dispatch(ingredientInfoSlice.actions.addIngredientInfo(ingredients.find((item: IIngredient) => item._id === ingredientId)))
+            dispatch(addIngredientInfo(ingredients.find((item: IIngredient) => item._id === ingredientId)))
         }
     }, [ingredientId, ingredients, dispatch])
     useEffect(() => {
         if (!isExact) {
-            // @ts-ignore
-            dispatch(ingredientInfoSlice.actions.deleteIngredientInfo())
+            dispatch(deleteIngredientInfo())
         }
     }, [isExact, dispatch])
 
