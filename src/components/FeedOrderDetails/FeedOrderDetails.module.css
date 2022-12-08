@@ -1,0 +1,19 @@
+.feedOrderDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 720px;
+    padding: 40px;
+}
+
+.ingredientList {
+    height: 250px ;
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.ingredient {
+    display: flex;
+    align-items: center;
+}

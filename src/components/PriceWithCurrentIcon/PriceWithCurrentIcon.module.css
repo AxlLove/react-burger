@@ -1,0 +1,11 @@
+.currency {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    align-self: center;
+    width: 22px;
+    height: 22px;
+}

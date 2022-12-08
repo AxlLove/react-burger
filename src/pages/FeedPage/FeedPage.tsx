@@ -93,9 +93,9 @@ const  testOrder = [{
         updatedAt: "2021-06-23T14:43:22.603Z"
     }
 ]
-const testOrderNumber = [`0o345334`,`0o345334`,`0o345334`,`0o345334`,`0o345334`,`0o345334`,`0o345334`, `0o34533`, `0o34532`, `0o34531`, `0o34530`, `0o34532`, `0o34532`,`0o34532`,`0o34532`,`0o34532`,`0o34532`,`0o34532`,`0o34532`,`0o34532`,`0o34532`]
+const testOrderNumber = [`0o345334`,`0o345333`,`0o345534`,`0o3453s34`,`0o34a5334`,`0o345d334`,`0o3453f34`, `0o345a33`, `0o345a32`, `0o34d531`, `0os34530`, `0o34a532`, `0o34a532`,`0o34s532`,`0o34d532`,`0o3d4532`,`0o345d32`,`0o3453d2`,`0o3a4532`,`0o3453d2`,`0oa34532`]
 const FeedPage: React.FC = () => {
-
+//TODO азвания классов - рука-лицо
     return (
         <main className={styles.feed}>
             <div className={styles.content}>
@@ -103,7 +103,7 @@ const FeedPage: React.FC = () => {
                 <div className={styles.boxes}>
                     <ul className={`${styles.feedList}`}>
                         {testOrder.map((order)=>(
-                            <FeedCard identifier={order.number} date={order.createdAt} name={order.name} ingredients={order.ingredients}/>
+                            <FeedCard status={'Выполнен'} identifier={order.number} date={order.createdAt} name={order.name} ingredients={order.ingredients} key={order.number}/>
                         ))}
                     </ul>
                     <div className={styles.ordersStatus}>

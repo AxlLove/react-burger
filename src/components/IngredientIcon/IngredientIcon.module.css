@@ -1,0 +1,39 @@
+.ingredientIcon {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px solid rgb(167, 61, 231);
+    background: #1C1C21;
+}
+
+.typeList {
+    overflow: hidden;
+}
+.typeList:not(:nth-last-child(1)) {
+    margin-left: -20px;
+}
+
+.ingredientIcon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.cover {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #FFFFFF;
+    z-index: 0;
+}
+
+.coverText {
+    position: absolute;
+    opacity: 1;
+    z-index: 1;
+    transition: 0.3s;
+}

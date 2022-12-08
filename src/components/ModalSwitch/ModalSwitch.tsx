@@ -18,6 +18,7 @@ import OnlyUnAuthRoute from "../OnlyUnAuthRoute/OnlyUnAuthRoute";
 import {FC} from "react";
 import {Location} from "history"
 import FeedPage from "../../pages/FeedPage/FeedPage";
+import FeedOrderDetails from "../FeedOrderDetails/FeedOrderDetails";
 
 interface ILocationState {
     background?: Location;
@@ -96,6 +97,14 @@ const ModalSwitch: FC = () => {
                                 className={`text text_type_main-large pl-10 pt-15 ${styles.ingredientModalHeader}`}>Детали
                                 ингредиента</h2>
                             </IngredientDetails>
+                        </Modal>
+                    }
+                />)}
+                {background && (<Route
+                    path='/feed/:identifier' exact={true}
+                    children={
+                        <Modal onClose={handleModalClose}>
+                            <FeedOrderDetails/>
                         </Modal>
                     }
                 />)}

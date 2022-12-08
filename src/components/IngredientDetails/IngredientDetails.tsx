@@ -5,7 +5,7 @@ import {getIngredientInfoSelector} from '../../services/selectors/IngredientInfo
 import {useParams, useRouteMatch} from "react-router-dom";
 import React, {FC, useEffect} from "react";
 import {addIngredientInfo, deleteIngredientInfo} from "../../services/slices/ingredientInfoSlice";
-import {IIngredient, IIngredientWithUniqueId} from "../../types/types";
+import {IIngredient} from "../../types/types";
 
 
 const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children}) => {
