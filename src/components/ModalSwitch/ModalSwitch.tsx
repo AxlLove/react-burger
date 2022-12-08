@@ -61,9 +61,6 @@ const ModalSwitch: FC = () => {
                     <Route path={'/feed'} exact={true}>
                         <FeedPage/>
                     </Route>
-                    <Route path={'/feed/:id'} exact={true}>
-                        <div/>
-                    </Route>
                     <ProtectedRoute path={'/profile/orders'} exact={true}>
                         <ProfileOrdersPage/>
                     </ProtectedRoute>
@@ -71,12 +68,18 @@ const ModalSwitch: FC = () => {
                         <ProfileOrdersPage/>
                     </ProtectedRoute>
                     <Route
+                        path='/feed/:identifier' exact={true}
+                        children={
+                                <div className={styles.pageContainer}><FeedOrderDetails withPage={true}/></div>
+                        }
+                    />
+                    <Route
                         path='/ingredients/:ingredientId' exact={true}
                         children={
                         //TODO можно добавить прелоадер
                             //TODO можно поставить флаг и рендерить хедер от флага
                             <>
-                                <div className={styles.ingredientPageContainer}>
+                                <div className={styles.pageContainer}>
                                     <IngredientDetails><h2
                                         className={`text text_type_main-large ${styles.ingredientPageHeader}`}>Детали
                                         ингредиента</h2>
@@ -84,11 +87,13 @@ const ModalSwitch: FC = () => {
                             </>
                         }
                     />
+
                     <Route path={'*'}>
                         <NotFoundPage/>
                     </Route>
-
                 </Switch>
+
+
                 {background && (<Route
                     path='/ingredients/:ingredientId' exact={true}
                     children={

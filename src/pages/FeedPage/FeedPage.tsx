@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styles from './FeedPage.module.css';
 import FeedCard from "../../components/FeedCard/FeedCard";
 
@@ -103,7 +103,7 @@ const FeedPage: React.FC = () => {
                 <div className={styles.boxes}>
                     <ul className={`${styles.feedList}`}>
                         {testOrder.map((order)=>(
-                            <FeedCard status={'Выполнен'} identifier={order.number} date={order.createdAt} name={order.name} ingredients={order.ingredients} key={order.number}/>
+                            <FeedCard identifier={order.number} date={order.createdAt} name={order.name} ingredients={order.ingredients} key={order.number}/>
                         ))}
                     </ul>
                     <div className={styles.ordersStatus}>

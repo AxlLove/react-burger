@@ -1,5 +1,21 @@
 .content {
     display: flex;
-    padding: 120px  360px 0;
+    padding: 120px  0 60px 320px ;
     gap: 60px;
+}
+.orders {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 844px;
+    overflow: auto;
+    max-height: 60vh;
+    padding-right: 8px;
+}
+
+
+@media (max-width: 1600px) {
+    .content {
+        padding: 120px  0 60px 180px;
+    }
 }

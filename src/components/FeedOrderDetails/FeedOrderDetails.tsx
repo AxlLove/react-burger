@@ -13,8 +13,10 @@ interface IFeedOrderDetails {
     ingredients: Array<string>;
     date: string;
 }
-
-const FeedOrderDetails: React.FC = ()=> {
+interface IFeedOrderDetailst {
+    withPage?: boolean;
+}
+const FeedOrderDetails: React.FC<IFeedOrderDetailst> = ({withPage})=> {
 
     const test: IFeedOrderDetails={ identifier: 0o34533, name: 'Супер пупер бургер', status: 'Выполнен', ingredients: [
         "60d3b41abdacab0026a733c6",
@@ -29,20 +31,22 @@ const FeedOrderDetails: React.FC = ()=> {
     const price = useAppSelector(feedPriceSelector(test.ingredients))
     return (
         <div className={styles.feedOrderDetails}>
-            <h2>#{test.identifier}</h2>
-            <p>{test.name}</p>
-            <p>{test.status}</p>
-            <p>Состав</p>
-            <ul className={styles.ingredientList}>
+            <h2 className={`text text_type_digits-default ${withPage && styles.withPage}`}>#{test.identifier}</h2>
+            <p className={`text text_type_main-medium mt-10`}>{test.name}</p>
+            <p className={`text text_type_main-small mt-3 ${test.status === 'Выполнен' ? styles.statusDone : ''}`}>{test.status}</p>
+            <p className={`text text_type_main-medium mt-15`}>Состав</p>
+            <ul className={`${styles.ingredientList} mt-6`}>
                 {arr.map(item => (
                         <li className={styles.ingredient}>
-                            <IngredientIcon name={item.name} image={item.image_mobile}/>
-                            <p>{item.name}</p>
-                            <PriceWithCurrentIcon price={item.type !== 'bun'? `${item.price}`: `2 x ${item.price}`}/>
+                            <div className={styles.ingredientContainer}>
+                                <IngredientIcon name={item.name} image={item.image_mobile}/>
+                                <p>{item.name}</p>
+                            </div>
+                                <PriceWithCurrentIcon price={item.type !== 'bun'? `${item.price}`: `2 x ${item.price}`}/>
                         </li>
                 ))}
             </ul>
-            <div>
+            <div className={`${styles.dateContainer} mt-10`}>
                 <FormattedDate className={`${styles.date} text text_type_main-default text_color_inactive`} date={new Date(test.date)}/>
                 <PriceWithCurrentIcon price={price}/>
             </div>

@@ -55,3 +55,5 @@ const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children})
 }
 
 export default IngredientDetails;
+
+//TODO use APpp disp
