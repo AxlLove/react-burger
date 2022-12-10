@@ -37,3 +37,9 @@ export interface IOrder {
 
 export type TIngredientType = 'bun' | 'sauce' | 'main';
 export type TIngredientName = 'Булки' | 'Соусы' | 'Начинки';
+
+export enum WebSocketStatus {
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE',
+    CONNECTING = 'CONNECTING',
+}
