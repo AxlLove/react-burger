@@ -1,4 +1,7 @@
 import { RootState } from "../store"
 export const feedOrderInfo = (store: RootState)=> {
-        return store?.orderInfo?.orderInfo?.orders[0]
+    if (store.orderInfo.orderInfo.orders !== null) {
+        return store.orderInfo.orderInfo.orders[0]
+    }
+        
 }

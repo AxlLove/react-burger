@@ -42,6 +42,19 @@ export const feedPriceSelector = (feed: Array<string> | undefined) => createSele
 
 });
 
+type price = {
+    [name: string]: {
+        current: number;
+        count: number;
+    }
+}
+export const test = (feed: Array<string> | undefined) => createSelector(getIngredientsSelector, (getIngredientsSelector)=> {
+    if(feed)  {
+        return feed.reduce<Array<price>>((acc, current) => acc.hasOwnProperty(current)? {}, {})
+    }
+
+});
+
 //TODO разобраться как считаем булку
 //TODO можно заменить методом reduce
 
