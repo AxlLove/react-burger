@@ -12,6 +12,7 @@ import getUserReducer from './slices/getUserSlice'
 import logoutUserSlice from "./slices/logoutUserSlice";
 import feedReducer from "./slices/feedSlice";
 import {createSockedMiddleware} from "./middleware/sockedMiddleware";
+import orderInfoReducer from './slices/orderInfoSlice'
 import {
     wsConnecting as feedWsConnecting,
     connect as feedConnect,
@@ -21,7 +22,6 @@ import {
     wsError as feedWsError,
     wsMessage as feedWsMessage
 } from './slices/feedSlice'
-import {Middleware} from "redux";
 
 const wsActions = {
     wsConnecting: feedWsConnecting,
@@ -46,6 +46,7 @@ const rootReducer = combineReducers({
     getUser: getUserReducer,
     logoutUser: logoutUserSlice,
     feed: feedReducer,
+    orderInfo: orderInfoReducer,
 })
 //TODO вынести в отдельный файл
 const store = configureStore({

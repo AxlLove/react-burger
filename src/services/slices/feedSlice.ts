@@ -1,11 +1,11 @@
 import {createAction, createSlice} from "@reduxjs/toolkit";
-import {WebSocketStatus} from "../../types/types";
+import {IWsFeedOrders, WebSocketStatus} from "../../types/types";
 import {getUserUserSlice} from "./getUserSlice";
 
 interface IFeedSlice {
     status:string;
     connectingError: string;
-    data: Array<any>
+    data: IWsFeedOrders | null
 }
 
 const sliceName = 'feedSlice'
@@ -13,7 +13,7 @@ const sliceName = 'feedSlice'
 const initialState: IFeedSlice  = {
     status: WebSocketStatus.OFFLINE,
     connectingError: '',
-    data: [],
+    data: null,
 }
 
 export const wsConnecting = createAction('WEB_SOCKED_CONNECTING')
@@ -22,7 +22,7 @@ export const disconnect = createAction('WEB_SOCKED_DISCONNECT')
 export const wsOpen = createAction('WEB_SOCKED_OPEN')
 export const wsClose = createAction('WEB_SOCKED_CLOSE')
 export const wsError = createAction<string, 'WEB_SOCKED_ERROR'>('WEB_SOCKED_ERROR')
-export const wsMessage = createAction<Array<any>, 'WEB_SOCKED_MESSAGE'>('WEB_SOCKED_MESSAGE')
+export const wsMessage = createAction<IWsFeedOrders, 'WEB_SOCKED_MESSAGE'>('WEB_SOCKED_MESSAGE')
 
  const feedSlice = createSlice({
     name: sliceName,

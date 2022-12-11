@@ -19,7 +19,7 @@ export interface IIngredientWithUniqueId extends IIngredient {
 }
 
 export interface IOrder {
-    createdAt: string;
+    status: string;
     ingredients: Array<IIngredient>
     name: string;
     number: number;
@@ -30,9 +30,24 @@ export interface IOrder {
         updatedAt: string;
     }
     price: number;
-    status: string;
+    createdAt: string;
     updatedAt: string;
     _id: string;
+}
+
+export interface IFeedOrder extends Omit<IOrder, "ingredients" | "owner" | 'price' > {
+    ingredients: Array<string>;
+}
+export interface IOrderDetail {
+    success: boolean;
+    orders: Array<IFeedOrder>;
+}
+
+export interface IWsFeedOrders {
+    success: boolean;
+    orders: Array<IFeedOrder>
+    total: number;
+    totalToday: number;
 }
 
 export type TIngredientType = 'bun' | 'sauce' | 'main';

@@ -3,7 +3,7 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 
 interface IPriceWithCurrentIcon {
-    price: string | number;
+    price?: string | number ;
     extraClass?: string;
 }
 

@@ -1,0 +1,9 @@
+.feedList {
+    list-style-type: none;
+    width: 600px;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

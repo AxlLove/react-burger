@@ -7,7 +7,7 @@ import {FormattedDate} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link, useLocation} from "react-router-dom";
 import PriceWithCurrentIcon from "../PriceWithCurrentIcon/PriceWithCurrentIcon";
 import IngredientIcon from "../IngredientIcon/IngredientIcon";
-
+import {v4 as uiv4} from 'uuid'
 
 type TStatus = 'Выполнен' | 'Готовится' | 'Создан';
 
@@ -41,11 +41,11 @@ const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, sta
                     <p className={`text text_type_main-small pt-2 ${status === 'Выполнен' ? styles.statusDone : ''}`}>{status}</p>}
                 <div className={`${styles.ingredientContainer} pt-6`}>
                     <ul className={styles.ingredientIcons}>
-                        {arr.slice(0, 6).map((item, index) => (
+                        {arr && arr.slice(0, 6).map((item, index) => (
                             index !== 5 ?
-                                <IngredientIcon list={true} name={item.name} image={item.image_mobile} key={index}/>
+                                <IngredientIcon list={true} name={item.name} image={item.image_mobile} key={uiv4()}/>
                                 : <IngredientIcon list={true} name={item.name} image={item.image_mobile} withoutCount={false}
-                                                  count={arr.length - 5} key={index}/>
+                                                  count={arr.length - 5} key={uiv4()}/>
                         )).reverse()}
                     </ul>
                     <PriceWithCurrentIcon price={price}/>

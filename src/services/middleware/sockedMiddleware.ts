@@ -15,7 +15,9 @@ export type TWsActionTypes = {
 export const createSockedMiddleware = (wsActions: TWsActionTypes): Middleware<{}, RootState > => {
     return (store) => {
         let socked: WebSocket | null = null;
-        let url = ''
+        let url = '';
+        let isConnected = false;
+        let reconnectTimer = 0
         return (next) => (action) => {
             const {dispatch} = store;
             const {
@@ -29,10 +31,10 @@ export const createSockedMiddleware = (wsActions: TWsActionTypes): Middleware<{}
             } = wsActions;
 
             if (connect.match(action)) {
+                window.clearTimeout(reconnectTimer)
                 url = action.payload;
-                console.log('connect', url)
                 socked = new WebSocket(url)
-                console.log('connect', socked)
+                console.log('connect')
                 dispatch(wsConnecting())
             }
             if (socked) {
@@ -40,20 +42,33 @@ export const createSockedMiddleware = (wsActions: TWsActionTypes): Middleware<{}
                     console.log('onopen')
                     dispatch(wsOpen())
                 }
-                socked.onerror = (event: Event) => {
+                socked.onerror = () => {
+                    console.log('onerror')
                     dispatch(wsError('WebSocked Error'))
                 }
                 socked.onmessage = (event: MessageEvent) => {
                     const {data} = event;
                     const parsedData = JSON.parse(data)
-                    console.log(parsedData)
                     dispatch(wsMessage(parsedData))
                 }
-                socked.onclose = () => {
+                socked.onclose = (event: CloseEvent) => {
+                    if (event.code !== 1000) {
+                        dispatch(wsError(event.code.toString()))
+                    }
+                    if (isConnected) {
+                        dispatch(wsConnecting())
+                        reconnectTimer = window.setTimeout(()=> {
+                            dispatch(connect(url))
+                        }, 3000)
+                    }
+                    console.log('onclose')
                     dispatch(wsClose())
                 }
                 if (disconnect.match(action)) {
                     console.log('WebSocked disconnected')
+                    window.clearTimeout(reconnectTimer)
+                    isConnected = false;
+                    reconnectTimer = 0
                     socked.close()
                     dispatch(wsClose())
                 }

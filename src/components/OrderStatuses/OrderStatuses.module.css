@@ -1,34 +1,11 @@
-.feed {
-    display: flex;
-    gap: 56px;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-.content {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.columns {
-    display: flex;
-    justify-content: center;
-    gap: 56px;
-
-}
 .ordersStatus {
     display: flex;
     width: 548px;
     flex-direction: column;
-}
-.ordersStatus {
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
     gap: 60px;
 }
+
 .status {
     display: flex;
     gap: 32px;

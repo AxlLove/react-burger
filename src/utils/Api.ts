@@ -1,6 +1,6 @@
 import {ACCESS_TOKEN_NAME, BASE_URL, REFRESH_TOKEN_NAME} from "./constants";
 import {getCookie} from "./coockie";
-import {IIngredient, IOrder} from "../types/types";
+import {IIngredient, IOrder, IOrderDetail} from "../types/types";
 
 type TReqMethod = 'GET' | 'POST' | 'PUT' | 'PATCH';
 
@@ -79,6 +79,15 @@ export const makeAnOrder = (ingredients: {ingredients: Array<string>}) => {
             authorization: `Bearer ${getCookie(ACCESS_TOKEN_NAME)}`
         },
         body: JSON.stringify(ingredients)
+    })
+}
+
+export const getOrderByNumber = (number: number) => {
+    return request<IOrderDetail>(`${BASE_URL}/orders/${number}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        }
     })
 }
 
