@@ -11,13 +11,12 @@ const initialState = {
 };
 
 export const getUser = createAsyncThunk(`${sliceName}/getUser`, async function (_, {rejectWithValue}) {
-    //TODO ???
         try {
             return await userRequest()
         } catch (err) {
             const { message } = err as { message: string }
             console.log(message)
-            if ( message === 'jwt expired') {
+            if ( message === 'jwt expired' || '') {
                 const tokens = await refreshToken()
                 saveTokens(tokens)
                 return await userRequest()

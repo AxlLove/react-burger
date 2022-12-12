@@ -1,6 +1,7 @@
 import {createSelector} from '@reduxjs/toolkit'
-import { IIngredient } from '../../types/types';
-import { RootState } from '../store';
+import {IIngredient} from '../../types/types';
+import {RootState} from '../store';
+import {array} from "prop-types";
 
 const selectOtherIngredient = (store: RootState) => store?.burgerConstructor?.constructorData
 const selectBun = (store: RootState) => store?.burgerConstructor?.bun
@@ -18,10 +19,10 @@ export const counterSelector = (card: IIngredient) => createSelector(selectBun, 
     }
 )
 
-export const feedSelector = (feed: Array<string> | undefined) => createSelector(getIngredientsSelector, (getIngredientsSelector)=> {
-    if(feed) {
+export const feedSelector = (feed: Array<string> | undefined) => createSelector(getIngredientsSelector, (getIngredientsSelector) => {
+    if (feed) {
         return feed.reduce<Array<IIngredient>>((arr, current) => {
-            const item = getIngredientsSelector.find((item)=> item._id === current)
+            const item = getIngredientsSelector.find((item) => item._id === current)
             if (item) {
                 arr.push(item);
             }
@@ -29,32 +30,29 @@ export const feedSelector = (feed: Array<string> | undefined) => createSelector(
         }, [])
     }
 });
-export const feedPriceSelector = (feed: Array<string> | undefined) => createSelector(getIngredientsSelector, (getIngredientsSelector)=> {
-    if(feed)  {
+export const feedPriceSelector = (feed: Array<string> | undefined) => createSelector(getIngredientsSelector, (getIngredientsSelector) => {
+    if (feed) {
         return feed.reduce<number>((acc, current) => {
-            const item = getIngredientsSelector.find((item)=> item._id === current)
+            const item = getIngredientsSelector.find((item) => item._id === current)
             if (item) {
-             item && item.type === 'bun'?  acc += item.price * 2: acc += item.price
+                acc += item.price
             }
             return acc;
         }, 0)
     }
-
 });
 
-type price = {
-    [name: string]: {
-        current: number;
-        count: number;
+type TCount = IIngredient & { counter: number }
+export const count = (feed: Array<string> | undefined) => createSelector(getIngredientsSelector, (getIngredientsSelector) => {
+    if (feed) {
+        const item = getIngredientsSelector.filter(ingredient => !!feed.find(id => id === ingredient._id))
+        return item.reduce<Array<TCount>>((acc, ingredient) => {
+            const counter = feed.filter(id => ingredient._id === id).length
+            acc.push({...ingredient, counter})
+            return acc
+        }, [])
     }
-}
-export const test = (feed: Array<string> | undefined) => createSelector(getIngredientsSelector, (getIngredientsSelector)=> {
-    if(feed)  {
-        return feed.reduce<Array<price>>((acc, current) => acc.hasOwnProperty(current)? {}, {})
-    }
-
 });
 
-//TODO разобраться как считаем булку
-//TODO можно заменить методом reduce
+
 

@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom'
 import {useLocation} from "react-router-dom";
 import {IIngredient} from "../../types/types";
 import {FC} from "react";
+import PriceWithCurrentIcon from "../PriceWithCurrentIcon/PriceWithCurrentIcon";
 
 interface ICardProps {
     card: IIngredient;
@@ -44,7 +45,6 @@ const Card: FC<ICardProps> = ({card}) => {
                 <p className={`text text_type_main-default pt-1 ${styles.wordBreak}`}>{card.name}</p>
             </li>
         </Link>
-
     )
 }
 

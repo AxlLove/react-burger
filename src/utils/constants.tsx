@@ -1,24 +1,38 @@
 export const BASE_URL = 'https://norma.nomoreparties.space/api'
 export const WS_URL_ALL_ORDERS = 'wss://norma.nomoreparties.space/orders/all'
+export const WS_USER_URL = 'wss://norma.nomoreparties.space/orders'
 
 export const ACCESS_TOKEN_NAME = 'token'
 export const REFRESH_TOKEN_NAME = 'refreshToken'
 
-export const TOKEN_LIFETIME = 2400
+export const TOKEN_LIFETIME = 10
 
 export enum OrderStatus {
-    DONE= 'Выполнен',
+    DONE = 'Выполнен',
     PENDING = 'Готовится',
     CREATED = 'Создан'
 }
 
-export enum ordersStatuses {
-    done = 'done',
-    pending = 'pending',
-    created = 'created'
+export enum OrderResponseStatus {
+    DONE = 'done',
+    PENDING = 'pending',
+    CREATED = 'created'
 }
-//TODO переименовать
 
-// export const BUN_INGREDIENT_TYPE = 'Булки'
-// export const SAUCE_INGREDIENT_TYPE = 'Соусы'
-// export const MAIN_INGREDIENT_TYPE = 'Начинки'    
+export enum IngredientTypeRU {
+    BUN_INGREDIENT_TYPE_RU = 'Булки',
+    SAUCE_INGREDIENT_TYPE_RU = 'Соусы',
+    MAIN_INGREDIENT_TYPE_RU = 'Начинки'
+}
+
+export enum IngredientTypeEng {
+    BUN_INGREDIENT_TYPE_ENG = 'bun',
+    SAUCE_INGREDIENT_TYPE_ENG = 'sauce',
+    MAIN_INGREDIENT_TYPE_ENG = 'main'
+}
+
+export enum WebSocketStatus {
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE',
+    CONNECTING = 'CONNECTING',
+}

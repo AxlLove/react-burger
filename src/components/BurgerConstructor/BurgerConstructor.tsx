@@ -2,7 +2,7 @@ import styles from './BurgerConstructor.module.css'
 import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { useAppDispatch, useAppSelector} from "../../services/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../services/hooks/hooks";
 import {useState, useCallback,} from 'react';
 import {fetchOrder} from '../../services/slices/orderSlice';
 import {addIngredientToCart, updateIngredientsInConstructor} from "../../services/slices/burgerConstructorSlice";
@@ -60,7 +60,7 @@ function BurgerConstructor() {
             setNoIngredientErr(true)
             return
         }
-        if(orderData) {
+        if (orderData) {
             dispatch(fetchOrder(orderData))
         }
         setBurgerConstructorModalOpen(true)
@@ -163,14 +163,9 @@ function BurgerConstructor() {
                 <span className={`${styles.error} text text_type_main-default`}>Выберите минимум один ингредиент</span>
             }
 
-            {burgerConstructorModalOpen && !onLoad && !onError &&
+            {burgerConstructorModalOpen && !onError &&
                 <Modal onClose={toggleModal}>
                     <OrderDetails/>
-                </Modal>
-            }
-            {onLoad &&
-                <Modal>
-                    <Preloader/>
                 </Modal>
             }
         </section>

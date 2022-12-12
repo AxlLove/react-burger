@@ -1,3 +1,5 @@
+import {OrderResponseStatus} from "../utils/constants";
+
 export interface IIngredient {
     _id: string;
     name: string;
@@ -19,11 +21,11 @@ export interface IIngredientWithUniqueId extends IIngredient {
 }
 
 export interface IOrder {
-    status: string;
+    status: OrderResponseStatus;
     ingredients: Array<IIngredient>
     name: string;
     number: number;
-    owner: {
+    owner?: {
         createdAt: string;
         name: string;
         email: string;
@@ -35,9 +37,10 @@ export interface IOrder {
     _id: string;
 }
 
-export interface IFeedOrder extends Omit<IOrder, "ingredients" | "owner" | 'price' > {
+export interface IFeedOrder extends Omit<IOrder, "ingredients" | 'price'> {
     ingredients: Array<string>;
 }
+
 export interface IOrderDetail {
     success: boolean;
     orders: Array<IFeedOrder>;

@@ -18,7 +18,6 @@ const initialState: IIngredientsSlice = {
 export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`, async function () {
         return await
             getIngredients().then(res => {
-                console.log(res)
                 return {
                     data: res.data
                 }

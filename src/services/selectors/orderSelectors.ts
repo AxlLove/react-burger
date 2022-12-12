@@ -5,7 +5,6 @@ export const orderDataSelector = (store: RootState) => {
         const dataId = data.map(item => item && item._id) as Array<string>
         return {ingredients: dataId}
 }
-//TODO Reselect?
 export const constructorSubmitOrderSelector = (store: RootState) => ({onLoad: store?.order?.onLoad, onError: store?.order?.onError});
 
 export const orderNumberSelector = (store: RootState) => store.order?.orderDetails?.order?.number

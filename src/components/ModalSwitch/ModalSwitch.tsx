@@ -34,7 +34,7 @@ const ModalSwitch: FC = () => {
         dispatch(deleteIngredientInfo());
         history.goBack();
     };
-
+//TODO исправить
     return (
         <>
             <AppHeader/>
@@ -73,6 +73,12 @@ const ModalSwitch: FC = () => {
                                 <div className={styles.pageContainer}><FeedOrderDetails withPage={true}/></div>
                         }
                     />
+                    <ProtectedRoute
+                        path='/profile/orders/:identifier' exact={true}
+                        children={
+                            <div className={styles.pageContainer}><FeedOrderDetails withPage={true}/></div>
+                        }
+                    />
                     <Route
                         path='/ingredients/:ingredientId' exact={true}
                         children={
@@ -93,7 +99,6 @@ const ModalSwitch: FC = () => {
                     </Route>
                 </Switch>
 
-
                 {background && (<Route
                     path='/ingredients/:ingredientId' exact={true}
                     children={
@@ -107,6 +112,14 @@ const ModalSwitch: FC = () => {
                 />)}
                 {background && (<Route
                     path='/feed/:identifier' exact={true}
+                    children={
+                        <Modal onClose={handleModalClose}>
+                            <FeedOrderDetails/>
+                        </Modal>
+                    }
+                />)}
+                {background && (<ProtectedRoute
+                    path='/profile/orders/:identifier' exact={true}
                     children={
                         <Modal onClose={handleModalClose}>
                             <FeedOrderDetails/>

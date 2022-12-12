@@ -18,4 +18,3 @@ const FeedOrderList: React.FC<IFeedOrderList> = ({orders}) => {
 }
 
 export default FeedOrderList;
-//TODO переиспользовать

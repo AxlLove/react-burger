@@ -1,6 +1,5 @@
 import React from "react";
 import styles from './FeedCard.module.css'
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useAppSelector} from "../../services/hooks/hooks";
 import {feedPriceSelector, feedSelector} from "../../services/selectors/ingrediensSelectors";
 import {FormattedDate} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,8 +7,10 @@ import {Link, useLocation} from "react-router-dom";
 import PriceWithCurrentIcon from "../PriceWithCurrentIcon/PriceWithCurrentIcon";
 import IngredientIcon from "../IngredientIcon/IngredientIcon";
 import {v4 as uiv4} from 'uuid'
+import {OrderResponseStatus} from "../../utils/constants";
+import {checkResponseStatus} from "../../utils/checkResponse";
 
-type TStatus = 'Выполнен' | 'Готовится' | 'Создан';
+type TStatus = OrderResponseStatus.DONE | OrderResponseStatus.PENDING | OrderResponseStatus.CREATED;
 
 interface IFeedCard {
     identifier: number;
@@ -26,7 +27,7 @@ const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, sta
     return (
         <Link key={identifier}
               to={{
-                  pathname: `/feed/${identifier}`,
+                  pathname: `${location.pathname}/${identifier}`,
                   state: {background: location},
               }}
               className={styles.link}>
@@ -38,13 +39,15 @@ const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, sta
                 </div>
                 <h2 className={`${styles.header} text text_type_main-medium pt-6`}>{name}</h2>
                 {status &&
-                    <p className={`text text_type_main-small pt-2 ${status === 'Выполнен' ? styles.statusDone : ''}`}>{status}</p>}
+                    <p className={`text text_type_main-small pt-2 ${status === OrderResponseStatus.DONE ? styles.statusDone : ''}`}>
+                        {checkResponseStatus(status)}</p>}
                 <div className={`${styles.ingredientContainer} pt-6`}>
                     <ul className={styles.ingredientIcons}>
                         {arr && arr.slice(0, 6).map((item, index) => (
                             index !== 5 ?
                                 <IngredientIcon list={true} name={item.name} image={item.image_mobile} key={uiv4()}/>
-                                : <IngredientIcon list={true} name={item.name} image={item.image_mobile} withoutCount={false}
+                                : <IngredientIcon list={true} name={item.name} image={item.image_mobile}
+                                                  withoutCount={false}
                                                   count={arr.length - 5} key={uiv4()}/>
                         )).reverse()}
                     </ul>

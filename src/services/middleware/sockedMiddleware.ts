@@ -12,7 +12,7 @@ export type TWsActionTypes = {
     wsMessage: ActionCreatorWithPayload<any>
 }
 
-export const createSockedMiddleware = (wsActions: TWsActionTypes): Middleware<{}, RootState > => {
+export const createSockedMiddleware = (wsActions: TWsActionTypes): Middleware<{}, RootState> => {
     return (store) => {
         let socked: WebSocket | null = null;
         let url = '';
@@ -34,16 +34,13 @@ export const createSockedMiddleware = (wsActions: TWsActionTypes): Middleware<{}
                 window.clearTimeout(reconnectTimer)
                 url = action.payload;
                 socked = new WebSocket(url)
-                console.log('connect')
                 dispatch(wsConnecting())
             }
             if (socked) {
                 socked.onopen = () => {
-                    console.log('onopen')
                     dispatch(wsOpen())
                 }
                 socked.onerror = () => {
-                    console.log('onerror')
                     dispatch(wsError('WebSocked Error'))
                 }
                 socked.onmessage = (event: MessageEvent) => {
@@ -57,15 +54,13 @@ export const createSockedMiddleware = (wsActions: TWsActionTypes): Middleware<{}
                     }
                     if (isConnected) {
                         dispatch(wsConnecting())
-                        reconnectTimer = window.setTimeout(()=> {
+                        reconnectTimer = window.setTimeout(() => {
                             dispatch(connect(url))
                         }, 3000)
                     }
-                    console.log('onclose')
                     dispatch(wsClose())
                 }
                 if (disconnect.match(action)) {
-                    console.log('WebSocked disconnected')
                     window.clearTimeout(reconnectTimer)
                     isConnected = false;
                     reconnectTimer = 0

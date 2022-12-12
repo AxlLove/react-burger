@@ -31,8 +31,9 @@ const wsActions = {
     wsClose: feedWsClose,
     wsError: feedWsError,
     wsMessage: feedWsMessage,
-}
-const sockedMiddleware = createSockedMiddleware(wsActions)
+};
+
+const sockedMiddleware = createSockedMiddleware(wsActions);
 
 const rootReducer = combineReducers({
     ingredients: ingredientReducer,
@@ -47,8 +48,8 @@ const rootReducer = combineReducers({
     logoutUser: logoutUserSlice,
     feed: feedReducer,
     orderInfo: orderInfoReducer,
-})
-//TODO вынести в отдельный файл
+});
+
 const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(sockedMiddleware).concat(thunk),
@@ -58,6 +59,5 @@ const store = configureStore({
 
 export default store;
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
-//TODO возмоно стоит вынести экшены из слайсов

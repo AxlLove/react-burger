@@ -1,6 +1,6 @@
 import {createAction, createSlice} from "@reduxjs/toolkit";
 import {IWsFeedOrders, WebSocketStatus} from "../../types/types";
-import {getUserUserSlice} from "./getUserSlice";
+
 
 interface IFeedSlice {
     status:string;
@@ -27,7 +27,11 @@ export const wsMessage = createAction<IWsFeedOrders, 'WEB_SOCKED_MESSAGE'>('WEB_
  const feedSlice = createSlice({
     name: sliceName,
     initialState,
-    reducers: {},
+    reducers: {
+        deleteOrderData: state => {
+            state.data = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(wsConnecting, (state) => {
@@ -50,5 +54,5 @@ export const wsMessage = createAction<IWsFeedOrders, 'WEB_SOCKED_MESSAGE'>('WEB_
 })
 
 const {reducer} = feedSlice;
-
+export const {deleteOrderData} = feedSlice.actions
 export default reducer

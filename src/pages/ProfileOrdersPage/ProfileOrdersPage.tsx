@@ -1,108 +1,38 @@
 import styles from "./ProfileOrdersPage.module.css";
 import NavBar from "../../components/NavBar/NavBar";
 import FeedCard from "../../components/FeedCard/FeedCard";
+import {useAppDispatch, useAppSelector} from "../../services/hooks/hooks";
+import {feedDataSelector, feedStatus} from "../../services/selectors/feedSelector";
+import {useEffect} from "react";
+import {connect, deleteOrderData, disconnect} from "../../services/slices/feedSlice";
+import {ACCESS_TOKEN_NAME, WS_USER_URL} from "../../utils/constants";
+import {getCookie} from "../../utils/coockie";
+import {getUser} from "../../services/slices/getUserSlice";
 
-const  testOrder = [{
-    ingredients: [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733c8",
-        "60d3b41abdacab0026a733d0",
-        "60d3b41abdacab0026a733d1"],
-    _id: "",
-    name: 'Супер бургер',
-    status: "done",
-    number: 123415,
-    createdAt: "2021-06-23T14:43:22.587Z",
-    updatedAt: "2021-06-23T14:43:22.603Z"
-},
-    {
-        ingredients: [
-            "60d3b41abdacab0026a733c6",
-            "60d3b41abdacab0026a733c8",
-            "60d3b41abdacab0026a733d0",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1"],
-        _id: "",
-        name: 'Супер бургер',
-        status: "done",
-        number: 213214,
-        createdAt: "2021-06-23T14:43:22.587Z",
-        updatedAt: "2021-06-23T14:43:22.603Z"
-    },
-    {
-        ingredients: [
-            "60d3b41abdacab0026a733c6",
-            "60d3b41abdacab0026a733c8",
-            "60d3b41abdacab0026a733d0",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1"],
-        _id: "",
-        name: 'Супер бургер',
-        status: "done",
-        number: 0,
-        createdAt: "2021-06-23T14:43:22.587Z",
-        updatedAt: "2021-06-23T14:43:22.603Z"
-    },
-    {
-        ingredients: [
-            "60d3b41abdacab0026a733c6",
-            "60d3b41abdacab0026a733c8",
-            "60d3b41abdacab0026a733d0",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1"],
-        _id: "",
-        name: 'Супер бургер',
-        status: "done",
-        number: 0,
-        createdAt: "2021-06-23T14:43:22.587Z",
-        updatedAt: "2021-06-23T14:43:22.603Z"
-    },
-    {
-        ingredients: [
-            "60d3b41abdacab0026a733c6",
-            "60d3b41abdacab0026a733c8",
-            "60d3b41abdacab0026a733d0",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1"],
-        _id: "",
-        name: 'Супер бургер',
-        status: "done",
-        number: 0,
-        createdAt: "2021-06-23T14:43:22.587Z",
-        updatedAt: "2021-06-23T14:43:22.603Z"
-    },
-    {
-        ingredients: [
-            "60d3b41abdacab0026a733c6",
-            "60d3b41abdacab0026a733c8",
-            "60d3b41abdacab0026a733d0",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1",
-            "60d3b41abdacab0026a733d1"],
-        _id: "",
-        name: 'Супер бургер',
-        status: "done",
-        number: 0,
-        createdAt: "2021-06-23T14:43:22.587Z",
-        updatedAt: "2021-06-23T14:43:22.603Z"
-    }
-]
 
 const ProfileOrdersPage = () => {
+    const dispatch = useAppDispatch()
+    const data = useAppSelector(feedDataSelector)
+
+    useEffect(() => {
+        if(!getCookie(ACCESS_TOKEN_NAME)){
+            return
+        }
+        dispatch(connect(`${WS_USER_URL}?token=${getCookie(ACCESS_TOKEN_NAME)}`))
+        return () => {
+            dispatch(disconnect())
+            dispatch(deleteOrderData())
+        }
+    }, [dispatch])
 
     return (
         <div className={`${styles.content}`}>
             <NavBar text={'В этом разделе вы можете посмотреть свои заказы'}/>
             <ul className={styles.orders}>
-            {testOrder.map((order)=>(
-                            <FeedCard status={`Выполнен`} identifier={order.number} date={order.createdAt} name={order.name} ingredients={order.ingredients} key={order.number}/>
-                        ))}
+                {data && data.orders && data.orders.map((order) => (
+                    <FeedCard status={order.status} identifier={order.number} date={order.createdAt} name={order.name}
+                              ingredients={order.ingredients} key={order.number}/>
+                )).reverse()}
             </ul>
         </div>
     )
