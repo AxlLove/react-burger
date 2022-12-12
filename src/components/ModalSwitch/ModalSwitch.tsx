@@ -28,7 +28,7 @@ const ModalSwitch: FC = () => {
     const dispatch = useAppDispatch()
     const location = useLocation<ILocationState>();
     const history = useHistory();
-    const background = location?.state && location?.state?.background;
+    let background = location.state && location.state.background;
 
     const handleModalClose = () => {
         dispatch(deleteIngredientInfo());
@@ -64,9 +64,6 @@ const ModalSwitch: FC = () => {
                     <ProtectedRoute path={'/profile/orders'} exact={true}>
                         <ProfileOrdersPage/>
                     </ProtectedRoute>
-                    <ProtectedRoute path={'/profile/orders/:id'} exact={true}>
-                        <ProfileOrdersPage/>
-                    </ProtectedRoute>
                     <Route
                         path='/feed/:identifier' exact={true}
                         children={
@@ -84,13 +81,11 @@ const ModalSwitch: FC = () => {
                         children={
                         //TODO можно добавить прелоадер
                             //TODO можно поставить флаг и рендерить хедер от флага
-                            <>
                                 <div className={styles.pageContainer}>
                                     <IngredientDetails><h2
                                         className={`text text_type_main-large ${styles.ingredientPageHeader}`}>Детали
                                         ингредиента</h2>
                                     </IngredientDetails></div>
-                            </>
                         }
                     />
 
@@ -119,7 +114,7 @@ const ModalSwitch: FC = () => {
                     }
                 />)}
                 {background && (<ProtectedRoute
-                    path='/profile/orders/:identifier' exact={true}
+                    path='/profile/orders/:identifier'
                     children={
                         <Modal onClose={handleModalClose}>
                             <FeedOrderDetails/>

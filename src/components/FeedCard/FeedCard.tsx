@@ -20,10 +20,13 @@ interface IFeedCard {
     status?: TStatus,
 }
 
+
+
 const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, status}) => {
     const location = useLocation();
     const arr = useAppSelector(feedSelector(ingredients))
     const price = useAppSelector(feedPriceSelector(ingredients))
+
     return (
         <Link key={identifier}
               to={{
@@ -46,7 +49,8 @@ const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, sta
                         {arr && arr.slice(0, 6).map((item, index) => (
                             index !== 5 ?
                                 <IngredientIcon list={true} name={item.name} image={item.image_mobile} key={uiv4()}/>
-                                : <IngredientIcon list={true} name={item.name} image={item.image_mobile}
+                                : 
+                                <IngredientIcon list={true} name={item.name} image={item.image_mobile}
                                                   withoutCount={false}
                                                   count={arr.length - 5} key={uiv4()}/>
                         )).reverse()}
