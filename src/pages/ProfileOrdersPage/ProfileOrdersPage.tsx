@@ -2,7 +2,7 @@ import styles from "./ProfileOrdersPage.module.css";
 import NavBar from "../../components/NavBar/NavBar";
 import FeedCard from "../../components/FeedCard/FeedCard";
 import {useAppDispatch, useAppSelector} from "../../services/hooks/hooks";
-import {feedDataSelector, feedStatus} from "../../services/selectors/feedSelector";
+import {feedDataSelector} from "../../services/selectors/feedSelector";
 import {useEffect} from "react";
 import {connect, deleteOrderData, disconnect} from "../../services/slices/feedSlice";
 import {ACCESS_TOKEN_NAME, WS_USER_URL} from "../../utils/constants";
@@ -16,7 +16,7 @@ const ProfileOrdersPage = () => {
 
     useEffect(() => {
         if(!getCookie(ACCESS_TOKEN_NAME)){
-            return
+            dispatch(getUser())
         }
         dispatch(connect(`${WS_USER_URL}?token=${getCookie(ACCESS_TOKEN_NAME)}`))
         return () => {

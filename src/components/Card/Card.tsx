@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom'
 import {useLocation} from "react-router-dom";
 import {IIngredient} from "../../types/types";
 import {FC} from "react";
-import PriceWithCurrentIcon from "../PriceWithCurrentIcon/PriceWithCurrentIcon";
 
 interface ICardProps {
     card: IIngredient;

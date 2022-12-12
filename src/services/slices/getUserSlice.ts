@@ -16,7 +16,7 @@ export const getUser = createAsyncThunk(`${sliceName}/getUser`, async function (
         } catch (err) {
             const { message } = err as { message: string }
             console.log(message)
-            if ( message === 'jwt expired' || '') {
+            if ( message === 'jwt expired' || message === "jwt malformed") {
                 const tokens = await refreshToken()
                 saveTokens(tokens)
                 return await userRequest()

@@ -20,7 +20,7 @@ export const updateUserInfo = createAsyncThunk(`${sliceName}/update`, async func
             return await updateUser(name, email, password)
         } catch (err) {
             const { message } = err as { message: string }
-            if (message === 'jwt expired') {
+            if (message === 'jwt expired' || message === "jwt malformed") {
                 const tokens = await refreshToken()
                 saveTokens(tokens)
                 return await updateUser(name, email, password)

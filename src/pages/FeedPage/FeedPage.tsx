@@ -3,17 +3,14 @@ import styles from './FeedPage.module.css';
 import {useAppDispatch, useAppSelector} from "../../services/hooks/hooks";
 import {connect, deleteOrderData, disconnect} from "../../services/slices/feedSlice";
 import { WS_URL_ALL_ORDERS } from "../../utils/constants";
-import { feedDataSelector, feedStatus } from "../../services/selectors/feedSelector";
+import { feedDataSelector } from "../../services/selectors/feedSelector";
 import FeedOrderList from "../../components/FeedOrderList/FeedOrderList";
 import OrderStatuses from "../../components/OrderStatuses/OrderStatuses";
-import Preloader from "../../components/Preloader/Preloader";
-import { WebSocketStatus } from "../../types/types";
 
 
 const FeedPage: React.FC = () => {
     const dispatch = useAppDispatch()
     const data = useAppSelector(feedDataSelector)
-    const connectStatus = useAppSelector(feedStatus)
 
     useEffect(()=> {
         dispatch(connect(WS_URL_ALL_ORDERS))

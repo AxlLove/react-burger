@@ -24,7 +24,7 @@ export const fetchOrder = createAsyncThunk(`${sliceName}/fetchOrder`, async func
             return await makeAnOrder(orderData)
         } catch (err) {
             const { message } = err as { message: string }
-            if (message === 'jwt expired') {
+            if (message === 'jwt expired' || message === "jwt malformed") {
                 const tokens = await refreshToken()
                 saveTokens(tokens)
                 return await makeAnOrder(orderData)

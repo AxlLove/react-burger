@@ -20,7 +20,6 @@ import {v4 as uiv4} from 'uuid'
 import ConstructorItem from '../ConstructorItem/ConstructorItem';
 import {getUserInfo} from "../../services/selectors/userSelector";
 import {useHistory} from "react-router-dom";
-import Preloader from "../Preloader/Preloader";
 import {IIngredientWithUniqueId} from "../../types/types";
 
 
@@ -162,7 +161,6 @@ function BurgerConstructor() {
                 noIngredientErr &&
                 <span className={`${styles.error} text text_type_main-default`}>Выберите минимум один ингредиент</span>
             }
-
             {burgerConstructorModalOpen && !onError &&
                 <Modal onClose={toggleModal}>
                     <OrderDetails/>
