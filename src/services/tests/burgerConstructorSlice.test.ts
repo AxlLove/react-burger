@@ -16,6 +16,16 @@ describe('burgerConstructorSlice', ()=> {
 
         expect(resultWithBun.bun).toEqual(bunWithId)
         expect(result.constructorData[0]).toEqual(ingredientWithID)
-
     })
-})
+    it('should update ingredient to cart with "updateIngredientsInConstructor" action', ()=> {
+        const mock = [{...ingredientWithID, name: 'testName'}]
+        const action = {type: updateIngredientsInConstructor.type, payload: mock}
+        const result = reducer({bun: null, constructorData: [ingredientWithID]}, action)
+        expect(result.constructorData).toEqual(mock)
+    })
+    it('should delete ingredient in cart with "deleteIngredient" action', ()=> {
+        const action = {type: deleteIngredient.type, payload: ingredientWithID.dragId}
+        const result = reducer({bun: null, constructorData: [ingredientWithID]}, action)
+        expect(result.constructorData).toEqual([])
+        })
+    })
