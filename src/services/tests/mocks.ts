@@ -44,3 +44,15 @@ export const ingredientWithoutID = {
     image_large:"https://code.s3.yandex.net/react/code/sauce-04-large.png",
     __v:0,
 }
+
+export const userMock = {
+    email: '123@321.ru',
+    name: 'Aleksey'
+}
+
+
+export const successfullAuthMock = {
+    success: true,
+     user: {email: 'some-email', name: 'some-name'}, 
+     accessToken: '1232',
+     refreshToken: '123'}

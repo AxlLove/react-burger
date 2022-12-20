@@ -18,15 +18,16 @@ describe('ingredientSlice', () => {
         expect(state.onLoad).toBe(true)
         expect(state.onError).toBe(false)
     })
+
     it('should change status with fetchIngredients.fulfilled action', ()=> {
         const state = reducer(initialState, fetchIngredients.fulfilled({data: [ingredientWithoutID]}, fetchIngredients.fulfilled.type))
-        console.log(state)
         expect(state).toEqual({
             ingredientData: [ingredientWithoutID],
             onLoad: false,
             onError: false,
         })
     })
+
     it('should change status with fetchIngredients.rejected action', ()=> {
         const state = reducer(initialState, fetchIngredients.rejected)
         expect(state.onLoad).toBe(false)
@@ -61,6 +62,7 @@ describe('fetchIngredientThunk', () => {
         expect(end[0].type).toBe('ingredients/fetchIngredients/fulfilled')
         expect(end[0].payload).toEqual({data: [ingredientWithoutID]})
     })
+    
     it('should getIngredient with rejected response', async () => {
         mockFetch.mockResolvedValue({
             ok: false,
