@@ -1,6 +1,5 @@
-import { Console } from "console";
 import reducer, {loginUser} from "../slices/loginUserSlice"
-import {ingredientWithoutID, successfullAuthMock} from "./mocks";
+import {successfullAuthMock} from "./mocks";
 
 
 global.fetch = jest.fn()
@@ -31,12 +30,18 @@ describe('loginUserSlice', () => {
     })
 
     it('should change status with loginUser.rejected action', ()=> {
-        const state = reducer(initialState, loginUser.rejected)
-        console.log(loginUser.rejected)
+        const state = reducer(initialState, loginUser.rejected(null, '', {email: '', password: ''}, 'errr', ))
         expect(state.onLoad).toBe(false)
         expect(state.onError).toBe(true)
+        expect(state.errorMessage).toBe('Произошла ошибка, попробуйте еще раз!')
     })
-    
+
+    it('should change status with loginUser.rejected action with incorrect user data', ()=> {
+        const state = reducer(initialState, loginUser.rejected(null, '', {email: '', password: ''}, 'email or password are incorrect', ))
+        expect(state.onLoad).toBe(false)
+        expect(state.onError).toBe(true)
+        expect(state.errorMessage).toBe('E-mail или пароль введены неверно!')
+    })
 });
 
 describe('loginUserThunk', () => {
@@ -66,7 +71,7 @@ describe('loginUserThunk', () => {
         expect(end[0].payload).toEqual(successfullAuthMock)
     })
     
-    it('should getIngredient with rejected response', async () => {
+    it('should loginUser with rejected response', async () => {
         mockFetch.mockResolvedValue({
             ok: false,
             json: () => Promise.reject({message: 'email or password are incorrect'}),
@@ -75,7 +80,6 @@ describe('loginUserThunk', () => {
         const dispatch = jest.fn();
 
         const thunk = loginUser({email: 'some@email', password: 'some-password'});
-
 
         await thunk(dispatch, () => {
         }, {})

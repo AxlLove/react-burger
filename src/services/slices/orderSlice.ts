@@ -8,7 +8,9 @@ interface IOrderSlice {
     orderDetails: ISuccessOrderRequest | null;
     onLoad: boolean;
     onError: boolean;
+    errorMessage: string;
 }
+//TODO сообщение
 interface IOrderData {
     ingredients: Array<string>
 }
@@ -16,6 +18,7 @@ const initialState: IOrderSlice = {
     orderDetails: null,
     onLoad: false,
     onError: false,
+    errorMessage: ''
 };
 
 export const fetchOrder = createAsyncThunk(`${sliceName}/fetchOrder`, async function (orderData: IOrderData, {rejectWithValue}) {
@@ -47,9 +50,10 @@ export const orderSlice = createSlice({
                 state.onLoad = false;
                 state.orderDetails = action.payload
             })
-            .addCase(fetchOrder.rejected, (state)=> {
+            .addCase(fetchOrder.rejected, (state,action)=> {
                 state.onLoad = false;
                 state.onError = true
+                state.errorMessage = action.payload as string
             })
     }
 })

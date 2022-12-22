@@ -1,9 +1,10 @@
 import {OrderResponseStatus, OrderStatus} from "./constants";
+import {TOrderResponseStatus} from "../types/types";
 
 type TStatus = OrderResponseStatus.DONE | OrderResponseStatus.PENDING | OrderResponseStatus.CREATED | undefined;
 type TResult = OrderStatus.DONE | OrderStatus.PENDING | OrderStatus.CREATED | string | undefined
 
-export const checkResponseStatus = (status: TStatus): TResult => {
+export const checkResponseStatus = (status: TOrderResponseStatus): TResult => {
     let res = ''
     if (status) {
         switch (status) {

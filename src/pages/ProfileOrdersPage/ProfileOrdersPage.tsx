@@ -30,7 +30,7 @@ const ProfileOrdersPage = () => {
             <NavBar text={'В этом разделе вы можете посмотреть свои заказы'}/>
             <ul className={styles.orders}>
                 {data && data.orders && data.orders.map((order) => (
-                    <FeedCard status={order.status} identifier={order.number} date={order.createdAt} name={order.name}
+                    <FeedCard status={order?.status} identifier={order.number} date={order.createdAt} name={order.name}
                               ingredients={order.ingredients} key={order.number}/>
                 )).reverse()}
             </ul>

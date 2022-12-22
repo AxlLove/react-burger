@@ -3,8 +3,10 @@ import {userMock} from "./mocks";
 
 
 global.fetch = jest.fn()
-
 const mockFetch = global.fetch as any
+const dispatch = jest.fn();
+const thunk = getUser();
+
 
 const initialState = {
     onLoad: false,
@@ -44,8 +46,6 @@ describe('getUserThunk', () => {
             ok: true
         })
 
-        const dispatch = jest.fn();
-        const thunk = getUser();
 
         await thunk(dispatch, () => {
         }, {})
@@ -61,15 +61,11 @@ describe('getUserThunk', () => {
         expect(end[0].payload).toEqual({user: userMock})
     })
     
-    it('should triger refreshToken when err message "jwt expired"', async () => {
+    it('should trigger refreshToken when err message "jwt expired"', async () => {
         mockFetch.mockResolvedValue({
             ok: false,
             json: () => Promise.reject({message: 'jwt expired'}),
         })
-
-        const dispatch = jest.fn();
-
-        const thunk = getUser();
 
         await thunk(dispatch, () => {
         }, {})
@@ -91,9 +87,6 @@ describe('getUserThunk', () => {
             json: () => Promise.reject({message: 'some error'}),
         })
 
-        const dispatch = jest.fn();
-
-        const thunk = getUser();
 
         await thunk(dispatch, () => {
         }, {})

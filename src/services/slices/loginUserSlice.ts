@@ -39,11 +39,12 @@ export const loginUserSlice = createSlice({
             .addCase(loginUser.rejected, (state, action)=> {
                 state.onLoad = false;
                 state.onError = true;
+                console.log(action.payload)
                 if (action.payload === 'email or password are incorrect') {
                     state.errorMessage = 'E-mail или пароль введены неверно!'
                     return
                 }
-                state.errorMessage = 'На сервере произошла ошибка, попробуйте еще раз!'
+                state.errorMessage = 'Произошла ошибка, попробуйте еще раз!'
 
             })
     }
