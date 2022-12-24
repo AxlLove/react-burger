@@ -28,6 +28,7 @@
 * css-modules
 * jest
 * cypress
+* Intersection Observer API
 
 ## Frontend
 <https://movies-explorer.kitaev.nomoreparties.sbs>
