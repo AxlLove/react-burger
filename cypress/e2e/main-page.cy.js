@@ -3,12 +3,11 @@ describe('burger-constructor e2e', ()=> {
         cy.visit('/');
     });
 
-    it('shoud open and close ingredient modal', ()=>{
+    it('should open and close ingredient modal', ()=>{
         cy.get('div[id="Булки"]').find('li').first().as('testedBun')
 
         cy.get('@testedBun').click()
-        
-        cy.get('[class^=IngredientDetails_ingredientDetails__hlRGm').contains("Краторная булка N-200i")
+        cy.get('#ingredientModal').contains("Краторная булка N-200i")
         cy.url().should('include' , '/ingredients')
 
         cy.get('button').last().click()

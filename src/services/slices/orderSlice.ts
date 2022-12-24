@@ -10,7 +10,7 @@ interface IOrderSlice {
     onError: boolean;
     errorMessage: string;
 }
-//TODO сообщение
+
 interface IOrderData {
     ingredients: Array<string>
 }
