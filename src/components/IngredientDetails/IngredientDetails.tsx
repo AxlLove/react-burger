@@ -17,7 +17,6 @@ const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children})
     const {ingredientId} = useParams<{ ingredientId?: string }>()
     const location = useLocation()
     useEffect(() => {
-        console.log(location?.state)
         if (ingredients) {
             dispatch(addIngredientInfo(ingredients.find((item: IIngredient) => item._id === ingredientId)))
         }

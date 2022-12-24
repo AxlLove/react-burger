@@ -1,8 +1,8 @@
 # «React Burger» 
 
 <div align="center" target="_blank" rel="noopener">
-<a href="https://movies-explorer.kitaev.nomoreparties.sbs"><img src="https://github.com/AxlLove/Axllove/blob/master/src/movies-explorer.PNG" target="_blank" rel="noopener" alt="Movies Explorer"></a>
- <div align="center" target="_blank" rel="noopener">https://movies-explorer.kitaev.nomoreparties.sbs</div>
+<a href="https://https://axllove.github.io/react-burger/"><img src="https://github.com/AxlLove/Axllove/blob/master/src/%D0%A0%D0%B5%D0%B0%D0%BA%D1%82%20%D0%B1%D1%83%D1%80%D0%B3%D0%B5%D1%80.PNG" target="_blank" rel="noopener" alt="React Burger"></a>
+ <div align="center" target="_blank" rel="noopener">https://https://axllove.github.io/react-burger/</div>
 </div></br>
 
 Работа реализована, для подтверждения и закрепления полученных знаний, в ходе обучения на курсе «Реакт - разработчик» платформы [Яндекс.Практикума](https://practicum.yandex.ru/ "Сервис онлайн-образования от Яндекса"). 

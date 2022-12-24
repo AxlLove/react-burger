@@ -1,6 +1,6 @@
 {
   "name": "react-burger",
-  "homepage": "./",
+  "homepage": "https://axllove.github.io/react-burger",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -29,6 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "cp build/index.html build/404.html",
     "test": "react-scripts test",
     "test:cypress": "cypress open",
     "eject": "react-scripts eject",

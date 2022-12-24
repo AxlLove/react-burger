@@ -4,7 +4,6 @@ import {loginUser} from './loginUserSlice'
 import {updateUserInfo} from "./updateUserSlice";
 import {getUser} from "./getUserSlice";
 import {logoutUser} from "./logoutUserSlice";
-import {constructorSlice} from "./burgerConstructorSlice";
 
 interface IUserInfo {
     userInfo: {
