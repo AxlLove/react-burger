@@ -12,7 +12,7 @@ interface PasswordAuthInputProps extends Pick<React.HTMLProps<HTMLInputElement>,
 }
 
 type icon = 'HideIcon' | 'ShowIcon' | 'EditIcon';
-//TODO можно вынести
+
 export const PasswordAuthInput: FC<PasswordAuthInputProps> = ({
                                                                   value,
                                                                   onChange,

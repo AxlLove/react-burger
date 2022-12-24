@@ -9,10 +9,11 @@ import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuth
 import {Redirect} from "react-router-dom";
 import {useForm} from "../../hooks/useForm";
 
+type TResetPasswordForm = {password: string; token: string}
 const ResetPasswordPage = () => {
     const ref = useRef<HTMLFormElement>(null)
     const history = useHistory()
-    const {formValues, handleChange} = useForm({
+    const {formValues, handleChange} = useForm<TResetPasswordForm>({
         password: "",
         token: '',
     })

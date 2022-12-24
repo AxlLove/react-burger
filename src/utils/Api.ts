@@ -1,6 +1,6 @@
 import {ACCESS_TOKEN_NAME, BASE_URL, REFRESH_TOKEN_NAME} from "./constants";
 import {getCookie} from "./coockie";
-import {IIngredient, IOrder} from "../types/types";
+import {IIngredient, IOrder, IOrderDetail} from "../types/types";
 
 type TReqMethod = 'GET' | 'POST' | 'PUT' | 'PATCH';
 
@@ -8,6 +8,10 @@ interface IHeaders {
     [key: string]: string;
 }
 
+interface ISuccessfulGetIngredientRequest {
+    success: boolean;
+    data: Array<IIngredient>
+}
 interface IOptions {
     method: TReqMethod;
     headers: IHeaders
@@ -43,7 +47,7 @@ interface ISuccessfulGetUserRequest {
     user: IUser;
 }
 
-interface ISuccessOrderRequest {
+export interface ISuccessOrderRequest {
     name: string;
     order: IOrder;
     success: boolean;
@@ -59,7 +63,7 @@ const request = <T>(url: string, options: IOptions): Promise<T> => {
 
 
 export const getIngredients = () => {
-    return request<Array<IIngredient>>(`${BASE_URL}/ingredients`, {
+    return request<ISuccessfulGetIngredientRequest>(`${BASE_URL}/ingredients`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -67,7 +71,7 @@ export const getIngredients = () => {
     })
 }
 
-export const makeAnOrder = (ingredients: Array<string>) => {
+export const makeAnOrder = (ingredients: {ingredients: Array<string>}) => {
     return request<ISuccessOrderRequest>(`${BASE_URL}/orders`, {
         method: 'POST',
         headers: {
@@ -75,6 +79,15 @@ export const makeAnOrder = (ingredients: Array<string>) => {
             authorization: `Bearer ${getCookie(ACCESS_TOKEN_NAME)}`
         },
         body: JSON.stringify(ingredients)
+    })
+}
+
+export const getOrderByNumber = (number: number) => {
+    return request<IOrderDetail>(`${BASE_URL}/orders/${number}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        }
     })
 }
 

@@ -30,18 +30,20 @@ export const logoutUser = createAsyncThunk(`${sliceName}/logout`, async function
 export const logoutUserSlice = createSlice({
     name: sliceName,
     initialState,
-    extraReducers: {
-        [logoutUser.pending]: (state) => {
-            state.onLoad = true;
-            state.onError = false;
-        },
-        [logoutUser.fulfilled]: (state) => {
-            state.onLoad = false;
-        },
-        [logoutUser.rejected]: (state) => {
-            state.onLoad = false;
-            state.onError = true;
-        },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(logoutUser.pending, (state)=> {
+                state.onLoad = true;
+                state.onError = false;
+            })
+            .addCase(logoutUser.fulfilled, state=> {
+                state.onLoad = false;
+            })
+            .addCase(logoutUser.rejected, state=> {
+                state.onLoad = false;
+                state.onError = true;
+            })
     }
 })
 const {reducer} = logoutUserSlice;

@@ -1,9 +1,15 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getIngredients} from "../../utils/Api";
+import {IIngredient} from "../../types/types";
 
+
+interface IIngredientsSlice {
+    ingredientData: Array<IIngredient>;
+    onLoad: boolean;
+    onError: boolean;
+}
 const sliceName = 'ingredients'
-
-const initialState = {
+const initialState: IIngredientsSlice = {
     ingredientData: [],
     onLoad: false,
     onError: false,
@@ -13,7 +19,6 @@ export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`
         return await
             getIngredients().then(res => {
                 return {
-                    bun: res.data.find(item => item.type === 'bun'),
                     data: res.data
                 }
             })
@@ -27,29 +32,20 @@ export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`
 export const ingredientSlice = createSlice({
     name: sliceName,
     initialState,
-    reducers: {
-        addIngredientToCart: (state, action) => {
-            if (action.payload.type === 'bun') {
-                state.bun = action.payload
-                return
-            }
-            state.constructorData.push(action.payload)
-        },
-    },
-    extraReducers: {
-        [fetchIngredients.pending]: (state) => {
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(fetchIngredients.pending, state => {
             state.onLoad = true;
             state.onError = false
-        },
-        [fetchIngredients.fulfilled]: (state, action) => {
-            state.onLoad = false;
-            state.ingredientData = action.payload.data
-        },
-        [fetchIngredients.rejected]: (state) => {
-            state.onLoad = false;
-            state.onError = true
-        },
-
+        })
+            .addCase(fetchIngredients.fulfilled, (state, action)=> {
+                state.onLoad = false;
+                state.ingredientData = action.payload.data
+            })
+            .addCase(fetchIngredients.rejected, (state)=> {
+                state.onLoad = false;
+                state.onError = true
+            })
     }
 })
 const {reducer} = ingredientSlice;

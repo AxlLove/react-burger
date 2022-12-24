@@ -1,3 +1,5 @@
+import {OrderResponseStatus} from "../utils/constants";
+
 export interface IIngredient {
     _id: string;
     name: string;
@@ -19,21 +21,43 @@ export interface IIngredientWithUniqueId extends IIngredient {
 }
 
 export interface IOrder {
-    createdAt: string;
+    status: OrderResponseStatus;
     ingredients: Array<IIngredient>
     name: string;
     number: number;
-    owner: {
+    owner?: {
         createdAt: string;
         name: string;
         email: string;
         updatedAt: string;
     }
     price: number;
-    status: string;
+    createdAt: string;
     updatedAt: string;
     _id: string;
 }
 
+export interface IFeedOrder extends Omit<IOrder, "ingredients" | 'price'> {
+    ingredients: Array<string>;
+}
+
+export interface IOrderDetail {
+    success: boolean;
+    orders: Array<IFeedOrder>;
+}
+
+export interface IWsFeedOrders {
+    success: boolean;
+    orders: Array<IFeedOrder>
+    total: number;
+    totalToday: number;
+}
+
 export type TIngredientType = 'bun' | 'sauce' | 'main';
 export type TIngredientName = 'Булки' | 'Соусы' | 'Начинки';
+
+export enum WebSocketStatus {
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE',
+    CONNECTING = 'CONNECTING',
+}

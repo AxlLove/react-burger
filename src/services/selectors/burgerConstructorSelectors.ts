@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
-
-const selectOtherIngredient = store => store?.burgerConstructor?.constructorData
-const selectBun = store => store?.burgerConstructor?.bun
+import { RootState } from '../store'
+const selectOtherIngredient = (store: RootState) => store?.burgerConstructor?.constructorData
+const selectBun = (store: RootState) => store?.burgerConstructor?.bun
 
 export const totalPriceSelector = createSelector(selectBun, selectOtherIngredient, (selectBun, selectOtherIngredient) => {
             const data = [selectBun, ...selectOtherIngredient, selectBun]
@@ -9,7 +9,7 @@ export const totalPriceSelector = createSelector(selectBun, selectOtherIngredien
     }
 )
 
-export const constructorDataSelector = (store) => ({
+export const constructorDataSelector = (store: RootState) => ({
     selectedBun: store.burgerConstructor.bun,
     otherIngredients: store.burgerConstructor.constructorData
 })

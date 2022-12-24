@@ -6,7 +6,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.ingredientPageContainer {
+.pageContainer {
     margin-top: 100px;
     display: flex;
     justify-content: center;

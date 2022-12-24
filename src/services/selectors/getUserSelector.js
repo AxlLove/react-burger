@@ -1,1 +1,0 @@
-export const getUserLoadSelector = store => store?.getUser.onLoad

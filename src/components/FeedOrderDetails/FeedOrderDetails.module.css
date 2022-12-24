@@ -1,0 +1,40 @@
+.feedOrderDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 720px;
+    padding: 35px;
+}
+
+.ingredientList {
+    height: 200px ;
+    overflow-y: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-right: 25px;
+    gap: 24px;
+}
+.ingredient {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ingredientContainer {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.dateContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.withPage {
+    align-self: center;
+}
+.statusDone {
+        color: rgba(0, 204, 204, 1);
+}

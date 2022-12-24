@@ -1,6 +1,6 @@
-import {ingredientInfoSlice} from "../../services/slices/ingredientInfoSlice";
+import {deleteIngredientInfo} from "../../services/slices/ingredientInfoSlice";
 import {useHistory, useLocation, Switch, Route} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../services/hooks/hooks";
 import MainPage from "../../pages/MainPage/MainPage";
 import LoginPage from "../../pages/LoginPage/LognPage";
 import RegisterPage from "../../pages/RegisterPage/RegisterPage";
@@ -17,23 +17,24 @@ import ProfileOrdersPage from "../../pages/ProfileOrdersPage/ProfileOrdersPage";
 import OnlyUnAuthRoute from "../OnlyUnAuthRoute/OnlyUnAuthRoute";
 import {FC} from "react";
 import {Location} from "history"
+import FeedPage from "../../pages/FeedPage/FeedPage";
+import FeedOrderDetails from "../FeedOrderDetails/FeedOrderDetails";
 
 interface ILocationState {
     background?: Location;
 }
 
 const ModalSwitch: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const location = useLocation<ILocationState>();
     const history = useHistory();
-    const background = location?.state && location?.state?.background;
+    let background = location.state && location.state.background;
 
     const handleModalClose = () => {
-        // @ts-ignore
-        dispatch(ingredientInfoSlice.actions.deleteIngredientInfo());
+        dispatch(deleteIngredientInfo());
         history.goBack();
     };
-
+//TODO исправить
     return (
         <>
             <AppHeader/>
@@ -58,28 +59,41 @@ const ModalSwitch: FC = () => {
                         <ProfilePage/>
                     </ProtectedRoute>
                     <Route path={'/feed'} exact={true}>
-                        <div/>
+                        <FeedPage/>
                     </Route>
                     <ProtectedRoute path={'/profile/orders'} exact={true}>
                         <ProfileOrdersPage/>
                     </ProtectedRoute>
                     <Route
+                        path='/feed/:identifier' exact={true}
+                        children={
+                                <div className={styles.pageContainer}><FeedOrderDetails withPage={true}/></div>
+                        }
+                    />
+                    <ProtectedRoute
+                        path='/profile/orders/:identifier' exact={true}
+                        children={
+                            <div className={styles.pageContainer}><FeedOrderDetails withPage={true}/></div>
+                        }
+                    />
+                    <Route
                         path='/ingredients/:ingredientId' exact={true}
                         children={
-                            <>
-                                <div className={styles.ingredientPageContainer}>
+                        //TODO можно добавить прелоадер
+                            //TODO можно поставить флаг и рендерить хедер от флага
+                                <div className={styles.pageContainer}>
                                     <IngredientDetails><h2
                                         className={`text text_type_main-large ${styles.ingredientPageHeader}`}>Детали
                                         ингредиента</h2>
                                     </IngredientDetails></div>
-                            </>
                         }
                     />
+
                     <Route path={'*'}>
                         <NotFoundPage/>
                     </Route>
-
                 </Switch>
+
                 {background && (<Route
                     path='/ingredients/:ingredientId' exact={true}
                     children={
@@ -88,6 +102,22 @@ const ModalSwitch: FC = () => {
                                 className={`text text_type_main-large pl-10 pt-15 ${styles.ingredientModalHeader}`}>Детали
                                 ингредиента</h2>
                             </IngredientDetails>
+                        </Modal>
+                    }
+                />)}
+                {background && (<Route
+                    path='/feed/:identifier' exact={true}
+                    children={
+                        <Modal onClose={handleModalClose}>
+                            <FeedOrderDetails/>
+                        </Modal>
+                    }
+                />)}
+                {background && (<ProtectedRoute
+                    path='/profile/orders/:identifier'
+                    children={
+                        <Modal onClose={handleModalClose}>
+                            <FeedOrderDetails/>
                         </Modal>
                     }
                 />)}

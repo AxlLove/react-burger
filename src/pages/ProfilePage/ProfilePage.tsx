@@ -3,26 +3,30 @@ import styles from './ProfilePage.module.css'
 import NavBar from "../../components/NavBar/NavBar";
 import {ChangeEvent, SyntheticEvent, useEffect, useRef, useState} from "react";
 import {NameInput} from "../../components/NameInput/NameInput";
-import {useDispatch, useSelector} from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import {getUserInfo} from "../../services/selectors/userSelector";
 import {updateUserRequestSelector} from "../../services/selectors/updateUserSelectors";
 import {updateUserInfo} from "../../services/slices/updateUserSlice";
 import {useForm} from "../../hooks/useForm";
 
+type TProfileForm = {name: string; email: string; password: string}
+
 const ProfilePage = () => {
     const ref = useRef<HTMLFormElement>(null)
-    const dispatch = useDispatch()
-    const {onLoad, onError, errorMessage} = useSelector(updateUserRequestSelector)
+    const dispatch = useAppDispatch()
+    const {onLoad, onError, errorMessage} = useAppSelector(updateUserRequestSelector)
     const [change, setChange] = useState(false)
-    const initialInput = useSelector(getUserInfo)
+    const initialInput = useAppSelector(getUserInfo)
 
-    const {formValues, handleChange, setFormValues} = useForm({
+    const {formValues, handleChange, setFormValues} = useForm<TProfileForm>({
         name: "",
         email: '',
         password: '',
     })
     useEffect(() => {
-        setFormValues({...initialInput, password: ''})
+        if(initialInput) {
+            setFormValues({...initialInput, password: ''})
+        }
     }, [initialInput, setFormValues])
 
     const handleProfileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +43,6 @@ const ProfilePage = () => {
     }
     const handleSubmit = (event: SyntheticEvent) => {
         event.preventDefault()
-        // @ts-ignore
         dispatch(updateUserInfo(formValues))
         setChange(false)
     }

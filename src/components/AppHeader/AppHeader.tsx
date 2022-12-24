@@ -9,7 +9,7 @@ function AppHeader() {
             <nav className={styles.content}>
                 <div className={styles.container}>
                     <NavLink
-                        className={`text text_type_main-default ${styles.link} pt-4 pb-4 pr-5 pl-6`}
+                        className={`text text_type_main-default ${styles.link} pt-4 pb-4 pr-5`}
                         activeClassName={styles.textActive}
                         exact to={{pathname: `/`}}>
                         <BurgerIcon type={'secondary'}/>

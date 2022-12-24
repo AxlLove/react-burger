@@ -1,0 +1,93 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    margin-right: 8px;
+    background: #1C1C21;
+    border-radius: 40px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+}
+.link {
+    text-decoration: none;
+    color: white;
+}
+.currency {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    align-self: center;
+    width: 22px;
+    height: 22px;
+}
+
+.orderContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ingredientContainer {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.ingredientIcons {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    max-width: 300px;
+    margin-right: 24px;
+}
+
+.ingredientIcon {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px solid rgb(167, 61, 231);
+    overflow: hidden;
+    background: #1C1C21;
+}
+
+.ingredientIcon:not(:last-child) {
+    margin-left: -20px;
+}
+
+.ingredientIcon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.cover {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #FFFFFF;
+    z-index: 0;
+}
+
+.coverText {
+    position: absolute;
+    opacity: 1;
+    z-index: 1;
+    transition: 0.3s;
+}
+
+.cover::before {
+    content: "";
+    background-color: #1C1C21;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.statusDone {
+    color: rgba(0, 204, 204, 1);
+}

@@ -2,21 +2,22 @@ import Form from "../../components/Form/Form";
 import {Link} from "react-router-dom";
 import styles from './LoginPage.module.css'
 import React, {useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import {EmailAuthInput} from "../../components/EmailAuthInput/EmailAuthInput";
 import {PasswordAuthInput} from "../../components/PasswordAuthInput/PasswordAuthInput";
 import {loginRequestSelector} from "../../services/selectors/loginUserSelector";
 import {loginUser} from "../../services/slices/loginUserSlice";
 import {useForm} from "../../hooks/useForm";
 
+type TLogin = {email: string; password: string;}
 
 const LoginPage = () => {
     const ref = useRef<HTMLFormElement>(null)
-    const dispatch = useDispatch()
-    const {onLoad, onError, errorMessage} = useSelector(loginRequestSelector)
+    const dispatch = useAppDispatch()
+    const {onLoad, onError, errorMessage} = useAppSelector(loginRequestSelector)
 
 
-    const {formValues, handleChange} = useForm({
+    const {formValues, handleChange} = useForm<TLogin>({
         email: '',
         password: '',
     })
@@ -25,7 +26,6 @@ const LoginPage = () => {
         if(ref.current && !ref.current.checkValidity()){
             return
         }
-                // @ts-ignore
        dispatch(loginUser(formValues))
     }
 
