@@ -1,7 +1,6 @@
 import reducer, * as feed from '../slices/feedSlice'
 import {WebSocketStatus} from "../../types/types";
 import {getUser} from "../slices/getUserSlice";
-import {wsClose, wsError, wsMessage} from "../slices/feedSlice";
 import {orderInfoMock} from "./mocks";
 
 const initialState = {

@@ -1,5 +1,5 @@
 import reducer, {fetchGetOrderByNumber, deleteFeedOrderInfo} from "../slices/orderInfoSlice"
-import {ingredientWithoutID, orderInfoMock} from "./mocks";
+import {orderInfoMock} from "./mocks";
 
 
 
