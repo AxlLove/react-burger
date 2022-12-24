@@ -50,7 +50,7 @@ export const updateUserSlice = createSlice({
                     state.errorMessage = 'Пользователь с данным E-mail уже зарегестрирован'
                     return
                 }
-                state.errorMessage = 'На сервере произошла ошибка, попробуйте еще раз!'
+                state.errorMessage = 'Произошла ошибка, попробуйте еще раз!'
             })
     }
 })

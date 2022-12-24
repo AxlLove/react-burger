@@ -9,12 +9,14 @@ interface IOrderInfoSlice {
     orderInfo: IOrderDetail | null;
     onLoad: boolean;
     onError: boolean;
+    errorMessage: string;
 }
 
 const initialState: IOrderInfoSlice = {
     orderInfo: null,
     onError: false,
     onLoad: false,
+    errorMessage: '',
 };
 
 export const fetchGetOrderByNumber = createAsyncThunk(`${sliceName}/fetchOrder`, async (number: number, {rejectWithValue}) => {
@@ -22,11 +24,13 @@ export const fetchGetOrderByNumber = createAsyncThunk(`${sliceName}/fetchOrder`,
         .then((res) => {
             return res
         })
-        .catch(rejectWithValue)
+        .catch(err=> {
+            return rejectWithValue(err.message)
+        })
 })
 
 
-export const ingredientInfoSlice = createSlice({
+export const orderInfoSlice = createSlice({
     name: sliceName,
     initialState,
     reducers: {
@@ -44,12 +48,13 @@ export const ingredientInfoSlice = createSlice({
                 state.onLoad = false;
                 state.orderInfo = action.payload
             })
-            .addCase(fetchGetOrderByNumber.rejected, (state) => {
+            .addCase(fetchGetOrderByNumber.rejected, (state, action) => {
                 state.onLoad = false;
                 state.onError = true
+                state.errorMessage = action.payload as string;
             })
     }
 })
-const {reducer} = ingredientInfoSlice;
-export const {deleteFeedOrderInfo} = ingredientInfoSlice.actions
+const {reducer} = orderInfoSlice;
+export const {deleteFeedOrderInfo} = orderInfoSlice.actions
 export default reducer

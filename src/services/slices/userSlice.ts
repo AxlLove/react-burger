@@ -50,6 +50,7 @@ export const userSlice = createSlice({
             })
     }
 })
+
 const {reducer} = userSlice;
 
 export default reducer

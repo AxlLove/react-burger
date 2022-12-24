@@ -9,6 +9,7 @@ import IngredientIcon from "../IngredientIcon/IngredientIcon";
 import {v4 as uiv4} from 'uuid'
 import {OrderResponseStatus} from "../../utils/constants";
 import {checkResponseStatus} from "../../utils/checkResponse";
+import {TOrderResponseStatus} from "../../types/types";
 
 type TStatus = OrderResponseStatus.DONE | OrderResponseStatus.PENDING | OrderResponseStatus.CREATED;
 
@@ -17,7 +18,7 @@ interface IFeedCard {
     date: string;
     name: string;
     ingredients: Array<string>,
-    status?: TStatus,
+    status?: TOrderResponseStatus,
 }
 
 
