@@ -9,18 +9,15 @@ import IngredientIcon from "../IngredientIcon/IngredientIcon";
 import {v4 as uiv4} from 'uuid'
 import {OrderResponseStatus} from "../../utils/constants";
 import {checkResponseStatus} from "../../utils/checkResponse";
-
-type TStatus = OrderResponseStatus.DONE | OrderResponseStatus.PENDING | OrderResponseStatus.CREATED;
+import {TOrderResponseStatus} from "../../types/types";
 
 interface IFeedCard {
     identifier: number;
     date: string;
     name: string;
     ingredients: Array<string>,
-    status?: TStatus,
+    status?: TOrderResponseStatus,
 }
-
-
 
 const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, status}) => {
     const location = useLocation();
@@ -63,4 +60,4 @@ const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, sta
 
     )
 }
-export default FeedCard;
+export default React.memo(FeedCard);

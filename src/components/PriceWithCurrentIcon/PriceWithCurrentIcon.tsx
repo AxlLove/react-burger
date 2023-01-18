@@ -20,4 +20,4 @@ const PriceWithCurrentIcon: React.FC<IPriceWithCurrentIcon> = ({price, extraClas
     )
 }
 
-export default PriceWithCurrentIcon;
+export default React.memo(PriceWithCurrentIcon);

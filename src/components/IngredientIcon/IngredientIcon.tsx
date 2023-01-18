@@ -1,6 +1,6 @@
 import styles from "./IngredientIcon.module.css";
 import React from "react";
-import {without} from "react-dnd-html5-backend/dist/utils/js_utils";
+
 interface IIngredientIcon {
     name: string;
     image: string;
@@ -8,7 +8,6 @@ interface IIngredientIcon {
     count?: number | null;
     list?: boolean;
 }
-
 
 const IngredientIcon: React.FC<IIngredientIcon> = ({name, image, withoutCount=true, count, list=false}) => {
     return (

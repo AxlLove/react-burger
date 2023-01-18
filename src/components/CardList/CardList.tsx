@@ -2,7 +2,7 @@ import Card from "../Card/Card";
 import styles from "./CardList.module.css";
 import {useSelector} from "react-redux";
 import {getIngredientsSelector} from "../../services/selectors/ingrediensSelectors";
-import React, {FC} from "react";
+import React, {FC, useMemo} from "react";
 import {IIngredient, TIngredientName, TIngredientType} from "../../types/types";
 
 interface ICardListProps {
@@ -11,14 +11,20 @@ interface ICardListProps {
     listRef: React.RefObject<HTMLDivElement>;
 }
 
+
+
 const CardList: FC<ICardListProps> = ({type, name, listRef}) => {
     const ingredients = useSelector(getIngredientsSelector)
+
+    const cards = useMemo(()=> {
+        return ingredients?.filter((item) => item.type === type)
+    }, [ingredients, type])
+
     return (
         <div id={name} ref={listRef}>
             <h2 className={'text text_type_main-medium'}>{name}</h2>
             <ul className={`${styles.list} pt-6`}>
-                {ingredients.map((card: IIngredient) => (
-                    card.type === type &&
+                {cards.map((card: IIngredient) => (
                     <Card card={card}
                           key={card._id}/>
                 ))}
@@ -27,4 +33,4 @@ const CardList: FC<ICardListProps> = ({type, name, listRef}) => {
     )
 }
 
-export default CardList;
+export default React.memo(CardList);

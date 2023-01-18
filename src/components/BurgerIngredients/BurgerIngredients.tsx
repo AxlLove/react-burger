@@ -46,4 +46,4 @@ const BurgerIngredients: FC = () => {
 }
 
 
-export default BurgerIngredients;
+export default React.memo(BurgerIngredients);

@@ -40,9 +40,10 @@ export const logoutUserSlice = createSlice({
             .addCase(logoutUser.fulfilled, state=> {
                 state.onLoad = false;
             })
-            .addCase(logoutUser.rejected, state=> {
+            .addCase(logoutUser.rejected, (state, action)=> {
                 state.onLoad = false;
                 state.onError = true;
+                state.errorMessage = action.payload as string
             })
     }
 })

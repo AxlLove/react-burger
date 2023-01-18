@@ -1,23 +1,21 @@
 import styles from './IngredientDetails.module.css'
-import {useDispatch, useSelector} from 'react-redux';
 import {getIngredientsSelector} from '../../services/selectors/ingrediensSelectors'
 import {getIngredientInfoSelector} from '../../services/selectors/IngredientInfoSelectors'
-import {useLocation, useParams, useRouteMatch} from "react-router-dom";
+import {useParams, useRouteMatch} from "react-router-dom";
 import React, {FC, useEffect} from "react";
 import {addIngredientInfo, deleteIngredientInfo} from "../../services/slices/ingredientInfoSlice";
 import {IIngredient} from "../../types/types";
+import {useAppDispatch, useAppSelector} from "../../services/hooks/hooks";
 
 
 const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children}) => {
-    const ingredient = useSelector(getIngredientInfoSelector)
-    const ingredients = useSelector(getIngredientsSelector)
+    const ingredient = useAppSelector(getIngredientInfoSelector)
+    const ingredients = useAppSelector(getIngredientsSelector)
     const {isExact} = useRouteMatch()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const {ingredientId} = useParams<{ ingredientId?: string }>()
-    const location = useLocation()
+
     useEffect(() => {
-        //ts-ignore
-        console.log(location?.state)
         if (ingredients) {
             dispatch(addIngredientInfo(ingredients.find((item: IIngredient) => item._id === ingredientId)))
         }
@@ -29,7 +27,7 @@ const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children})
     }, [isExact, dispatch])
 
     return (
-        <div className={`${styles.ingredientDetails}`}>
+        <div id={'ingredientModal'} className={`${styles.ingredientDetails}`}>
             {children}
             <img alt={ingredient?.name} src={ingredient?.image_large}/>
             <p className={'text text_type_main-medium pt-4'}>{ingredient?.name}</p>
@@ -57,5 +55,3 @@ const IngredientDetails: FC<React.HTMLAttributes<HTMLDivElement>> = ({children})
 }
 
 export default IngredientDetails;
-
-//TODO use APpp disp

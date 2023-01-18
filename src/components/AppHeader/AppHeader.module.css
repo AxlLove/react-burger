@@ -22,7 +22,9 @@
     color: #8585AD;
     fill: #8585AD;
 }
-
+.logo {
+    margin-right: 120px;
+}
 .textActive {
     color: #F2F2F3;
 }
@@ -30,8 +32,6 @@
 .textActive  svg {
     fill: white
 }
-
-
 
 .link:hover {
     opacity: .8;

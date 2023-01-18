@@ -27,7 +27,6 @@ export const constructorSlice = createSlice({
                 return
             }
             state.constructorData.push(action.payload)
-
         },
         updateIngredientsInConstructor: (state, action: PayloadAction<Array<IIngredientWithUniqueId>>) => {
             state.constructorData = action.payload

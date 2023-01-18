@@ -23,7 +23,9 @@ function AppHeader() {
                     </NavLink>
                 </div>
 
-                <Logo/>
+                <div className={styles.logo}>
+                    <Logo/>
+                </div>
 
                 <NavLink className={`text text_type_main-default ${styles.link} pt-4 pb-4 pr-5 pl-6`}
                          activeClassName={styles.textActive} to={{pathname: `/profile`}}>
@@ -36,6 +38,3 @@ function AppHeader() {
 }
 
 export default AppHeader;
-
-
-//TODO разместить лого по центру

@@ -15,7 +15,7 @@ const initialState: IIngredientsSlice = {
     onError: false,
 };
 
-export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`, async function () {
+export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`, async function (_, {rejectWithValue}) {
         return await
             getIngredients().then(res => {
                 return {
@@ -23,7 +23,7 @@ export const fetchIngredients = createAsyncThunk(`${sliceName}/fetchIngredients`
                 }
             })
                 .catch((res) => {
-                    throw new Error(`Ошибка ${res}`)
+                    return rejectWithValue(res.message)
                 })
     }
 )

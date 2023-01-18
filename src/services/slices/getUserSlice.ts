@@ -15,7 +15,6 @@ export const getUser = createAsyncThunk(`${sliceName}/getUser`, async function (
             return await userRequest()
         } catch (err) {
             const { message } = err as { message: string }
-            console.log(message)
             if ( message === 'jwt expired' || message === "jwt malformed") {
                 const tokens = await refreshToken()
                 saveTokens(tokens)
@@ -46,6 +45,7 @@ export const getUserUserSlice = createSlice({
             })
     }
 })
+
 const {reducer} = getUserUserSlice;
 
 export default reducer

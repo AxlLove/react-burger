@@ -1,6 +1,6 @@
 import styles from './ConstructorItem.module.css'
 import { useAppDispatch } from '../../services/hooks/hooks';
-import {constructorSlice} from "../../services/slices/burgerConstructorSlice";
+import {deleteIngredient as deleteIngredientById} from "../../services/slices/burgerConstructorSlice";
 import {DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
 import React, {FC, useRef} from 'react'
 import {useDrop, useDrag} from 'react-dnd'
@@ -22,7 +22,7 @@ const ConstructorItem: FC<IConstructorItem> = ({dragId, index, item, moveCard}) 
     const dispatch = useAppDispatch()
 
     const deleteIngredient = (id: string) => {
-        dispatch(constructorSlice.actions.deleteIngredient(id))
+        dispatch(deleteIngredientById(id))
     }
     const ref = useRef<HTMLLIElement>(null);
     const [{handlerId}, drop] = useDrop<IConstructorItem, unknown, ICollectProps>({
@@ -89,4 +89,4 @@ const ConstructorItem: FC<IConstructorItem> = ({dragId, index, item, moveCard}) 
 }
 
 
-export default ConstructorItem
+export default React.memo(ConstructorItem)

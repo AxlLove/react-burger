@@ -1,7 +1,6 @@
 import {createSelector} from '@reduxjs/toolkit'
 import {IIngredient} from '../../types/types';
 import {RootState} from '../store';
-import {array} from "prop-types";
 
 const selectOtherIngredient = (store: RootState) => store?.burgerConstructor?.constructorData
 const selectBun = (store: RootState) => store?.burgerConstructor?.bun

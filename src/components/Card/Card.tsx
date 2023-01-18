@@ -6,7 +6,7 @@ import {useDrag} from "react-dnd";
 import {Link} from 'react-router-dom'
 import {useLocation} from "react-router-dom";
 import {IIngredient} from "../../types/types";
-import {FC} from "react";
+import React, {FC} from "react";
 
 interface ICardProps {
     card: IIngredient;
@@ -47,4 +47,4 @@ const Card: FC<ICardProps> = ({card}) => {
     )
 }
 
-export default Card;
+export default React.memo(Card);

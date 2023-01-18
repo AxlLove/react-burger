@@ -43,7 +43,7 @@ export const loginUserSlice = createSlice({
                     state.errorMessage = 'E-mail или пароль введены неверно!'
                     return
                 }
-                state.errorMessage = 'На сервере произошла ошибка, попробуйте еще раз!'
+                state.errorMessage = 'Произошла ошибка, попробуйте еще раз!'
 
             })
     }
