@@ -89,4 +89,4 @@ const ConstructorItem: FC<IConstructorItem> = ({dragId, index, item, moveCard}) 
 }
 
 
-export default ConstructorItem
+export default React.memo(ConstructorItem)

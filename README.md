@@ -31,4 +31,4 @@
 * Intersection Observer API
 
 ## Frontend
-<https://movies-explorer.kitaev.nomoreparties.sbs>
+<https://axllove.github.io/react-burger/>

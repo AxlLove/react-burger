@@ -1,5 +1,3 @@
-import {OrderResponseStatus} from "../utils/constants";
-
 export interface IIngredient {
     _id: string;
     name: string;
@@ -15,11 +13,12 @@ export interface IIngredient {
     __v?: number;
 }
 
-
 export interface IIngredientWithUniqueId extends IIngredient {
     dragId: string;
 }
+
 export type TOrderResponseStatus = 'done' | 'pending' | 'created' | string | undefined
+
 export interface IOrder {
     status: TOrderResponseStatus;
     ingredients: Array<IIngredient>

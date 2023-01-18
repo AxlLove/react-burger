@@ -11,8 +11,6 @@ import {OrderResponseStatus} from "../../utils/constants";
 import {checkResponseStatus} from "../../utils/checkResponse";
 import {TOrderResponseStatus} from "../../types/types";
 
-type TStatus = OrderResponseStatus.DONE | OrderResponseStatus.PENDING | OrderResponseStatus.CREATED;
-
 interface IFeedCard {
     identifier: number;
     date: string;
@@ -20,8 +18,6 @@ interface IFeedCard {
     ingredients: Array<string>,
     status?: TOrderResponseStatus,
 }
-
-
 
 const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, status}) => {
     const location = useLocation();
@@ -64,4 +60,4 @@ const FeedCard: React.FC<IFeedCard> = ({identifier, date, name, ingredients, sta
 
     )
 }
-export default FeedCard;
+export default React.memo(FeedCard);

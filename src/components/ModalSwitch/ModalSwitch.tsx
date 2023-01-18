@@ -34,9 +34,9 @@ const ModalSwitch: FC = () => {
         dispatch(deleteIngredientInfo());
         history.goBack();
     };
-//TODO исправить
+//TODO добавить обработчик закрытия модалки
     return (
-        <>
+        <div className={styles.app}>
             <AppHeader/>
             <main className={styles.main}>
                 <Switch location={background || location}>
@@ -122,7 +122,7 @@ const ModalSwitch: FC = () => {
                     }
                 />)}
             </main>
-        </>
+        </div>
     );
 };
 

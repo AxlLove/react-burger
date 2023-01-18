@@ -5,7 +5,7 @@ import {constructorSubmitOrderSelector, orderNumberSelector} from '../../service
 
 function OrderDetails() {
     const identifier = useAppSelector(orderNumberSelector)
-    const {onLoad, onError} = useAppSelector(constructorSubmitOrderSelector)
+    const {onLoad} = useAppSelector(constructorSubmitOrderSelector)
     return (
         <div className={`${styles.orderDetails} pt-30 pb-30`}>
             {!onLoad ?

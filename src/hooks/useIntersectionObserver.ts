@@ -29,7 +29,6 @@ export const useIntersectionObserver = (options: IOptions) => {
             containerChild?.forEach(item => observer.unobserve(item as Element))
         }
 
-
     }, [containerRef, options])
 
     return {containerRef, current}

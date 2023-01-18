@@ -1,6 +1,7 @@
 import { useAppSelector } from '../../services/hooks/hooks';
 import { feedOrderDoneSelector, feedOrderPendingSelector } from '../../services/selectors/feedSelector';
 import styles from './OrderStatuses.module.css'
+import React from "react";
 
 
 interface IOrderStatuses {
@@ -43,4 +44,4 @@ const pendingOrders = useAppSelector(feedOrderPendingSelector)
     )
 }
 
-export default OrderStatuses;
+export default React.memo(OrderStatuses);
