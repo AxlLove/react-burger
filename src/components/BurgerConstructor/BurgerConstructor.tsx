@@ -169,5 +169,5 @@ function BurgerConstructor() {
         </section>
     )
 }
-//TODO можно добавить поведение кнопке и сообщение при приготовлении заказа
+
 export default BurgerConstructor;

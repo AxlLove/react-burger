@@ -34,7 +34,7 @@ const ModalSwitch: FC = () => {
         dispatch(deleteIngredientInfo());
         history.goBack();
     };
-//TODO добавить обработчик закрытия модалки
+
     return (
         <div className={styles.app}>
             <AppHeader/>
@@ -79,8 +79,6 @@ const ModalSwitch: FC = () => {
                     <Route
                         path='/ingredients/:ingredientId' exact={true}
                         children={
-                        //TODO можно добавить прелоадер
-                            //TODO можно поставить флаг и рендерить хедер от флага
                                 <div className={styles.pageContainer}>
                                     <IngredientDetails><h2
                                         className={`text text_type_main-large ${styles.ingredientPageHeader}`}>Детали

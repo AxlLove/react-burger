@@ -107,7 +107,6 @@ describe('fetchOrderThunk', () => {
         expect(calls).toHaveLength(2)
         expect(start[0].type).toBe('order/fetchOrder/pending')
         expect(end[0].type).toBe('order/fetchOrder/rejected')
-        //todo повторяется код, нужно вынести для всех
         expect(end[0].meta.rejectedWithValue).toBe(true)
         expect(end[0].payload).toBe('some error')
     })
