@@ -10,7 +10,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import ProfilePage from "../../pages/ProfilePage/ProfilePage";
 import Modal from "../Modal/Modal";
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
-import AppHeader from "../AppHeader/AppHeader";
+import HeaderDesktop from "../AppHeader/index";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 import styles from './ModalSwitch.module.css'
 import ProfileOrdersPage from "../../pages/ProfileOrdersPage/ProfileOrdersPage";
@@ -37,7 +37,7 @@ const ModalSwitch: FC = () => {
 
     return (
         <div className={styles.app}>
-            <AppHeader/>
+            <HeaderDesktop/>
             <main className={styles.main}>
                 <Switch location={background || location}>
                     <Route exact={true} path={'/'}>

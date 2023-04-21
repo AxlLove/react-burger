@@ -1,11 +1,13 @@
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './AppHeader.module.css';
 import {NavLink} from 'react-router-dom'
+import {useAppSelector} from "../../services/hooks/hooks";
+import {getWidthSelector} from "../../services/selectors/widthSelector";
 
-function AppHeader() {
+function HeaderDesktop() {
+    const isMobile = useAppSelector(getWidthSelector)
 
     return (
-        <header className={styles.header}>
             <nav className={styles.content}>
                 <div className={styles.container}>
                     <NavLink
@@ -26,15 +28,13 @@ function AppHeader() {
                 <div className={styles.logo}>
                     <Logo/>
                 </div>
-
-                <NavLink className={`text text_type_main-default ${styles.link} pt-4 pb-4 pr-5 pl-6`}
-                         activeClassName={styles.textActive} to={{pathname: `/profile`}}>
+                 <NavLink className={`text text_type_main-default ${styles.link} pt-4 pb-4 pr-5 pl-6`}
+                          activeClassName={styles.textActive} to={{pathname: `/profile`}}>
                     <ProfileIcon type={'secondary'}/>
                     Личный кабинет
                 </NavLink>
             </nav>
-        </header>
     );
 }
 
-export default AppHeader;
+export default HeaderDesktop;

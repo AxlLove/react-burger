@@ -11,6 +11,7 @@ import updateUserReducer from './slices/updateUserSlice'
 import getUserReducer from './slices/getUserSlice'
 import logoutUserSlice from "./slices/logoutUserSlice";
 import feedReducer from "./slices/feedSlice";
+import getWidth from "./slices/getWidthSlice";
 import {createSockedMiddleware} from "./middleware/sockedMiddleware";
 import orderInfoReducer from './slices/orderInfoSlice'
 import {
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
     logoutUser: logoutUserSlice,
     feed: feedReducer,
     orderInfo: orderInfoReducer,
+    width: getWidth,
 });
 
 const store = configureStore({
